@@ -37,15 +37,11 @@ export default {
 
 
 <template>
-  <!-- <div class="search">
+  <div v-for="restaurant in restaurants">
 
-    <div class="searchbar">
+    <h3>{{ restaurant.name }}</h3>
 
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input v-model="searchTerm" type="search" placeholder="Cerca o inizia una nuova chat">
-
-.    </div>
-  </div> -->
+  </div>
 
 </template>
 
