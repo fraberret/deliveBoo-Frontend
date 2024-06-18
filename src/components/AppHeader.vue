@@ -1,14 +1,14 @@
 <script>
 export default {
-  name: 'HomePage'
+    name: 'AppHeader'
 }
 </script>
 
 
 <template>
-  <div>
-    <h1>Homepage</h1>
-  </div>
+    <header>
+        <h1>Header</h1>
+    </header>
 </template>
 
 

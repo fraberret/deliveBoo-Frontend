@@ -1,14 +1,14 @@
 <script>
 export default {
-  name: 'HomePage'
+    name: 'AppFooter'
 }
 </script>
 
 
 <template>
-  <div>
-    <h1>Homepage</h1>
-  </div>
+    <footer>
+        <h1>Footer</h1>
+    </footer>
 </template>
 
 
