@@ -60,16 +60,18 @@ export default {
 
         <div v-if="searchTerm" class="restaurants">
             <div v-for="restaurant in filteredRestaurants" class="card">
-                <template v-if="restaurant.logo && restaurant.logo.startsWith('uploads')">
-                    <img :src="base_url + '/storage/' + restaurant.logo" alt="">
-                </template>
-                <template v-else-if="restaurant.logo && restaurant.logo.startsWith('/img/')">
-                    <img :src="base_url + restaurant.logo" alt="">
-                </template>
-                <template v-else>
-                    <img :src="restaurant.logo" alt="">
-                </template>
-                <h3>{{ restaurant.name }}</h3>
+                <router-link :to="{ name: 'singleRestaurant', params: { slug: restaurant.slug } }">
+                    <template v-if="restaurant.logo && restaurant.logo.startsWith('uploads')">
+                        <img :src="base_url + '/storage/' + restaurant.logo" alt="">
+                    </template>
+                    <template v-else-if="restaurant.logo && restaurant.logo.startsWith('/img/')">
+                        <img :src="base_url + restaurant.logo" alt="">
+                    </template>
+                    <template v-else>
+                        <img :src="restaurant.logo" alt="">
+                    </template>
+                    <h3>{{ restaurant.name }}</h3>
+                </router-link>
             </div>
         </div>
 
