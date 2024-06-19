@@ -32,6 +32,7 @@ export default {
     },
     mounted() {
         this.callRestaurant()
+
     }
 }
 </script>
@@ -40,21 +41,59 @@ export default {
 <template>
 
     <div class="container">
-        <div class="col">
-            <h1>{{ restaurant.name }}</h1>
+        <div class="d-flex align-items-center">
+            <div class="col-6">
 
-            <template v-if="restaurant.logo && restaurant.logo.startsWith('uploads')">
-                <img width="400" :src="base_restaurant_api + '/storage/' + restaurant.logo" alt="">
-            </template>
-            <template v-else-if="restaurant.logo && restaurant.logo.startsWith('/img/')">
-                <img width="400" :src="base_restaurant_api + restaurant.logo" alt="">
-            </template>
-            <template v-else>
-                <img width="400" :src="restaurant.logo" alt="">
-            </template>
 
-            <h3>{{ restaurant.piva }}</h3>
+                <template v-if="restaurant.logo && restaurant.logo.startsWith('uploads')">
+                    <img width="400" :src="base_restaurant_api + '/storage/' + restaurant.logo" alt="">
+                </template>
+                <template v-else-if="restaurant.logo && restaurant.logo.startsWith('/img/')">
+                    <img width="400" :src="base_restaurant_api + restaurant.logo" alt="">
+                </template>
+                <template v-else>
+                    <img width="400" :src="restaurant.logo" alt="">
+                </template>
+
+
+            </div>
+            <div class="col-6">
+                <h1>Name: {{ restaurant.name }}</h1>
+                <h2>Address: {{ restaurant.address }}</h2>
+
+                <h3>P.Iva: {{ restaurant.piva }}</h3>
+                <div><strong>Telephone Number: </strong> {{ restaurant.telephone_number }}</div>
+            </div>
         </div>
+
+        <h2>Menu</h2>
+        <div class="row row-cols-3">
+
+            <div class="card" v-for="dish in restaurant.dishes">
+                <template v-if="dish.cover_image && dish.cover_image.startsWith('uploads')">
+                    <img class="card-img-top" :src="base_restaurant_api + '/storage/' + dish.cover_image" alt="">
+                </template>
+                <template v-else-if="dish.cover_image && dish.cover_image.startsWith('/img/')">
+                    <img class="card-img-top" :src="base_restaurant_api + dish.cover_image" alt="">
+                </template>
+                <template v-else>
+                    <img class="card-img-top" :src="dish.cover_image" alt="">
+                </template>
+
+                <div class="card-body">
+                    <h3>{{ dish.name }}</h3>
+                    <template v-if="dish.description">
+                        <p><strong>Description: </strong> {{ dish.description }}</p>
+                    </template>
+                    <h4>Price: {{ dish.price }}</h4>
+                    <template v-if="dish.ingredients">
+                        <p><strong>Ingredients: </strong> {{ dish.ingredients }}</p>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
 </template>
