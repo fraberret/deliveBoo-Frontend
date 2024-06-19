@@ -7,6 +7,8 @@ export default {
     data() {
         return {
             base_api: 'http://127.0.0.1:8000/api/restaurant/',
+            base_restaurant_api: 'http://127.0.0.1:8000',
+
             restaurant: {}
 
         }
@@ -37,7 +39,23 @@ export default {
 
 <template>
 
-    <h1>{{ restaurant.name }}</h1>
+    <div class="container">
+        <div class="col">
+            <h1>{{ restaurant.name }}</h1>
+
+            <template v-if="restaurant.logo && restaurant.logo.startsWith('uploads')">
+                <img width="400" :src="base_restaurant_api + '/storage/' + restaurant.logo" alt="">
+            </template>
+            <template v-else-if="restaurant.logo && restaurant.logo.startsWith('/img/')">
+                <img width="400" :src="base_restaurant_api + restaurant.logo" alt="">
+            </template>
+            <template v-else>
+                <img width="400" :src="restaurant.logo" alt="">
+            </template>
+
+            <h3>{{ restaurant.piva }}</h3>
+        </div>
+    </div>
 
 </template>
 
