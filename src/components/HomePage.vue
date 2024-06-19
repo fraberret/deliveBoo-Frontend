@@ -5,6 +5,7 @@ export default {
     name: 'HomePage',
     data() {
         return {
+            base_url: 'http://127.0.0.1:8000',
             base_api: 'http://127.0.0.1:8000/api',
             api_url: '/restaurants/',
             restaurants: [],
@@ -51,13 +52,23 @@ export default {
         <div class="search">
             <div class="searchbar">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input @keyup="filterRestaurants" v-model="searchTerm" type="search"
+                <input @keyup="filterRestaurants" v-model.trim="searchTerm" type="search"
                     placeholder="Cerca o inizia una nuova chat">
             </div>
         </div>
 
-        <div class="restaurants">
+
+        <div v-if="searchTerm" class="restaurants">
             <div v-for="restaurant in filteredRestaurants" class="card">
+                <template v-if="restaurant.logo.startsWith('uploads')">
+                    <img :src="base_url + '/storage/' + restaurant.logo" alt="">
+                </template>
+                <template v-else-if="restaurant.logo.startsWith('/img/')">
+                    <img :src="base_url + restaurant.logo" alt="">
+                </template>
+                <template v-else>
+                    <img :src="restaurant.logo" alt="">
+                </template>
                 <h3>{{ restaurant.name }}</h3>
             </div>
         </div>
@@ -83,6 +94,11 @@ export default {
         .card {
             width: calc(100% / 3 - 1rem);
             height: 300px;
+
+            img {
+                max-width: 100%;
+                display: block;
+            }
         }
 
     }
