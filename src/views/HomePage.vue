@@ -8,25 +8,45 @@ export default {
             base_url: 'http://127.0.0.1:8000',
             base_api: 'http://127.0.0.1:8000/api',
             api_url: '/restaurants/',
+            api_cousines_url: '/cousines',
+            cousines: [],
             restaurants: [],
             filteredRestaurants: [],
             loading: false,
             searchTerm: ''
         }
     },
-    mounted() {
-        const url = this.base_api + this.api_url
-        axios
-            .get(url)
-            .then(resp => {
-                this.restaurants = resp.data.results
-                this.loading = true
-                /* console.log(this.restaurants) */
 
-            })
-            .catch(err => console.error(err))
-    },
     methods: {
+        getRestaurants() {
+            const url = this.base_api + this.api_url
+            axios
+                .get(url)
+                .then(resp => {
+                    this.restaurants = resp.data.results
+                    this.loading = true
+                    /* console.log(this.restaurants) */
+
+                })
+                .catch(err => console.error(err));
+
+        },
+
+        getCousines() {
+            const url = this.base_api + this.api_cousines_url
+            console.log(url);
+            axios
+
+                .get(url)
+                .then(resp => {
+                    this.cousines = resp.data.results
+                    this.loading = true
+                    // console.log(this.cousines)
+
+                })
+                .catch(err => console.error(err))
+        },
+
         filterRestaurants() {
             const url = this.base_api + this.api_url + this.searchTerm
             axios
@@ -41,7 +61,26 @@ export default {
 
         },
 
-    }
+        filterRestaurantsbyCousine(name) {
+            const url = this.base_api + this.api_cousines_url + '/' + name
+            axios
+                .get(url)
+                .then(resp => {
+                    this.filteredRestaurants = resp.data.results
+                    this.loading = true
+                    console.log(this.filterRestaurants)
+
+                })
+                .catch(err => console.error(err))
+
+        },
+
+    },
+
+    mounted() {
+        this.getRestaurants(),
+            this.getCousines()
+    },
 }
 </script>
 
@@ -58,7 +97,14 @@ export default {
         </div>
 
 
-        <div v-if="searchTerm" class="restaurants">
+        <template v-for="cousine in cousines" >
+            <div class="badge bg-primary mx-1 text-white text-dark" @click="filterRestaurantsbyCousine(cousine.name)">
+                {{ cousine.name }}
+            </div>
+        </template>
+
+
+        <div class="restaurants">
             <div v-for="restaurant in filteredRestaurants" class="card">
                 <router-link :to="{ name: 'singleRestaurant', params: { slug: restaurant.slug } }">
                     <template v-if="restaurant.logo && restaurant.logo.startsWith('uploads')">
