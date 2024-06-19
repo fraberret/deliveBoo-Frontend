@@ -60,10 +60,10 @@ export default {
 
         <div v-if="searchTerm" class="restaurants">
             <div v-for="restaurant in filteredRestaurants" class="card">
-                <template v-if="restaurant.logo.startsWith('uploads')">
+                <template v-if="restaurant.logo && restaurant.logo.startsWith('uploads')">
                     <img :src="base_url + '/storage/' + restaurant.logo" alt="">
                 </template>
-                <template v-else-if="restaurant.logo.startsWith('/img/')">
+                <template v-else-if="restaurant.logo && restaurant.logo.startsWith('/img/')">
                     <img :src="base_url + restaurant.logo" alt="">
                 </template>
                 <template v-else>
