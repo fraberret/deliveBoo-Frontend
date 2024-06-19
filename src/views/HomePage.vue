@@ -13,73 +13,78 @@ export default {
             restaurants: [],
             filteredRestaurants: [],
             loading: false,
-            searchTerm: ''
+            searchTerm: '',
+
+            searchCuisinesArray: [],
+            searchCuisines: '',
+            // isBadge: false
         }
     },
-
     methods: {
         getRestaurants() {
             const url = this.base_api + this.api_url
-            axios
-                .get(url)
+
+            axios.get(url)
                 .then(resp => {
                     this.restaurants = resp.data.results
                     this.loading = true
-                    /* console.log(this.restaurants) */
-
-                })
-                .catch(err => console.error(err));
-
+                }).catch(err => console.error(err));
         },
-
         getCousines() {
             const url = this.base_api + this.api_cousines_url
-            console.log(url);
-            axios
 
-                .get(url)
+            axios.get(url)
                 .then(resp => {
                     this.cousines = resp.data.results
                     this.loading = true
-                    // console.log(this.cousines)
-
-                })
-                .catch(err => console.error(err))
+                }).catch(err => console.error(err))
         },
-
         filterRestaurants() {
             const url = this.base_api + this.api_url + this.searchTerm
-            axios
-                .get(url)
+
+            axios.get(url)
                 .then(resp => {
                     this.filteredRestaurants = resp.data.results
                     this.loading = true
-                    /* console.log(this.restaurants) */
-
-                })
-                .catch(err => console.error(err))
-
+                }).catch(err => console.error(err))
         },
+        filterRestaurantsbyCousine() {
+            const url = this.base_api + this.api_cousines_url + '/' + this.searchCuisines
 
-        filterRestaurantsbyCousine(name) {
-            const url = this.base_api + this.api_cousines_url + '/' + name
-            axios
-                .get(url)
+            axios.get(url)
                 .then(resp => {
                     this.filteredRestaurants = resp.data.results
                     this.loading = true
-                    console.log(this.filterRestaurants)
-
-                })
-                .catch(err => console.error(err))
-
+                    // console.log(this.filterRestaurants)
+                }).catch(err => console.error(err))
         },
+        addCousineToSearch(cousine) {
+            // this.toggleBadge()
 
+            const index = this.searchCuisinesArray.indexOf(cousine);
+
+            if (!this.searchCuisinesArray.includes(cousine)) {
+                this.searchCuisinesArray.push(cousine);
+            } else {
+                this.searchCuisinesArray.splice(index, 1);
+            }
+
+            this.searchCuisines = this.searchCuisinesArray.join(',');
+            console.log(this.searchCuisines);
+
+            if (this.searchCuisines) {
+                this.filterRestaurantsbyCousine();
+            } else {
+                this.filteredRestaurants = []
+            }
+        },
+        // toggleBadge() {
+        //     this.isBadge = !this.isBadge
+        // }
     },
-
     mounted() {
-        this.getRestaurants(),
-            this.getCousines()
+        this.getRestaurants()
+        this.getCousines()
     },
 }
 </script>
@@ -97,14 +102,14 @@ export default {
         </div>
 
 
-        <template v-for="cousine in cousines" >
-            <div class="badge bg-primary mx-1 text-white text-dark" @click="filterRestaurantsbyCousine(cousine.name)">
+        <template v-for="cousine in cousines" :key="cousine.id">
+            <div class="badge bg-primary mx-1 text-white text-dark" @click="addCousineToSearch(cousine.name)">
                 {{ cousine.name }}
             </div>
         </template>
 
 
-        <div class="restaurants">
+        <div v-if="filteredRestaurants.length" class="restaurants">
             <div v-for="restaurant in filteredRestaurants" class="card">
                 <router-link :to="{ name: 'singleRestaurant', params: { slug: restaurant.slug } }">
                     <template v-if="restaurant.logo && restaurant.logo.startsWith('uploads')">
