@@ -9,11 +9,11 @@ export default {
     <header>
         <nav class="navbar navbar-expand-md navbar-light py-4 mb-5">
             <div class="container">
-                <a class="navbar-brand d-flex align-items-center" href="">
+                <router-link :to="{ name: 'home'}" class="navbar-brand d-flex align-items-center" href="">
                     <div class="logo_laravel ps-2">
                         <img src="/img/logo-deliveboo.png" alt="app logo">
                     </div>
-                </a>
+                </router-link>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
