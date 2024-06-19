@@ -14,10 +14,9 @@ export default {
             filteredRestaurants: [],
             loading: false,
             searchTerm: '',
-
             searchCuisinesArray: [],
             searchCuisines: '',
-            // isBadge: false
+            selectedCousine: []
         }
     },
     methods: {
@@ -55,17 +54,17 @@ export default {
                 .then(resp => {
                     this.filteredRestaurants = resp.data.results
                     this.loading = true
-                    // console.log(this.filterRestaurants)
                 }).catch(err => console.error(err))
         },
-        addCousineToSearch(cousine) {
-            // this.toggleBadge()
+        addCousineToSearch(cousine, i) {
 
             const index = this.searchCuisinesArray.indexOf(cousine);
 
             if (!this.searchCuisinesArray.includes(cousine)) {
+                this.selectedCousine.push(i + 1)
                 this.searchCuisinesArray.push(cousine);
             } else {
+                this.selectedCousine.splice(index, 1)
                 this.searchCuisinesArray.splice(index, 1);
             }
 
@@ -78,9 +77,6 @@ export default {
                 this.filteredRestaurants = []
             }
         },
-        // toggleBadge() {
-        //     this.isBadge = !this.isBadge
-        // }
     },
     mounted() {
         this.getRestaurants()
@@ -102,8 +98,9 @@ export default {
         </div>
 
 
-        <template v-for="cousine in cousines" :key="cousine.id">
-            <div class="badge bg-primary mx-1 text-white text-dark" @click="addCousineToSearch(cousine.name)">
+        <template v-for="(cousine, index) in cousines" :key="cousine.id">
+            <div :class="selectedCousine.includes(cousine.id) ? 'bg-dark' : 'bg-primary'"
+                class="badge bg-primary mx-1 text-white text-dark" @click="addCousineToSearch(cousine.name, index)">
                 {{ cousine.name }}
             </div>
         </template>
