@@ -6,13 +6,12 @@ export default {
     data() {
         return {
             base_url: 'http://127.0.0.1:8000',
-            base_api: 'http://127.0.0.1:8000/api',
-            api_url: '/restaurants/',
-            api_cousines_url: '/cousines',
+            api_restaurants_url: '/api/restaurants/',
+            api_cousines_url: '/api/cousines',
             cousines: [],
             restaurants: [],
             filteredRestaurants: [],
-            loading: false,
+            isLoading: false,
             searchTerm: '',
             searchCuisinesArray: [],
             searchCuisines: '',
@@ -22,9 +21,9 @@ export default {
     },
     methods: {
         getRestaurants() {
-            this.loading = false
+            this.isLoading = true
 
-            const url = this.base_api + this.api_url
+            const url = this.base_url + this.api_restaurants_url
 
             axios.get(url)
                 .then(resp => {
@@ -34,7 +33,7 @@ export default {
                 }).catch(err => console.error(err));
         },
         getCousines() {
-            const url = this.base_api + this.api_cousines_url
+            const url = this.base_url + this.api_cousines_url
 
             axios.get(url)
                 .then(resp => {
@@ -43,9 +42,10 @@ export default {
         },
         // search bar filter
         // filterRestaurants() {
-        //     this.loading = false
+        //  this.isLoading = true
 
-        //     const url = this.base_api + this.api_url + this.searchTerm
+
+        //     const url = this.base_url + this.api_restaurants_url + this.searchTerm
 
         //     axios.get(url)
         //         .then(resp => {
@@ -56,8 +56,8 @@ export default {
         // },
         filterRestaurantsbyCousine() {
             this.isRestaurants = true
-            this.loading = false
-            const url = this.base_api + this.api_cousines_url + '/' + this.searchCuisines
+            this.isLoading = true
+            const url = this.base_url + this.api_cousines_url + '/' + this.searchCuisines
 
             axios.get(url)
                 .then(resp => {
@@ -79,7 +79,6 @@ export default {
             }
 
             this.searchCuisines = this.searchCuisinesArray.join(',');
-            console.log(this.searchCuisines);
 
             if (this.searchCuisines) {
                 this.filterRestaurantsbyCousine();
@@ -89,15 +88,11 @@ export default {
         },
         loadGif() {
             setTimeout(() => {
-                this.loading = true
+                this.isLoading = false
             }, 500);
         }
     },
     mounted() {
-        this.loading = true
-        this.isRestaurants = false
-
-        // this.isRestaurants = false
         // this.getRestaurants()
         this.getCousines()
     },
@@ -123,10 +118,10 @@ export default {
                 {{ cousine.name }}
             </div>
         </template>
-        <template v-if="!loading">
+        <template v-if="isLoading">
             <div class="gif">
                 <img width="200" src="/img/logo-gif.gif" alt="">
-                <h6 class="text-secondary">loading...</h6>
+                <h6 class="text-secondary">Loading..</h6>
             </div>
         </template>
 
