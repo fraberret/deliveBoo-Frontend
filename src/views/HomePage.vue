@@ -105,11 +105,13 @@ export default {
 
         <div class="d-flex align-items-center justify-content-center flex-column">
 
-            <div>
-                <i class="fa-solid fa-magnifying-glass me-2"></i>
+            <!-- <div class="search">
+            <div class="searchbar">
+                <i class="fa-solid fa-magnifying-glass"></i>
                 <input @keyup="filterRestaurants" v-model.trim="searchTerm" type="search"
-                    placeholder="Cerca un ristorante">
+                    placeholder="Cerca o inizia una nuova chat">
             </div>
+        </div> -->
 
             <div class="my-4">
                 <template v-for="(cousine, index) in cousines" :key="cousine.id">
