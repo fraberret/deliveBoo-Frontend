@@ -9,7 +9,7 @@ export default {
     <header>
         <nav class="navbar navbar-expand-md navbar-light py-4 mb-5">
             <div class="container">
-                <router-link :to="{ name: 'home'}" class="navbar-brand d-flex align-items-center" href="">
+                <router-link :to="{ name: 'home' }" class="navbar-brand d-flex align-items-center" href="">
                     <div class="logo_laravel ps-2">
                         <img src="/img/logo-deliveboo.png" alt="app logo">
                     </div>
@@ -26,12 +26,12 @@ export default {
                     <ul class="navbar-nav ms-auto">
 
                         <li class="nav-item">
-                            <a class="nav-link nav_link px-4" href="">Ok</a>
+                            <a class="nav-link nav_link px-4" href="http://localhost:8000/login">I own a place</a>
                         </li>
 
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link nav_link px-4" href="">Ciao</a>
-                        </li>
+                        </li> -->
 
                     </ul>
                 </div>
