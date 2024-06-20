@@ -115,7 +115,7 @@ export default {
             <div class="searchbar">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input @keyup="filterRestaurants" v-model.trim="searchTerm" type="search"
-                    placeholder="Cerca o inizia una nuova chat">
+                    placeholder="Cerca un ristorante">
             </div>
         </div> -->
 
@@ -141,18 +141,20 @@ export default {
 
             <template v-if="isRestaurants">
                 <div v-if="filteredRestaurants.length" class="restaurants">
-                    <div v-for="restaurant in filteredRestaurants" class="card">
-                        <router-link :to="{ name: 'singleRestaurant', params: { slug: restaurant.slug } }">
+                    <div v-for="restaurant in filteredRestaurants" class="card h-100">
+                        <router-link :to="{ name: 'singleRestaurant', params: { slug: restaurant.slug } }"
+                            class="text-decoration-none text-dark">
                             <template v-if="restaurant.logo && restaurant.logo.startsWith('uploads')">
-                                <img :src="base_url + '/storage/' + restaurant.logo" alt="">
+                                <img :src="base_url + '/storage/' + restaurant.logo" class="card-img-top"
+                                    alt="Restaurant Logo">
                             </template>
                             <template v-else-if="restaurant.logo && restaurant.logo.startsWith('/img/')">
-                                <img :src="base_url + restaurant.logo" alt="">
+                                <img :src="base_url + restaurant.logo" class="card-img-top" alt="Restaurant Logo">
                             </template>
                             <template v-else>
-                                <img :src="restaurant.logo" alt="">
+                                <img :src="restaurant.logo" class="card-img-top" alt="Restaurant Logo">
                             </template>
-                            <h3>{{ restaurant.name }}</h3>
+                            <h3 class="my-3">{{ restaurant.name }}</h3>
                         </router-link>
                     </div>
                 </div>
