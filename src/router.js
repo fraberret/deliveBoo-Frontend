@@ -1,6 +1,6 @@
 import { createWebHistory, createRouter } from 'vue-router'
 import SingleRestaurant from './views/SingleRestaurant.vue';
-// import NotFound from './views/NotFound.vue';
+import NotFound from './views/NotFound.vue';
 import HomePage from './views/HomePage.vue';
 
 
@@ -18,11 +18,11 @@ const router = createRouter({
         name: 'singleRestaurant',
         component: SingleRestaurant
     },
-    // {
-    //     path: '/:pathMatch(.*)*',
-    //     name: 'notFound',
-    //     component: NotFound
-    // }
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'notFound',
+        component: NotFound
+    }
     ]
 })
 
