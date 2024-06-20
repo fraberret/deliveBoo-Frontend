@@ -16,17 +16,21 @@ export default {
             searchTerm: '',
             searchCuisinesArray: [],
             searchCuisines: '',
-            selectedCousine: []
+            selectedCousine: [],
+            isRestaurants: false
         }
     },
     methods: {
         getRestaurants() {
+            this.loading = false
+
             const url = this.base_api + this.api_url
 
             axios.get(url)
                 .then(resp => {
                     this.restaurants = resp.data.results
-                    this.loading = true
+                    this.loadGif()
+
                 }).catch(err => console.error(err));
         },
         getCousines() {
@@ -35,25 +39,31 @@ export default {
             axios.get(url)
                 .then(resp => {
                     this.cousines = resp.data.results
-                    this.loading = true
                 }).catch(err => console.error(err))
         },
-        filterRestaurants() {
-            const url = this.base_api + this.api_url + this.searchTerm
+        // search bar filter
+        // filterRestaurants() {
+        //     this.loading = false
 
-            axios.get(url)
-                .then(resp => {
-                    this.filteredRestaurants = resp.data.results
-                    this.loading = true
-                }).catch(err => console.error(err))
-        },
+        //     const url = this.base_api + this.api_url + this.searchTerm
+
+        //     axios.get(url)
+        //         .then(resp => {
+        //             this.filteredRestaurants = resp.data.results
+        //             this.loadGif()
+
+        //         }).catch(err => console.error(err))
+        // },
         filterRestaurantsbyCousine() {
+            this.isRestaurants = true
+            this.loading = false
             const url = this.base_api + this.api_cousines_url + '/' + this.searchCuisines
 
             axios.get(url)
                 .then(resp => {
                     this.filteredRestaurants = resp.data.results
-                    this.loading = true
+                    this.loadGif()
+
                 }).catch(err => console.error(err))
         },
         addCousineToSearch(cousine, i) {
@@ -77,9 +87,18 @@ export default {
                 this.filteredRestaurants = []
             }
         },
+        loadGif() {
+            setTimeout(() => {
+                this.loading = true
+            }, 1000);
+        }
     },
     mounted() {
-        this.getRestaurants()
+        this.loading = true
+        this.isRestaurants = false
+
+        // this.isRestaurants = false
+        // this.getRestaurants()
         this.getCousines()
     },
 }
@@ -89,13 +108,13 @@ export default {
 <template>
     <div class="container">
 
-        <div class="search">
+        <!-- <div class="search">
             <div class="searchbar">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input @keyup="filterRestaurants" v-model.trim="searchTerm" type="search"
                     placeholder="Cerca o inizia una nuova chat">
             </div>
-        </div>
+        </div> -->
 
 
         <template v-for="(cousine, index) in cousines" :key="cousine.id">
@@ -104,25 +123,48 @@ export default {
                 {{ cousine.name }}
             </div>
         </template>
-
-
-        <div v-if="filteredRestaurants.length" class="restaurants">
-            <div v-for="restaurant in filteredRestaurants" class="card">
-                <router-link :to="{ name: 'singleRestaurant', params: { slug: restaurant.slug } }">
-                    <template v-if="restaurant.logo && restaurant.logo.startsWith('uploads')">
-                        <img :src="base_url + '/storage/' + restaurant.logo" alt="">
-                    </template>
-                    <template v-else-if="restaurant.logo && restaurant.logo.startsWith('/img/')">
-                        <img :src="base_url + restaurant.logo" alt="">
-                    </template>
-                    <template v-else>
-                        <img :src="restaurant.logo" alt="">
-                    </template>
-                    <h3>{{ restaurant.name }}</h3>
-                </router-link>
+        <template v-if="!loading">
+            <div class="gif">
+                <img width="200" src="/img/logo-gif.gif" alt="">
+                <h6 class="text-secondary">loading...</h6>
             </div>
-        </div>
+        </template>
 
+        <template v-else>
+
+            <template v-if="isRestaurants">
+                <div v-if="filteredRestaurants.length" class="restaurants">
+                    <div v-for="restaurant in filteredRestaurants" class="card">
+                        <router-link :to="{ name: 'singleRestaurant', params: { slug: restaurant.slug } }">
+                            <template v-if="restaurant.logo && restaurant.logo.startsWith('uploads')">
+                                <img :src="base_url + '/storage/' + restaurant.logo" alt="">
+                            </template>
+                            <template v-else-if="restaurant.logo && restaurant.logo.startsWith('/img/')">
+                                <img :src="base_url + restaurant.logo" alt="">
+                            </template>
+                            <template v-else>
+                                <img :src="restaurant.logo" alt="">
+                            </template>
+                            <h3>{{ restaurant.name }}</h3>
+                        </router-link>
+                    </div>
+                </div>
+                <div v-else>
+                    <div class="restaurants">
+                        <div class="p-5">
+                            no restaurants...
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template v-else>
+                <div class="p-5">
+
+                    <h4>Select one ore more cousines to find restaurants...</h4>
+                </div>
+            </template>
+
+        </template>
     </div>
 
 </template>
@@ -152,5 +194,23 @@ export default {
         }
 
     }
+}
+
+.gif {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 3rem 0;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+
+    img {
+        margin: auto;
+    }
+}
+
+.badge {
+    cursor: pointer;
 }
 </style>
