@@ -12,7 +12,9 @@ export default {
             base_restaurant_api: 'http://127.0.0.1:8000',
             success: '',
             message: '',
-            restaurant: {}
+            restaurant: {},
+            loading: true
+
 
         }
     },
@@ -30,7 +32,7 @@ export default {
                     this.restaurant = resp.data.response
                     this.success = resp.data.success
                     this.message = resp.data.message
-                    this.loading = true
+                    this.loading = false
                     /* console.log(this.restaurants) */
 
                 })
@@ -47,10 +49,16 @@ export default {
 
 
 <template>
+    <template v-if="loading">
+        <div class="gif">
+            <img width="200" src="/img/logo-gif.gif" alt="">
+            <h6 class="text-secondary">Loading..</h6>
+        </div>
+    </template>
 
     <template v-if="success">
         <div class="container">
-            <AppBanner :title="restaurant.name" subTitle="Our Menu" />
+            <AppBanner :title="restaurant.name" subTitle="Our Menu" routeName="home" />
             <div class="row align-items-center my-4">
                 <div class="col-md-6 mb-3 mb-md-0">
 

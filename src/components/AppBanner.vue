@@ -4,6 +4,7 @@ export default {
     props: {
         title: String,
         subTitle: String,
+        routeName: String,
     }
 }
 </script>
@@ -17,18 +18,16 @@ export default {
                 {{ title }}
             </h2>
         </div>
-        <!-- <div class="actions single_dish">
-            <a href="" class="btn edit">
-                <img class="white_icon" width="22" src="" alt="edit icon">
-                <img class="purple_icon" width="22" src="" alt="edit icon">
-                <span>Edit</span>
-            </a>
-            {{ --modal trigger-- }}
+        <div class="actions single_dish" v-if="routeName">
+            <Router-Link :to="{ name: routeName }" class="btn">
+                <span>Go Back</span>
+            </Router-Link>
+            <!-- {{ --modal trigger-- }}
             <a type="button" class="btn delete" data-bs-toggle="modal" data-bs-target="#modal-{{ $dish->id }}">
                 <img width="21" src="{{ asset('img/icons/trash.png') }}" alt="trash icon">
                 <span>Delete</span>
-            </a>
-        </div> -->
+            </a> -->
+        </div>
     </div>
 </template>
 
@@ -69,7 +68,7 @@ export default {
         transform: translateY(-7px) scale(1.04);
     }
 
-    /* .actions {
+    .actions {
         .btn {
             background-color: var(--boo-primary);
             padding-inline: 2.5rem;
@@ -78,7 +77,7 @@ export default {
             align-items: center;
             justify-content: center;
             border-radius: 3.5rem;
-            color: $boo-lighter;
+            color: var(--boo-lighter);
             position: relative;
             z-index: 1;
             overflow: hidden;
@@ -104,7 +103,7 @@ export default {
                 border-color: var(--boo-gray-700);
             }
         }
-    } */
+    }
 }
 
 @media screen and (max-width: 780px) {
