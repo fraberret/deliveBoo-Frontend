@@ -1,5 +1,7 @@
 <script>
 import axios from 'axios';
+import AppBanner from '../components/AppBanner.vue';
+
 
 export default {
     name: 'HomePage',
@@ -18,6 +20,9 @@ export default {
             selectedCousine: [],
             isRestaurants: false
         }
+    },
+    components: {
+        AppBanner
     },
     methods: {
         getRestaurants() {
@@ -102,6 +107,7 @@ export default {
 
 <template>
     <div class="container">
+        <AppBanner title="Show all restaurants" subTitle="Welcome to DeliveBoo" />
 
         <div class="d-flex align-items-center justify-content-center flex-column">
 
@@ -115,7 +121,7 @@ export default {
 
             <div class="my-4">
                 <template v-for="(cousine, index) in cousines" :key="cousine.id">
-                    <span :class="['badge', 'm-1', selectedCousine.includes(cousine.id) ? 'bg-dark' : 'bg-primary']"
+                    <span :class="['badge', 'm-1', selectedCousine.includes(cousine.id) ? 'bg-dark' : '']"
                         class="text-white p-2" @click="addCousineToSearch(cousine.name, index)">
                         {{ cousine.name }}
                     </span>
@@ -211,20 +217,14 @@ export default {
     }
 }
 
-.badge {
-    cursor: pointer;
-
-    &:hover {
-        background-color: blue !important;
-    }
-}
 
 .badge {
     cursor: pointer;
     transition: 1s ease;
+    background-color: var(--boo-primary);
 
     &:hover {
-        background-color: #0c459c !important;
+        background-color: var(--boo-gray-700) !important;
     }
 }
 </style>
