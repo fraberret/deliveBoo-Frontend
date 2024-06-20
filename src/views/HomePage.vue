@@ -106,7 +106,7 @@ export default {
 
 
 <template>
-    <div class="container">
+    <div class="container min-vh-100">
         <AppBanner title="Show all restaurants" subTitle="Welcome to DeliveBoo" />
 
         <div class="d-flex align-items-center justify-content-center flex-column">
