@@ -90,7 +90,7 @@ export default {
         loadGif() {
             setTimeout(() => {
                 this.loading = true
-            }, 1000);
+            }, 500);
         }
     },
     mounted() {
@@ -149,7 +149,7 @@ export default {
                         </router-link>
                     </div>
                 </div>
-                <div v-else>
+                <div v-else-if="isRestaurants && selectedCousine.length != 0">
                     <div class="restaurants">
                         <div class="p-5">
                             no restaurants...
@@ -157,7 +157,7 @@ export default {
                     </div>
                 </div>
             </template>
-            <template v-else>
+            <template v-if="selectedCousine.length === 0">
                 <div class="p-5">
 
                     <h4>Select one ore more cousines to find restaurants...</h4>
