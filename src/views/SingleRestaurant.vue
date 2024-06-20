@@ -1,5 +1,7 @@
 <script>
 import axios from 'axios';
+import AppBanner from '../components/AppBanner.vue';
+
 export default {
 
     name: 'SingleRestaurant',
@@ -13,6 +15,9 @@ export default {
             restaurant: {}
 
         }
+    },
+    components: {
+        AppBanner
     },
     methods: {
         callRestaurant() {
@@ -45,6 +50,7 @@ export default {
 
     <template v-if="success">
         <div class="container">
+            <AppBanner :title="restaurant.name" subTitle="Our Menu" />
             <div class="row align-items-center my-4">
                 <div class="col-md-6 mb-3 mb-md-0">
 
@@ -64,7 +70,7 @@ export default {
 
                 </div>
                 <div class="col-md-6">
-                    <h1><b>Name:</b> {{ restaurant.name }}</h1>
+                    <!-- <h1><b>Name:</b> {{ restaurant.name }}</h1> -->
                     <h2><b>Address:</b> {{ restaurant.address }}</h2>
 
                     <h6><b>P.Iva:</b> {{ restaurant.piva }}</h6>
