@@ -103,21 +103,25 @@ export default {
 <template>
     <div class="container">
 
-        <!-- <div class="search">
-            <div class="searchbar">
-                <i class="fa-solid fa-magnifying-glass"></i>
+        <div class="d-flex align-items-center justify-content-center flex-column">
+
+            <div>
+                <i class="fa-solid fa-magnifying-glass me-2"></i>
                 <input @keyup="filterRestaurants" v-model.trim="searchTerm" type="search"
-                    placeholder="Cerca o inizia una nuova chat">
+                    placeholder="Cerca un ristorante">
             </div>
-        </div> -->
 
-
-        <template v-for="(cousine, index) in cousines" :key="cousine.id">
-            <div :class="selectedCousine.includes(cousine.id) ? 'bg-dark' : 'bg-primary'"
-                class="badge bg-primary mx-1 text-white text-dark" @click="addCousineToSearch(cousine.name, index)">
-                {{ cousine.name }}
+            <div class="my-4">
+                <template v-for="(cousine, index) in cousines" :key="cousine.id">
+                    <span :class="['badge', 'm-1', selectedCousine.includes(cousine.id) ? 'bg-dark' : 'bg-primary']"
+                        class="text-white p-2" @click="addCousineToSearch(cousine.name, index)">
+                        {{ cousine.name }}
+                    </span>
+                </template>
             </div>
-        </template>
+
+        </div>
+
         <template v-if="isLoading">
             <div class="gif">
                 <img width="200" src="/img/logo-gif.gif" alt="">
@@ -207,5 +211,18 @@ export default {
 
 .badge {
     cursor: pointer;
+
+    &:hover {
+        background-color: blue !important;
+    }
+}
+
+.badge {
+    cursor: pointer;
+    transition: 1s ease;
+
+    &:hover {
+        background-color: #0c459c !important;
+    }
 }
 </style>
