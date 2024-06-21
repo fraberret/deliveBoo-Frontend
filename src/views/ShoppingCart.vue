@@ -34,32 +34,31 @@ export default {
 <template>
 
     <div class="container">
-        <table class="table">
-            <thead>
+        <table class="table table-striped table-hover table-bordered">
+            <thead class="thead-dark">
                 <tr>
-                    <th scope="col">id</th>
+                    <th scope="col">ID</th>
                     <th scope="col">Price</th>
                     <th scope="col">Quantity</th>
                     <th scope="col">Total</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in cartItems">
+                <tr v-for="item in cartItems" :key="item.dishID">
                     <th scope="row">{{ item.dishID }}</th>
-                    <td>{{ item.price }}</td>
+                    <td>{{ item.price }}€</td>
                     <td>{{ item.quantity }}</td>
                     <td>
-                        <div class="singleTotal">{{ item.quantity * item.price }}</div>
+                        <div class="singleTotal">{{ (item.quantity * item.price).toFixed(2) }}€</div>
                     </td>
                 </tr>
                 <tr class="table-dark">
-                    <th></th>
-                    <td></td>
-                    <td></td>
-                    <td>{{ megaTotal }}</td>
+                    <th colspan="3" class="text-right">Grand Total</th>
+                    <td>{{ megaTotal.toFixed(2) }}€</td>
                 </tr>
             </tbody>
         </table>
+
 
         <BraintreeUi />
     </div>
