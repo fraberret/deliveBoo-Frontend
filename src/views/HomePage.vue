@@ -154,7 +154,11 @@ export default {
                             <template v-else>
                                 <img :src="restaurant.logo" class="card-img-top" alt="Restaurant Logo">
                             </template>
-                            <h3 class="my-3">{{ restaurant.name }}</h3>
+                            <h3 class="my-3 mx-2">{{ restaurant.name }}</h3>
+
+                            <div class="d-inline-block ms-2 mb-1" v-for="cousine in restaurant.cousines">
+                                <div class="badge" :class="[cousine.name == searchCuisines ? 'bg-dark' : '' ]">{{ cousine.name }}</div>
+                            </div>
                         </router-link>
                     </div>
                 </div>
