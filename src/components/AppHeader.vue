@@ -26,12 +26,12 @@ export default {
                     <ul class="navbar-nav ms-auto">
 
                         <li class="nav-item">
+                            <router-link class="nav-link nav_link px-4" :to="{ name: 'cart' }">Cart</router-link>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link nav_link px-4" href="http://localhost:8000/login">I own a place</a>
                         </li>
 
-                        <!-- <li class="nav-item">
-                            <a class="nav-link nav_link px-4" href="">Ciao</a>
-                        </li> -->
 
                     </ul>
                 </div>
