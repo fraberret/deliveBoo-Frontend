@@ -7,24 +7,26 @@ export default {
     },
     data() {
         return {
-            cartItems: null
-        }
-    },
-    methods: {
-        getTotal() {
-            let megaTotal = 0
-            let totals = document.querySelectorAll('.singleTotal');
-            totals.forEach(total => {
-                megaTotal += total.value
-            });
-            console.log(totals);
+            cartItems: []
         }
     },
     mounted() {
         const cart = JSON.parse(localStorage.getItem('cart'));
         this.cartItems = cart
-        this.getTotal()
-        // console.log(this.cartItems);
+    },
+    methods: {
+        calculateTotal(item) {
+            return item.quantity * item.price;
+        }
+    },
+    computed: {
+        megaTotal() {
+            let total = 0;
+            for (let item of this.cartItems) {
+                total += this.calculateTotal(item);
+            }
+            return total;
+        }
     },
 }
 </script>
@@ -50,15 +52,14 @@ export default {
                         <div class="singleTotal">{{ item.quantity * item.price }}</div>
                     </td>
                 </tr>
-                <tr class="bg-dark">
+                <tr class="table-dark">
                     <th></th>
                     <td></td>
                     <td></td>
-                    <td></td>
+                    <td>{{ megaTotal }}</td>
                 </tr>
             </tbody>
         </table>
-
 
         <BraintreeUi />
     </div>
