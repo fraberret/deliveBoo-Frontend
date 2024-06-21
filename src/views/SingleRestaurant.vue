@@ -13,9 +13,8 @@ export default {
             success: '',
             message: '',
             restaurant: {},
-            loading: true
-
-
+            loading: true,
+            cart: []
         }
     },
     components: {
@@ -38,11 +37,50 @@ export default {
                 })
                 .catch(err => console.error(err))
 
+        },
+        addToCart(dish) {
+            let localCart = localStorage.getItem('cart');
+
+            if (localCart === null) {
+                localCart = [];
+            } else {
+                localCart = JSON.parse(localCart);
+            }
+
+            let found = localCart.find(item => item.dish.id === dish.id);
+
+            if (found) {
+                found.quantity++;
+            } else {
+                localCart.push({ dish: dish, quantity: 1 });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(localCart));
+        },
+        removeFromCart(dishId) {
+            let localCart = localStorage.getItem('cart');
+
+            if (localCart === null) {
+                localCart = [];
+            } else {
+                localCart = JSON.parse(localCart);
+            }
+
+            let index = localCart.findIndex(item => item.dish.id === dishId);
+
+            if (index !== -1) {
+                localCart[index].quantity--;
+
+                if (localCart[index].quantity <= 0) {
+                    localCart.splice(index, 1);
+                }
+            }
+
+            localStorage.setItem('cart', JSON.stringify(localCart));
         }
     },
     mounted() {
         this.callRestaurant()
-
     }
 }
 </script>
@@ -113,6 +151,8 @@ export default {
                             <template v-if="dish.ingredients">
                                 <p class="card-text"><b>Ingredients: </b> {{ dish.ingredients }}</p>
                             </template>
+                            <div @click="addToCart(dish)" class="btn btn-primary">Add To Cart</div>
+                            <div @click="removeFromCart(dish.id)" class="btn btn-secondary">Remove Cart</div>
                         </div>
                     </div>
                 </div>
