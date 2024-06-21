@@ -58,6 +58,7 @@ export default {
             localStorage.setItem('cart', JSON.stringify(localCart));
         },
         removeFromCart(dishId) {
+
             let localCart = localStorage.getItem('cart');
 
             if (localCart === null) {
@@ -72,7 +73,7 @@ export default {
                 localCart[index].quantity--;
 
                 if (localCart[index].quantity <= 0) {
-                    localCart.splice(index, 1);
+                    JSON.parse(localCart).splice(index, 1);
                 }
             }
 
