@@ -1,8 +1,20 @@
 <script>
 export default {
     name: 'BraintreeUi',
+    // data() {
+    //     return {
+    //         tokenApi: ''
+    //     }
+    // },
+    // getToken() {
+    //     axios.get('http://localhost:8000/api/braintree/token')
+    //         .then(res => {
+    //             this.tokenApi = res.data.token
+    //             console.log(res.data.token);
+    //         }).catch(err => console.error(err))
+    // },
     mounted() {
-        var button = document.querySelector('#submit-button');
+        let button = document.querySelector('#submit-button');
 
         braintree.dropin.create({
             authorization: 'sandbox_g42y39zw_348pk9cgf3bgyw2b',

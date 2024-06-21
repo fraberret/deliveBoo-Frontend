@@ -14,7 +14,6 @@ export default {
             message: '',
             restaurant: {},
             loading: true,
-            cart: []
         }
     },
     components: {
@@ -39,46 +38,32 @@ export default {
 
         },
         addToCart(dish) {
-            let localCart = localStorage.getItem('cart');
-
-            if (localCart === null) {
-                localCart = [];
-            } else {
-                localCart = JSON.parse(localCart);
-            }
-
-            let found = localCart.find(item => item.dish.id === dish.id);
+            let localCart = JSON.parse(localStorage.getItem('cart')) || [];
+            let found = localCart.find(item => item.dishID === dish.id);
 
             if (found) {
                 found.quantity++;
             } else {
-                localCart.push({ dish: dish, quantity: 1 });
+                localCart.push({ dishID: dish.id, price: dish.price, quantity: 1 });
             }
 
             localStorage.setItem('cart', JSON.stringify(localCart));
         },
         removeFromCart(dishId) {
-
-            let localCart = localStorage.getItem('cart');
-
-            if (localCart === null) {
-                localCart = [];
-            } else {
-                localCart = JSON.parse(localCart);
-            }
-
-            let index = localCart.findIndex(item => item.dish.id === dishId);
+            let localCart = JSON.parse(localStorage.getItem('cart')) || [];
+            let index = localCart.findIndex(item => item.dishID === dishId);
 
             if (index !== -1) {
                 localCart[index].quantity--;
 
                 if (localCart[index].quantity <= 0) {
-                    JSON.parse(localCart).splice(index, 1);
+                    localCart.splice(index, 1);
                 }
             }
 
             localStorage.setItem('cart', JSON.stringify(localCart));
-        }
+        },
+
     },
     mounted() {
         this.callRestaurant()
@@ -152,8 +137,9 @@ export default {
                             <template v-if="dish.ingredients">
                                 <p class="card-text"><b>Ingredients: </b> {{ dish.ingredients }}</p>
                             </template>
-                            <div @click="addToCart(dish)" class="btn btn-primary">Add To Cart</div>
-                            <div @click="removeFromCart(dish.id)" class="btn btn-secondary">Remove Cart</div>
+                            <div @click="addToCart(dish)" class="btn me-2 btn-primary">+ Add To Cart</div>
+                            <div @click="removeFromCart(dish.id)" class="btn btn-secondary">- Remove From Cart</div>
+                            <!-- <p><b>Quantity in Cart:</b></p> -->
                         </div>
                     </div>
                 </div>
