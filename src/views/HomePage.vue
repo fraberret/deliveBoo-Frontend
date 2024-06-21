@@ -157,7 +157,7 @@ export default {
                             <h3 class="my-3 mx-2">{{ restaurant.name }}</h3>
 
                             <div class="d-inline-block ms-2 mb-1" v-for="cousine in restaurant.cousines">
-                                <div class="badge" :class="[cousine.name == searchCuisines ? 'bg-dark' : '' ]">{{ cousine.name }}</div>
+                                <div class="badge" :class="[searchCuisinesArray.includes(cousine.name) ? 'bg-dark' : '' ]">{{ cousine.name }}</div>
                             </div>
                         </router-link>
                     </div>
