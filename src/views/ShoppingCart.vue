@@ -1,5 +1,6 @@
 <script>
 import BraintreeUi from '../components/BraintreeUi.vue'
+import { store } from '../store';
 export default {
     name: 'ShoppingCart',
     components: {
@@ -7,22 +8,31 @@ export default {
     },
     data() {
         return {
-            cartItems: []
+            store
         }
-    },
-    mounted() {
-        const cart = JSON.parse(localStorage.getItem('cart'));
-        this.cartItems = cart
     },
     methods: {
         calculateTotal(item) {
             return item.quantity * item.price;
+        },
+        increaseQuantity(dishId) {
+            let found = store.localCart.find(item => item.dishID === dishId);
+            found.quantity++
+            store.cartQuantity++
+
+        },
+        decreaseQuantity(dishId) {
+            let found = store.localCart.find(item => item.dishID === dishId);
+            if (found.quantity > 0) {
+                found.quantity--
+                store.cartQuantity--
+            }
         }
     },
     computed: {
         megaTotal() {
             let total = 0;
-            for (let item of this.cartItems) {
+            for (let item of store.localCart) {
                 total += this.calculateTotal(item);
             }
             return total;
@@ -39,15 +49,20 @@ export default {
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Price</th>
-                    <th scope="col">Quantity</th>
+                    <th scope="col">Quantity
+                    </th>
                     <th scope="col">Total</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in cartItems" :key="item.dishID">
+                <tr v-for="item in store.localCart" :key="item.dishID">
                     <th scope="row">{{ item.dishID }}</th>
                     <td>{{ item.price }}€</td>
-                    <td>{{ item.quantity }}</td>
+                    <td>
+                        <button class="btn btn-dark" @click="decreaseQuantity(item.dishID)">-</button>
+                        <button class="btn btn-dark ms-1" @click="increaseQuantity(item.dishID)">+</button>
+                        <span class="ms-3">{{ item.quantity }}</span>
+                    </td>
                     <td>
                         <div class="singleTotal">{{ (item.quantity * item.price).toFixed(2) }}€</div>
                     </td>
