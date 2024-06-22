@@ -23,7 +23,7 @@ export default {
         },
         decreaseQuantity(dishId) {
             let found = store.localCart.find(item => item.dishID === dishId);
-            if (found.quantity > 0) {
+            if (found.quantity > 1) {
                 found.quantity--
                 store.cartQuantity--
             }
