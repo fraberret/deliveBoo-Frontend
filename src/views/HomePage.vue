@@ -142,7 +142,7 @@ export default {
             <template v-if="isRestaurants">
                 <div v-if="filteredRestaurants.length" class="restaurants">
                     <div v-for="restaurant in filteredRestaurants" class="card h-100">
-                        <router-link :to="{ name: 'singleRestaurant', params: { slug: restaurant.slug } }"
+                        <router-link :to="{ name: 'RestaurantMenu', params: { slug: restaurant.slug } }"
                             class="text-decoration-none text-dark">
                             <template v-if="restaurant.logo && restaurant.logo.startsWith('uploads')">
                                 <img :src="base_url + '/storage/' + restaurant.logo" class="card-img-top"
@@ -157,7 +157,9 @@ export default {
                             <h3 class="my-3 mx-2">{{ restaurant.name }}</h3>
 
                             <div class="d-inline-block ms-2 mb-1" v-for="cousine in restaurant.cousines">
-                                <div class="badge" :class="[searchCuisinesArray.includes(cousine.name) ? 'bg-dark' : '' ]">{{ cousine.name }}</div>
+                                <div class="badge"
+                                    :class="[searchCuisinesArray.includes(cousine.name) ? 'bg-dark' : '']">{{
+                                        cousine.name }}</div>
                             </div>
                         </router-link>
                     </div>
@@ -185,29 +187,24 @@ export default {
 
 
 <style>
-.container {
-    width: 90%;
-    margin: auto;
-    max-width: 1280px;
+.restaurants {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    width: 100%;
 
-    .restaurants {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-        width: 100%;
+    .card {
+        width: calc(100% / 3 - 1rem);
+        height: 300px;
 
-        .card {
-            width: calc(100% / 3 - 1rem);
-            height: 300px;
-
-            img {
-                max-width: 100%;
-                display: block;
-            }
+        img {
+            max-width: 100%;
+            display: block;
         }
-
     }
+
 }
+
 
 .gif {
     width: 100%;
