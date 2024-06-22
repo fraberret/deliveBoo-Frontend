@@ -27,6 +27,16 @@ export default {
                 found.quantity--
                 store.cartQuantity--
             }
+        },
+        deleteItem(dishId) {
+            let index = store.localCart.findIndex(item => item.dishID === dishId);
+            let found = store.localCart.find(item => item.dishID === dishId);
+
+            if (index !== -1) {
+                store.cartQuantity -= found.quantity
+                store.localCart.splice(index, 1);
+                localStorage.setItem('cart', JSON.stringify(store.localCart));
+            }
         }
     },
     computed: {
@@ -58,10 +68,11 @@ export default {
                 <tr v-for="item in store.localCart" :key="item.dishID">
                     <th scope="row">{{ item.dishID }}</th>
                     <td>{{ item.price }}€</td>
-                    <td>
+                    <td class="d-flex align-items-center">
                         <button class="btn btn-dark" @click="decreaseQuantity(item.dishID)">-</button>
                         <button class="btn btn-dark ms-1" @click="increaseQuantity(item.dishID)">+</button>
                         <span class="ms-3">{{ item.quantity }}</span>
+                        <button class="ms-auto btn btn-danger" @click="deleteItem(item.dishID)">delete</button>
                     </td>
                     <td>
                         <div class="singleTotal">{{ (item.quantity * item.price).toFixed(2) }}€</div>
