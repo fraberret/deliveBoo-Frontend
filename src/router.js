@@ -1,10 +1,8 @@
 import { createWebHistory, createRouter } from 'vue-router'
-import SingleRestaurant from './views/SingleRestaurant.vue';
 import NotFound from './views/NotFound.vue';
 import HomePage from './views/HomePage.vue';
 import ShoppingCart from './views/ShoppingCart.vue';
-
-
+import RestaurantMenu from './views/RestaurantMenu.vue';
 
 
 const router = createRouter({
@@ -16,8 +14,8 @@ const router = createRouter({
     },
     {
         path: '/restaurant/:slug',
-        name: 'singleRestaurant',
-        component: SingleRestaurant
+        name: 'RestaurantMenu',
+        component: RestaurantMenu
     },
     {
         path: '/cart',
@@ -28,8 +26,7 @@ const router = createRouter({
         path: '/:pathMatch(.*)*',
         name: 'notFound',
         component: NotFound
-    }
-    ]
+    }]
 })
 
 export default router;
