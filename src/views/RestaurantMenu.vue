@@ -393,7 +393,8 @@ export default {
                 align-items: center;
 
                 .btn_negative {
-                    padding-inline: 1.4rem;
+                    padding-inline: 0;
+                    width: 3.5rem;
                 }
             }
         }
