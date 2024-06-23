@@ -18,6 +18,10 @@ body {
     color: var(--boo-darker);
 }
 
+main {
+    min-height: calc(100vh - 280px - 6.5rem);
+}
+
 .container {
     width: 90%;
     /* max-width: 1420px; */
