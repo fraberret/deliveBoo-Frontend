@@ -1,10 +1,10 @@
 <script>
-import BraintreeUi from '../components/BraintreeUi.vue'
+import CheckoutForm from '../components/CheckoutForm.vue'
 import { store } from '../store';
 export default {
     name: 'ShoppingCart',
     components: {
-        BraintreeUi
+        CheckoutForm
     },
     data() {
         return {
@@ -35,16 +35,7 @@ export default {
                 localStorage.setItem('cart', JSON.stringify(store.localCart));
             }
         }
-    },
-    computed: {
-        grandTotal() {
-            let total = 0;
-            for (let item of store.localCart) {
-                total += item.quantity * item.price;
-            }
-            return total;
-        }
-    },
+    }
 }
 </script>
 
@@ -76,12 +67,12 @@ export default {
                 </tr>
                 <tr class="table-dark">
                     <th colspan="3" class="text-right">Grand Total</th>
-                    <td>{{ grandTotal.toFixed(2) }}€</td>
+                    <td>{{ store.grandTotal().toFixed(2) }}€</td>
                 </tr>
             </tbody>
         </table>
 
-        <BraintreeUi />
+        <CheckoutForm />
     </div>
 
 </template>

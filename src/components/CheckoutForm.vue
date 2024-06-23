@@ -1,17 +1,24 @@
 <script>
+import axios from 'axios';
+import { store } from '../store';
+
 export default {
-    name: 'BraintreeUi',
-    // data() {
-    //     return {
-    //         tokenApi: ''
-    //     }
-    // },
+    name: 'CheckoutForm',
+    data() {
+        return {
+            store,
+            loading: false,
+            // tokenApi: ''
+        }
+    },
     // getToken() {
-    //     axios.get('http://localhost:8000/api/braintree/token')
+    //     axios.get('http://localhost:8000/api/payments/token')
     //         .then(res => {
-    //             this.tokenApi = res.data.token
-    //             console.log(res.data.token);
-    //         }).catch(err => console.error(err))
+    //             this.tokenApi = res.data.token;
+    //             this.initializeBraintree();
+    //             this.loading = false;
+    //         })
+    //         .catch(err => console.error(err));
     // },
     mounted() {
         let button = document.querySelector('#submit-button');
@@ -41,7 +48,7 @@ export default {
     <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
         aria-labelledby="modalTitleId" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div v-if="!loading" class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalTitleId">
                         Choise your method of pay
@@ -53,10 +60,9 @@ export default {
                     <button id="submit-button" class="button button--small button--green">Purchase</button>
                 </div>
             </div>
+            <div v-else class="text-center my-5">loading...</div>
         </div>
     </div>
-
-
 </template>
 
 <style>
