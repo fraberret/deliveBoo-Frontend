@@ -49,7 +49,7 @@ export default {
                 store.cartQuantity++
             } else {
                 store.cartQuantity++
-                store.localCart.push({ restaurantId: currentRestaurantId, dishID: dish.id, price: dish.price, quantity: 1 });
+                store.localCart.push({ restaurantId: currentRestaurantId, dishID: dish.id, name: dish.name, price: dish.price, quantity: 1 });
             }
 
             localStorage.setItem('cart', JSON.stringify(store.localCart));

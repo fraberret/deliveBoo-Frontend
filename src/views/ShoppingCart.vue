@@ -12,9 +12,6 @@ export default {
         }
     },
     methods: {
-        calculateTotal(item) {
-            return item.quantity * item.price;
-        },
         increaseQuantity(dishId) {
             let found = store.localCart.find(item => item.dishID === dishId);
             found.quantity++
@@ -40,10 +37,10 @@ export default {
         }
     },
     computed: {
-        megaTotal() {
+        grandTotal() {
             let total = 0;
             for (let item of store.localCart) {
-                total += this.calculateTotal(item);
+                total += item.quantity * item.price;
             }
             return total;
         }
@@ -52,12 +49,11 @@ export default {
 </script>
 
 <template>
-
     <div class="container">
         <table class="table table-striped table-hover table-bordered">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">ID</th>
+                    <th scope="col">Dish</th>
                     <th scope="col">Price</th>
                     <th scope="col">Quantity
                     </th>
@@ -66,7 +62,7 @@ export default {
             </thead>
             <tbody>
                 <tr v-for="item in store.localCart" :key="item.dishID">
-                    <th scope="row">{{ item.dishID }}</th>
+                    <td>{{ item.name }}</td>
                     <td>{{ item.price }}€</td>
                     <td class="d-flex align-items-center">
                         <button class="btn btn-dark" @click="decreaseQuantity(item.dishID)">-</button>
@@ -80,11 +76,10 @@ export default {
                 </tr>
                 <tr class="table-dark">
                     <th colspan="3" class="text-right">Grand Total</th>
-                    <td>{{ megaTotal.toFixed(2) }}€</td>
+                    <td>{{ grandTotal.toFixed(2) }}€</td>
                 </tr>
             </tbody>
         </table>
-
 
         <BraintreeUi />
     </div>
