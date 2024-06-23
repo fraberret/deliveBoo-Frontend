@@ -49,11 +49,10 @@ export default {
             <table class="table table-striped table-hover table-bordered">
                 <thead class="thead-dark">
                     <tr>
-                        <th scope="col">Dish</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Quantity
-                        </th>
-                        <th scope="col">Total</th>
+                        <th scope="col" class="w-35">Name</th>
+                        <th scope="col" class="w-15">Price</th>
+                        <th scope="col" class="w-35">Quantity</th>
+                        <th scope="col" class="w-15">Total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,9 +61,10 @@ export default {
                         <td>{{ item.price }}€</td>
                         <td class="d-flex align-items-center">
                             <button class="btn btn-dark" @click="decreaseQuantity(item.dishID)">-</button>
+                            <span class="mx-3 w-2">{{ item.quantity }}</span>
                             <button class="btn btn-dark ms-1" @click="increaseQuantity(item.dishID)">+</button>
-                            <span class="ms-3">{{ item.quantity }}</span>
-                            <button class="ms-auto btn btn-danger" @click="deleteItem(item.dishID)">delete</button>
+                            <button class="ms-auto btn btn-danger" @click="deleteItem(item.dishID)"><i
+                                    class="fa-solid fa-trash"></i></button>
                         </td>
                         <td>
                             <div class="singleTotal">{{ (item.quantity * item.price).toFixed(2) }}€</div>
@@ -89,6 +89,10 @@ export default {
 </template>
 
 <style>
+.w-2 {
+    width: 2%;
+}
+
 .w-15 {
     width: 15%;
 }
