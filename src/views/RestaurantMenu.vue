@@ -138,9 +138,9 @@ export default {
                         </div>
                     </div>
                     <div class="socials">
-                        <img src="/img/social/instagram.png" alt="instagram icon">
-                        <img src="/img/social/facebook.png" alt="facebook icon">
-                        <img src="/img/social/x.png" alt="x icon">
+                        <a href=""><img src="/img/social/instagram.png" alt="instagram icon"></a>
+                        <a href=""><img src="/img/social/facebook.png" alt="facebook icon"></a>
+                        <a href=""><img src="/img/social/x.png" alt="x icon"></a>
                     </div>
                 </div>
             </div>
@@ -178,9 +178,10 @@ export default {
                         </div>
                         <div class="actions">
                             <div @click="addToCart(dish, restaurant.id)" class="buttons btn_primary">Add to Cart</div>
-                            <div @click="removeFromCart(dish.id, restaurant.id)" class="buttons btn_negative">-</div>
-                            <div class="counter ms-3">{{ getCurrentQuantity(dish.id) }} <small
-                                    class="text-secondary">pz.</small></div>
+                            <div v-if="getCurrentQuantity(dish.id) > 0" @click="removeFromCart(dish.id, restaurant.id)"
+                                class="buttons btn_negative">-</div>
+                            <div v-if="getCurrentQuantity(dish.id) > 0" class="counter ms-3">{{
+                                getCurrentQuantity(dish.id) }} <small class="text-secondary">pz.</small></div>
                             <!-- <img width="" src="/img/cart-icon.png" alt="cart icon"> -->
                         </div>
                     </div>
@@ -305,7 +306,7 @@ export default {
                 background-color: var(--boo-gray-800);
                 box-shadow: 0px 10px 8px rgba(0, 0, 0, 0.381);
                 display: flex;
-                min-height: 300px;
+                min-height: 320px;
                 z-index: 0;
 
                 .card_left {
@@ -339,7 +340,7 @@ export default {
                         }
 
                         p {
-                            color: var(--boo-gray-600);
+                            color: var(--boo-gray-400);
                             font-size: .75rem;
                             line-height: 1.2rem;
                             margin-bottom: 0;
@@ -385,6 +386,11 @@ export default {
                         img {
                             width: 100%;
                             object-fit: cover;
+                            transition: transform 2s ease;
+
+                            &:hover {
+                                transform: rotate(45deg);
+                            }
                         }
                     }
                 }
