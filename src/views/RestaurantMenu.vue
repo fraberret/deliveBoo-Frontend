@@ -26,12 +26,10 @@ export default {
             axios
                 .get(url)
                 .then(resp => {
-                    // console.log(resp.data);
                     this.restaurant = resp.data.response
                     this.success = resp.data.success
                     this.message = resp.data.message
                     this.loading = false
-                    /* console.log(this.restaurants) */
                 })
                 .catch(err => console.error(err))
 

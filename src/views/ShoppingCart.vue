@@ -14,9 +14,13 @@ export default {
     methods: {
         increaseQuantity(dishId) {
             let found = store.localCart.find(item => item.dishID === dishId);
-            found.quantity++
-            store.cartQuantity++
-
+            if (found.quantity < 5) {
+                found.quantity++;
+                store.cartQuantity++;
+                localStorage.setItem('cart', JSON.stringify(store.localCart));
+            } else {
+                alert("You cannot buy more than 5 items of this type.");
+            }
         },
         decreaseQuantity(dishId) {
             let found = store.localCart.find(item => item.dishID === dishId);
