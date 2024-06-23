@@ -143,7 +143,6 @@ export default {
             </div>
             <!-- DISHES -->
             <div class="right">
-                <!-- <div class="grad"></div> -->
                 <div class="dishes">
                     <div v-for="dish in restaurant.dishes" :key="dish.id" class="dish_card">
                         <div class="top">
@@ -158,6 +157,9 @@ export default {
                                 </div>
                             </div>
                             <div class="card_right">
+                                <div class="price">
+                                    <h5>{{ dish.price }}</h5><span>&#8364;</span>
+                                </div>
                                 <div class="image">
                                     <img v-if="dish.cover_image && dish.cover_image.startsWith('uploads')"
                                         :src="base_restaurant_api + '/storage/' + dish.cover_image" alt="Dish">
@@ -205,15 +207,6 @@ export default {
         position: relative;
     }
 
-    /* .grad {
-        position: absolute;
-        z-index: 1;
-        top: 0;
-        background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 90%);
-        width: 100%;
-        height: 20px;
-    } */
-
     .vertical_banner {
         height: 100%;
         background-color: var(--boo-secondary-light);
@@ -236,7 +229,6 @@ export default {
             border: 4px solid var(--boo-secondary-light);
             background-color: white;
             transition: background-color .25s ease, filter .1s ease;
-
 
             &:hover {
                 background-color: var(--boo-gray-800);
@@ -347,7 +339,6 @@ export default {
                             color: var(--boo-gray-600);
                             font-size: .75rem;
                             line-height: 1.2rem;
-                            /* padding-right: 4rem; */
                             margin-bottom: 0;
                         }
                     }
@@ -357,6 +348,28 @@ export default {
                     width: 50%;
                     position: relative;
 
+                    .price {
+                        position: absolute;
+                        background-color: var(--boo-secondary-dark);
+                        width: 100px;
+                        aspect-ratio: 1;
+                        border-radius: 50%;
+                        z-index: 1;
+                        right: 0;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: var(--boo-gray-800);
+                        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.381);
+
+                        h5 {
+                            font-size: 1.3rem;
+                            font-weight: 600;
+                            margin-bottom: 0;
+                            margin-right: 3px;
+                        }
+                    }
+
                     .image {
                         width: 330px;
                         /* top: 1rem; */
@@ -364,13 +377,13 @@ export default {
                         position: absolute;
                         border-radius: 50%;
                         overflow: hidden;
+                        box-shadow: 10px 20px 20px rgba(0, 0, 0, 0.381);
 
                         img {
                             width: 100%;
                             object-fit: cover;
                         }
                     }
-
                 }
             }
 
@@ -382,7 +395,6 @@ export default {
                 border-radius: 2rem;
                 transform: translateY(-4rem);
                 background-color: var(--boo-darker);
-
             }
 
             .actions {
