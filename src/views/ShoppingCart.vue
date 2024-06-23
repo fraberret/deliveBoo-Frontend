@@ -45,40 +45,55 @@ export default {
 
 <template>
     <div class="container">
-        <table class="table table-striped table-hover table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Dish</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Quantity
-                    </th>
-                    <th scope="col">Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in store.localCart" :key="item.dishID">
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.price }}€</td>
-                    <td class="d-flex align-items-center">
-                        <button class="btn btn-dark" @click="decreaseQuantity(item.dishID)">-</button>
-                        <button class="btn btn-dark ms-1" @click="increaseQuantity(item.dishID)">+</button>
-                        <span class="ms-3">{{ item.quantity }}</span>
-                        <button class="ms-auto btn btn-danger" @click="deleteItem(item.dishID)">delete</button>
-                    </td>
-                    <td>
-                        <div class="singleTotal">{{ (item.quantity * item.price).toFixed(2) }}€</div>
-                    </td>
-                </tr>
-                <tr class="table-dark">
-                    <th colspan="3" class="text-right">Grand Total</th>
-                    <td>{{ store.grandTotal().toFixed(2) }}€</td>
-                </tr>
-            </tbody>
-        </table>
+        <template v-if="store.localCart.length > 0">
+            <table class="table table-striped table-hover table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Dish</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity
+                        </th>
+                        <th scope="col">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in store.localCart" :key="item.dishID">
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.price }}€</td>
+                        <td class="d-flex align-items-center">
+                            <button class="btn btn-dark" @click="decreaseQuantity(item.dishID)">-</button>
+                            <button class="btn btn-dark ms-1" @click="increaseQuantity(item.dishID)">+</button>
+                            <span class="ms-3">{{ item.quantity }}</span>
+                            <button class="ms-auto btn btn-danger" @click="deleteItem(item.dishID)">delete</button>
+                        </td>
+                        <td>
+                            <div class="singleTotal">{{ (item.quantity * item.price).toFixed(2) }}€</div>
+                        </td>
+                    </tr>
+                    <tr class="table-dark">
+                        <th colspan="3" class="text-right">Grand Total</th>
+                        <td>{{ store.grandTotal().toFixed(2) }}€</td>
+                    </tr>
+                </tbody>
+            </table>
 
-        <CheckoutForm />
+            <CheckoutForm />
+        </template>
+        <template v-else>
+            <div class="alert alert-warning" role="alert">
+                The cart is empty.
+            </div>
+        </template>
     </div>
 
 </template>
 
-<script></script>
+<style>
+.w-15 {
+    width: 15%;
+}
+
+.w-35 {
+    width: 35%;
+}
+</style>
