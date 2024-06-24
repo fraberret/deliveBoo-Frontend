@@ -127,7 +127,7 @@ export default {
                                         <label for="customer_name" class="form-label">Name*</label>
                                         <input required v-model="formData.customer_name" type="text"
                                             :class="formErrors['customer_name'] && 'is-invalid'" class="form-control "
-                                            id="customer_name" name="customer_name" placeholder="Your Name..." />
+                                            id="customer_name" name="customer_name" placeholder="Your Name..."  minlength="3" maxlength="100" />
                                         <div v-if="formErrors['customer_name']" class="alert alert-danger mt-3">
                                             <small>{{ formErrors['customer_name'][0] }}</small>
                                         </div>
@@ -137,7 +137,7 @@ export default {
                                         <label for="customer_lastname" class="form-label">Last Name*</label>
                                         <input v-model="formData.customer_lastname" type="text" class="form-control"
                                             id="customer_lastname" name="customer_lastname" aria-describedby="helpId"
-                                            placeholder="Your Last Name..." />
+                                            placeholder="Your Last Name..." required minlength="3" maxlength="100"/>
                                         <div v-if="formErrors['customer_lastname']" class="alert alert-danger mt-3">
                                             <small>{{ formErrors['customer_lastname'][0] }}</small>
                                         </div>
@@ -150,7 +150,7 @@ export default {
                                         <label for="customer_email" class="form-label">Email</label>
                                         <input v-model="formData.customer_email" type="email" class="form-control"
                                             id="customer_email" name="customer_email" aria-describedby="helpId"
-                                            placeholder="Your Email..." />
+                                            placeholder="Your Email..." minlength="5" maxlength="255"/>
                                         <div v-if="formErrors['customer_email']" class="alert alert-danger mt-3">
                                             <small>{{ formErrors['customer_email'][0] }}</small>
                                         </div>
@@ -158,9 +158,11 @@ export default {
                                     <!-- PHONE NUMBER -->
                                     <div class="mb-3 w-50">
                                         <label for="customer_telephone" class="form-label">Phone Number*</label>
-                                        <input v-model="formData.customer_telephone" type="text" class="form-control"
+                                        <input v-model="formData.customer_telephone" type="tel" class="form-control"
                                             id="customer_telephone" name="customer_telephone" aria-describedby="helpId"
-                                            placeholder="Your Phone Number..." />
+                                            placeholder="Your Phone Number..." required autofocus
+                                            pattern="^\+[0-9]{12}$"
+                                            title="Telephone number must begin with a + followed by 12 digits." />
                                         <div v-if="formErrors['customer_telephone']" class="alert alert-danger mt-3">
                                             <small>{{ formErrors['customer_telephone'][0] }}</small>
                                         </div>
@@ -171,7 +173,7 @@ export default {
                                     <label for="customer_address" class="form-label">Address*</label>
                                     <input v-model="formData.customer_address" type="text" class="form-control"
                                         id="customer_address" name="customer_address" aria-describedby="helpId"
-                                        placeholder="Your Address..." />
+                                        placeholder="Your Address..." required minlength="5" maxlength="100" />
                                     <div v-if="formErrors['customer_address']" class="alert alert-danger mt-3">
                                         <small>{{ formErrors['customer_address'][0] }}</small>
                                     </div>
