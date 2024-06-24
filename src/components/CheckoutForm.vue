@@ -1,100 +1,282 @@
 <script>
 import axios from 'axios';
 import { store } from '../store';
-
 export default {
     name: 'CheckoutForm',
     data() {
         return {
             store,
-            loading: false,
-            // tokenApi: ''
+            tokenApi: '',
+            loading: true,
+            dropinInstance: null,
+            formData: {
+                dishes: [],
+                amount: '',
+                token: '',
+                restaurant_id: '',
+                customer_name: '',
+                customer_lastname: '',
+                customer_address: '',
+                customer_email: '',
+                customer_telephone: '',
+            },
+            formErrors: [],
+            formDanger: false
+        };
+    },
+    methods: {
+        getToken() {
+            axios.get('http://localhost:8000/api/payments/token')
+                .then(res => {
+                    this.tokenApi = res.data.token;
+                    this.initializeBraintree();
+                    this.loading = false;
+                })
+                .catch(err => console.error(err));
+        },
+        initializeBraintree() {
+            braintree.dropin.create({
+                authorization: this.tokenApi,
+                container: '#dropin-container',
+            }, (error, dropinInstance) => {
+                if (error) {
+                    console.error(error);
+                    return;
+                }
+                this.dropinInstance = dropinInstance;
+            });
+        },
+        order() {
+            this.dropinInstance.requestPaymentMethod((error, payload) => {
+                if (error) {
+                    console.error(error);
+                    this.formDanger = true
+                    return;
+                }
+
+                // test visa 4111111111111111
+
+                this.formData.token = payload.nonce;
+                this.formData.dishes = store.localCart;
+                this.formData.amount = store.grandTotal();
+                this.formData.restaurant_id = store.localCart[0].restaurantId;
+
+                axios.post('http://localhost:8000/api/payments/checkout', this.formData)
+                    .then(res => {
+                        console.log('Order placed successfully', res.data);
+                        this.formErrors = []
+                        this.localCart = []
+                        store.cartQuantity = 0
+                        localStorage.clear();
+                        localStorage.setItem('order', JSON.stringify(this.formData));
+                        this.redirectToOrderInfo()
+                    })
+                    .catch(error => {
+                        this.dropinInstance.clearSelectedPaymentMethod();
+                        if (error.response) {
+                            this.formErrors = error.response.data.errors;
+                        } else {
+                            console.error('Error placing order', error);
+                        }
+                    });
+            });
+        },
+        redirectToOrderInfo() {
+            const modalElement = document.getElementById('cartModal');
+            const modal = bootstrap.Modal.getInstance(modalElement);
+            modal.hide();
+            this.$router.push({ name: 'orderInfo' });
         }
     },
-    // getToken() {
-    //     axios.get('http://localhost:8000/api/payments/token')
-    //         .then(res => {
-    //             this.tokenApi = res.data.token;
-    //             this.initializeBraintree();
-    //             this.loading = false;
-    //         })
-    //         .catch(err => console.error(err));
-    // },
     mounted() {
-        let button = document.querySelector('#submit-button');
-
-        braintree.dropin.create({
-            authorization: 'sandbox_g42y39zw_348pk9cgf3bgyw2b',
-            selector: '#dropin-container'
-        }, function (err, instance) {
-            button.addEventListener('click', function () {
-                instance.requestPaymentMethod(function (err, payload) {
-                    // Submit payload.nonce to your server
-                });
-            })
-        });
+        this.getToken();
     }
-}
+};
 </script>
 
 <template>
-    <!-- Modal trigger button -->
-    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalId">
-        Buy
-    </button>
+    <div>
+        <!-- Modal trigger button -->
+        <div class="py-5">
+            <button type="button" class="border-0 p-4 ms-auto buttons btn_primary" data-bs-toggle="modal"
+                data-bs-target="#cartModal">
+                Order Now
+            </button>
+        </div>
 
-    <!-- Modal Body -->
-    <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
-    <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
-        aria-labelledby="modalTitleId" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
-            <div v-if="!loading" class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitleId">
-                        Choise your method of pay
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- Modal Body -->
+        <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+        <div class="modal fade" id="cartModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+            role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+                <div v-if="!loading" class="modal-content"
+                    :class="formDanger && 'bg-form-danger border-1 border-danger'">
+                    <div class="modal-header text-white" :class="formDanger ? 'bg-danger' : 'bg-dark'">
+                        <h5 class="modal-title" id="modalTitleId">
+                            Checkout
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form @submit.prevent="order()" method="post" class="py-3">
+                            <h5 class="text-center pb-3">Enter Your Informations</h5>
+                            <div class="billing_info mb-5 ">
+                                <div class="d-flex gap-3 pt-3">
+                                    <!-- NAME -->
+                                    <div class="mb-3 w-50">
+                                        <label for="customer_name" class="form-label">Name*</label>
+                                        <input required v-model="formData.customer_name" type="text"
+                                            :class="formErrors['customer_name'] && 'is-invalid'" class="form-control "
+                                            id="customer_name" name="customer_name" placeholder="Your Name..." />
+                                        <div v-if="formErrors['customer_name']" class="alert alert-danger mt-3">
+                                            <small>{{ formErrors['customer_name'][0] }}</small>
+                                        </div>
+                                    </div>
+                                    <!-- LASTNAME -->
+                                    <div class="mb-3 w-50">
+                                        <label for="customer_lastname" class="form-label">Last Name*</label>
+                                        <input v-model="formData.customer_lastname" type="text" class="form-control"
+                                            id="customer_lastname" name="customer_lastname" aria-describedby="helpId"
+                                            placeholder="Your Last Name..." />
+                                        <div v-if="formErrors['customer_lastname']" class="alert alert-danger mt-3">
+                                            <small>{{ formErrors['customer_lastname'][0] }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex gap-3 pt-3">
+                                    <!-- EMAIL -->
+                                    <div class="mb-3 w-50">
+                                        <label for="customer_email" class="form-label">Email</label>
+                                        <input v-model="formData.customer_email" type="email" class="form-control"
+                                            id="customer_email" name="customer_email" aria-describedby="helpId"
+                                            placeholder="Your Email..." />
+                                        <div v-if="formErrors['customer_email']" class="alert alert-danger mt-3">
+                                            <small>{{ formErrors['customer_email'][0] }}</small>
+                                        </div>
+                                    </div>
+                                    <!-- PHONE NUMBER -->
+                                    <div class="mb-3 w-50">
+                                        <label for="customer_telephone" class="form-label">Phone Number*</label>
+                                        <input v-model="formData.customer_telephone" type="text" class="form-control"
+                                            id="customer_telephone" name="customer_telephone" aria-describedby="helpId"
+                                            placeholder="Your Phone Number..." />
+                                        <div v-if="formErrors['customer_telephone']" class="alert alert-danger mt-3">
+                                            <small>{{ formErrors['customer_telephone'][0] }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ADDRESS -->
+                                <div class="mb-3 pt-3">
+                                    <label for="customer_address" class="form-label">Address*</label>
+                                    <input v-model="formData.customer_address" type="text" class="form-control"
+                                        id="customer_address" name="customer_address" aria-describedby="helpId"
+                                        placeholder="Your Address..." />
+                                    <div v-if="formErrors['customer_address']" class="alert alert-danger mt-3">
+                                        <small>{{ formErrors['customer_address'][0] }}</small>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="payment_method">
+                                <h5 class="text-center pb-0">Choose your payment method</h5>
+                                <!-- DROPIN UI -->
+                                <div id="dropin-container"></div>
+                            </div>
+
+                            <div class="d-flex mt-5 align-items-end">
+                                <h6 class="required_field_text"><span>*</span> fields are required</h6>
+                                <button type="submit" id="submit-button"
+                                    class="buttons btn_primary border-0 ms-auto">Confirm</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <div id="dropin-container"></div>
-                    <button id="submit-button" class="button button--small button--green">Purchase</button>
-                </div>
+                <div v-else class="text-center my-5">loading...</div>
             </div>
-            <div v-else class="text-center my-5">loading...</div>
         </div>
     </div>
 </template>
 
 <style>
-.button {
-    cursor: pointer;
+.bg-form-danger {
+    background-color: #fdf5f5;
+    /* border: 2px solid #ff5858; */
+}
+
+.form-label {
+    color: var(--boo-primary);
+    text-transform: uppercase;
     font-weight: 500;
-    left: 3px;
-    line-height: inherit;
+}
+
+.modal-header .btn-close {
+    filter: invert(1);
+}
+
+.modal-dialog-scrollable .modal-body {
+    scrollbar-width: thin;
+    scrollbar-color: var(--boo-gray-800) transparent;
+}
+
+.modal-dialog {
+    max-width: 800px;
+}
+
+/* .billing_info {
+    background-color: var(--boo-primary);
+    background-color: #f8f8f8;
+} */
+
+.required_field_text {
+    color: var(--boo-primary);
+}
+
+.braintree-loaded .braintree-sheet__container {
+    background-color: #fdf5f5
+}
+
+.braintree-sheet--has-error .braintree-sheet__error {
+    color: #CA2A2A;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    padding: 1rem 0 0 0;
     position: relative;
-    text-decoration: none;
-    text-align: center;
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 3px;
-    display: inline-block;
+    margin-top: 4px;
 }
 
-.button--small {
-    padding: 10px 20px;
-    font-size: 0.875rem;
+.braintree-sheet {
+    background-color: #f5f0ff;
 }
 
-.button--green {
-    outline: none;
-    background-color: #64d18a;
-    border-color: #64d18a;
-    color: white;
-    transition: all 200ms ease;
+.braintree-sheet__header {
+    align-items: center;
+    border-bottom: 1px solid #B5B5B5;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 12px 15px 0 12px;
+    position: relative;
 }
 
-.button--green:hover {
-    background-color: #8bdda8;
-    color: white;
+.braintree-form__field {
+    background-color: white;
+    width: 100%;
+}
+
+.braintree-sheet__content--form {
+    /* height: 241px; */
+
+    label {
+        display: block;
+    }
+
+    .braintree-form__notice-of-collection {
+        padding-top: 1rem;
+    }
+
+    .braintree-form__flexible-fields {
+        display: block;
+    }
 }
 </style>
