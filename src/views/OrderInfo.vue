@@ -1,10 +1,8 @@
 <script>
-import { store } from '../store';
 export default {
     name: 'OrderInfo',
     data() {
         return {
-            store,
             formData: null
         };
     },
@@ -13,13 +11,15 @@ export default {
     },
     beforeRouteLeave() {
         localStorage.clear();
-        // store.localCart = [];
     }
 };
 </script>
 <template>
     <div class="container">
         <div v-if="formData">
+            <div class="alert alert-success" role="alert">
+                Order Successfull
+            </div>
             <h1>Order Information</h1>
             <div>Name: {{ formData.customer_name }}</div>
             <div>Last Name: {{ formData.customer_lastname }}</div>
