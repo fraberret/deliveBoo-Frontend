@@ -52,7 +52,7 @@ export default {
                 store.cartQuantity++
             } else {
                 store.cartQuantity++
-                store.localCart.push({ restaurantId: currentRestaurantId, dishID: dish.id, name: dish.name, price: dish.price, quantity: 1 });
+                store.localCart.push({ restaurantId: currentRestaurantId, dishID: dish.id, nameRestaurant: this.restaurant.name , name: dish.name, price: dish.price, quantity: 1 });
             }
 
             localStorage.setItem('cart', JSON.stringify(store.localCart));
@@ -125,7 +125,7 @@ export default {
                         <div class="cousines">
                             <h6>cousines</h6>
                             <span class="cousine" v-for="(cousine, index) in restaurant.cousines" :key="cousine.id">{{
-        cousine.name }}<span v-if="index < restaurant.cousines.length - 1">, </span>
+                                cousine.name }}<span v-if="index < restaurant.cousines.length - 1">, </span>
                             </span>
                         </div>
                         <div class="telephone">
@@ -149,7 +149,7 @@ export default {
                 <div class="dishes">
                     <template v-for="dish in restaurant.dishes" :key="dish.id">
 
-                        <div  class="dish_card" v-if="dish.visible">
+                        <div class="dish_card" v-if="dish.visible">
                             <div class="top">
                                 <div class="card_left">
                                     <div>
@@ -184,7 +184,7 @@ export default {
                                 <div v-if="getCurrentQuantity(dish.id) > 0"
                                     @click="removeFromCart(dish.id, restaurant.id)" class="buttons btn_negative">-</div>
                                 <div v-if="getCurrentQuantity(dish.id) > 0" class="counter ms-3">{{
-        getCurrentQuantity(dish.id) }} <small class="text-secondary">pz.</small></div>
+                                    getCurrentQuantity(dish.id) }} <small class="text-secondary">pz.</small></div>
                                 <!-- <img width="" src="/img/cart-icon.png" alt="cart icon"> -->
                             </div>
                         </div>

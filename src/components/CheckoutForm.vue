@@ -9,6 +9,7 @@ export default {
             tokenApi: '',
             loading: true,
             dropinInstance: null,
+            restaurant_name: store.localCart[0].nameRestaurant,
             formData: {
                 dishes: [],
                 amount: '',
@@ -55,7 +56,6 @@ export default {
                 }
 
                 // test visa 4111111111111111
-
                 this.formData.token = payload.nonce;
                 this.formData.dishes = store.localCart;
                 this.formData.amount = store.grandTotal();
@@ -65,8 +65,8 @@ export default {
                     .then(res => {
                         console.log('Order placed successfully', res.data);
                         this.formErrors = []
-                        store.localCart = []
                         store.cartQuantity = 0
+                        store.localCart = []
                         localStorage.clear();
                         localStorage.setItem('order', JSON.stringify(this.formData));
                         this.sendMail()
@@ -93,6 +93,7 @@ export default {
             const data = {
                 name: this.formData.customer_name,
                 email: this.formData.customer_email,
+                restaurant_name: this.restaurant_name,
                 message: 'il tuo ordine è avvenuto con successo',
             }
 
@@ -142,7 +143,8 @@ export default {
                                         <label for="customer_name" class="form-label">Name*</label>
                                         <input required v-model="formData.customer_name" type="text"
                                             :class="formErrors['customer_name'] && 'is-invalid'" class="form-control "
-                                            id="customer_name" name="customer_name" placeholder="Your Name..."  minlength="3" maxlength="100" />
+                                            id="customer_name" name="customer_name" placeholder="Your Name..."
+                                            minlength="3" maxlength="100" />
                                         <div v-if="formErrors['customer_name']" class="alert alert-danger mt-3">
                                             <small>{{ formErrors['customer_name'][0] }}</small>
                                         </div>
@@ -152,7 +154,7 @@ export default {
                                         <label for="customer_lastname" class="form-label">Last Name*</label>
                                         <input v-model="formData.customer_lastname" type="text" class="form-control"
                                             id="customer_lastname" name="customer_lastname" aria-describedby="helpId"
-                                            placeholder="Your Last Name..." required minlength="3" maxlength="100"/>
+                                            placeholder="Your Last Name..." required minlength="3" maxlength="100" />
                                         <div v-if="formErrors['customer_lastname']" class="alert alert-danger mt-3">
                                             <small>{{ formErrors['customer_lastname'][0] }}</small>
                                         </div>
@@ -165,7 +167,7 @@ export default {
                                         <label for="customer_email" class="form-label">Email</label>
                                         <input v-model="formData.customer_email" type="email" class="form-control"
                                             id="customer_email" name="customer_email" aria-describedby="helpId"
-                                            placeholder="Your Email..." minlength="5" maxlength="255"/>
+                                            placeholder="Your Email..." minlength="5" maxlength="255" />
                                         <div v-if="formErrors['customer_email']" class="alert alert-danger mt-3">
                                             <small>{{ formErrors['customer_email'][0] }}</small>
                                         </div>
