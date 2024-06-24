@@ -42,6 +42,7 @@ main {
     transition: color .4s ease;
     cursor: pointer;
     white-space: nowrap;
+    user-select: none;
 
     &::after {
         position: absolute;

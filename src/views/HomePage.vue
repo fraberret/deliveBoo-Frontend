@@ -18,16 +18,22 @@ export default {
             searchCuisinesArray: [],
             searchCuisines: '',
             selectedCousine: [],
-            isRestaurants: false
+            isFilteredRestaurants: false,
+            isRestaurants: true,
+            allSelected: false
         }
     },
     components: {
         AppBanner
     },
     methods: {
-        getRestaurants() {
+        getAllRestaurants() {
+            this.selectedCousine = []
+            this.searchCuisinesArray = []
             this.isLoading = true
-
+            this.allSelected = true
+            this.isRestaurants = true
+            this.isFilteredRestaurants = false
             const url = this.base_url + this.api_restaurants_url
 
             axios.get(url)
@@ -48,10 +54,7 @@ export default {
         // search bar filter
         // filterRestaurants() {
         //  this.isLoading = true
-
-
         //     const url = this.base_url + this.api_restaurants_url + this.searchTerm
-
         //     axios.get(url)
         //         .then(resp => {
         //             this.filteredRestaurants = resp.data.results
@@ -60,8 +63,11 @@ export default {
         //         }).catch(err => console.error(err))
         // },
         filterRestaurantsbyCousine() {
-            this.isRestaurants = true
+            this.allSelected = false
+            this.isRestaurants = false
+            this.isFilteredRestaurants = true
             this.isLoading = true
+
             const url = this.base_url + this.api_cousines_url + '/' + this.searchCuisines
 
             axios.get(url)
@@ -72,7 +78,7 @@ export default {
                 }).catch(err => console.error(err))
         },
         addCousineToSearch(cousine, i) {
-
+            this.allSelected = false
             const index = this.searchCuisinesArray.indexOf(cousine);
 
             if (!this.searchCuisinesArray.includes(cousine)) {
@@ -95,10 +101,19 @@ export default {
             setTimeout(() => {
                 this.isLoading = false
             }, 500);
+        },
+        getImageSrc(restaurantLogo) {
+            if (restaurantLogo && restaurantLogo.startsWith('uploads')) {
+                return this.base_url + '/storage/' + restaurantLogo;
+            } else if (restaurantLogo && restaurantLogo.startsWith('/img/')) {
+                return this.base_url + restaurantLogo;
+            } else {
+                return restaurantLogo;
+            }
         }
     },
     mounted() {
-        // this.getRestaurants()
+        this.getAllRestaurants()
         this.getCousines()
     },
 }
@@ -106,120 +121,303 @@ export default {
 
 
 <template>
-    <div class="container min-vh-100">
-        <AppBanner title="Show all restaurants" subTitle="Welcome to DeliveBoo" />
+    <!-- <div class="search">
+    <div class="searchbar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input @keyup="filterRestaurants" v-model.trim="searchTerm" type="search"
+            placeholder="Cerca un ristorante">
+    </div>
+     </div> -->
+    <div class="container">
+        <AppBanner title="Chose a restaurant by selecting one or more cousine " subTitle="our restaurants" />
 
-        <div class="d-flex align-items-center justify-content-center flex-column">
-
-            <!-- <div class="search">
-            <div class="searchbar">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input @keyup="filterRestaurants" v-model.trim="searchTerm" type="search"
-                    placeholder="Cerca un ristorante">
+        <div class="search_container">
+            <div class="cousines">
+                <div class="cousine">
+                    <div class="cousine_btn" @click="getAllRestaurants()"
+                        :class="allSelected === true ? 'cousine_btn_selected' : 'cousine_btn_unselected'">
+                        <img :src="allSelected == true ? '/img/logo-deliveboo-small-white.png' : '/img/logo-deliveboo-small.png'"
+                            alt="small logo"> <span>All</span>
+                    </div>
+                </div>
+                <div class="cousine" v-for="(cousine, index) in cousines" :key="cousine.id">
+                    <div class="cousine_btn" @click="addCousineToSearch(cousine.name, index)"
+                        :class="selectedCousine.includes(cousine.id) ? 'cousine_btn_selected' : 'cousine_btn_unselected'">
+                        <img :src="selectedCousine.includes(cousine.id) ? '/img/logo-deliveboo-small-white.png' : '/img/logo-deliveboo-small.png'"
+                            alt="small logo"> <span> {{ cousine.name }}</span>
+                    </div>
+                </div>
             </div>
-        </div> -->
 
-            <div class="my-4">
-                <template v-for="(cousine, index) in cousines" :key="cousine.id">
-                    <span :class="['badge', 'm-1', selectedCousine.includes(cousine.id) ? 'bg-dark' : '']"
-                        class="text-white p-2" @click="addCousineToSearch(cousine.name, index)">
-                        {{ cousine.name }}
-                    </span>
+            <div class="restaurants">
+
+                <div v-if="isLoading" class="gif">
+                    <img width="200" src="/img/logo-gif.gif" alt="">
+                    <h6 class="text-secondary">Loading..</h6>
+                </div>
+
+                <template v-else>
+                    <template v-if="isRestaurants" class="h-100">
+                        <div v-if="restaurants.length" class="restaurants_container h-100">
+                            <div v-for="restaurant in restaurants" class="restaurant_card">
+                                <router-link class="router_link"
+                                    :to="{ name: 'RestaurantMenu', params: { slug: restaurant.slug } }">
+                                    <div class="top">
+                                        <img :src="getImageSrc(restaurant.logo)" alt="Restaurant Logo">
+                                    </div>
+
+                                    <div class="bottom">
+                                        <h6>{{ restaurant.name }}</h6>
+                                        <div class="badges">
+                                            <div v-for="cousine in restaurant.cousines" :key="cousine.id"
+                                                :class="[searchCuisinesArray.includes(cousine.name) ? 'badge_light' : 'badge_dark']">
+                                                {{ cousine.name }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </router-link>
+                            </div>
+                        </div>
+                    </template>
+                    <template v-if="isFilteredRestaurants" class="h-100">
+                        <div v-if="filteredRestaurants.length" class="restaurants_container h-100">
+                            <div v-for="restaurant in filteredRestaurants" class="restaurant_card">
+                                <router-link class="router_link"
+                                    :to="{ name: 'RestaurantMenu', params: { slug: restaurant.slug } }">
+                                    <div class="top">
+                                        <img :src="getImageSrc(restaurant.logo)" alt="Restaurant Logo">
+                                    </div>
+
+                                    <div class="bottom">
+                                        <h6>{{ restaurant.name }}</h6>
+                                        <div class="badges">
+                                            <div v-for="cousine in restaurant.cousines" :key="cousine.id"
+                                                :class="[searchCuisinesArray.includes(cousine.name) ? 'badge_light' : 'badge_dark']">
+                                                {{ cousine.name }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </router-link>
+                            </div>
+                        </div>
+                        <div v-else-if="isFilteredRestaurants && selectedCousine.length != 0" class="no_restaurants">
+                            <img width="150" src="/img/logo-sad.png" alt="">
+                            <h4>No restaurants found for this selection</h4>
+                            <h6>Keep searching</h6>
+                        </div>
+                    </template>
+                    <!-- <div v-if="selectedCousine.length === 0" class="p-5">
+                        <h4>Select one ore more cousines to find restaurants...</h4>
+                    </div> -->
                 </template>
             </div>
-
         </div>
-
-        <template v-if="isLoading">
-            <div class="gif">
-                <img width="200" src="/img/logo-gif.gif" alt="">
-                <h6 class="text-secondary">Loading..</h6>
-            </div>
-        </template>
-
-        <template v-else>
-
-            <template v-if="isRestaurants">
-                <div v-if="filteredRestaurants.length" class="restaurants">
-                    <div v-for="restaurant in filteredRestaurants" class="card h-100">
-                        <router-link :to="{ name: 'RestaurantMenu', params: { slug: restaurant.slug } }"
-                            class="text-decoration-none text-dark">
-                            <template v-if="restaurant.logo && restaurant.logo.startsWith('uploads')">
-                                <img :src="base_url + '/storage/' + restaurant.logo" class="card-img-top"
-                                    alt="Restaurant Logo">
-                            </template>
-                            <template v-else-if="restaurant.logo && restaurant.logo.startsWith('/img/')">
-                                <img :src="base_url + restaurant.logo" class="card-img-top" alt="Restaurant Logo">
-                            </template>
-                            <template v-else>
-                                <img :src="restaurant.logo" class="card-img-top" alt="Restaurant Logo">
-                            </template>
-                            <h3 class="my-3 mx-2">{{ restaurant.name }}</h3>
-
-                            <div class="d-inline-block ms-2 mb-1" v-for="cousine in restaurant.cousines">
-                                <div class="badge"
-                                    :class="[searchCuisinesArray.includes(cousine.name) ? 'bg-dark' : '']">{{
-                                        cousine.name }}</div>
-                            </div>
-                        </router-link>
-                    </div>
-                </div>
-                <div v-else-if="isRestaurants && selectedCousine.length != 0">
-                    <div class="restaurants">
-                        <div class="p-5">
-                            no restaurants...
-                        </div>
-                    </div>
-                </div>
-            </template>
-            <template v-if="selectedCousine.length === 0">
-                <div class="p-5">
-
-                    <h4>Select one ore more cousines to find restaurants...</h4>
-                </div>
-            </template>
-
-        </template>
+        <hr>
     </div>
-
 </template>
 
 
 
 <style>
-.restaurants {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
+.no_restaurants {
     width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
 
-    .card {
-        width: calc(100% / 3 - 1rem);
-        height: 300px;
-
-        img {
-            max-width: 100%;
-            display: block;
-        }
+    img {
+        margin-top: 2.5rem;
     }
+
+    h4 {
+        /* color: var(--boo-gray-500); */
+        font-weight: 400;
+        margin-top: 1rem;
+        margin-bottom: 0;
+    }
+
+    h6 {
+        color: var(--boo-primary);
+    }
+}
+
+hr {
+    color: var(--boo-gray-800);
+    margin-top: 0;
+    margin-bottom: 5rem;
 
 }
 
+.search_container {
+    display: flex;
+    margin-bottom: 5rem;
+
+    .cousines {
+        width: 300px;
+        flex-shrink: 0;
+        padding-right: 2rem;
+        height: 800px;
+        overflow-y: scroll;
+        scrollbar-width: thin;
+        scrollbar-color: var(--boo-primary) rgb(255, 255, 255);
+        /* scrollbar-color: var(--boo-primary) rgb(247, 247, 247); */
+        margin-right: 2rem;
+
+        .cousine {
+            /* background-color: red; */
+            height: 65px;
+            display: flex;
+            margin-bottom: 1.5rem;
+            user-select: none;
+
+            .cousine_btn {
+                width: 100%;
+                border-radius: 40px;
+                display: flex;
+                align-items: center;
+                padding-left: 2.2rem;
+                padding-right: 1.5rem;
+                height: 100%;
+                font-size: 1.1rem;
+                cursor: pointer;
+                transition: all .25s ease;
+
+                img {
+                    width: 28px;
+                    margin-right: .8rem;
+                }
+            }
+
+            .cousine_btn_unselected {
+                border: 1px solid transparent;
+                background-color: transparent;
+                transition: all .25s ease;
+
+                &:hover {
+                    /* border: 1px solid var(--boo-primary); */
+                    border: 1px solid var(--boo-secondary-light);
+                    background-color: var(--boo-secondary-light);
+                }
+            }
+
+            .cousine_btn_selected {
+                border: 1px solid var(--boo-primary);
+                background-color: var(--boo-primary);
+                color: var(--boo-lighter);
+            }
+        }
+    }
+
+    .restaurants {
+        flex-grow: 1;
+        display: flex;
+
+        .restaurants_container {
+            gap: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+
+            .router_link {
+                text-decoration: none;
+            }
+
+            .restaurant_card {
+                width: calc((100% / 3) - (2rem / 3));
+                border-radius: 2rem;
+                overflow: hidden;
+                height: fit-content;
+                /* border: 2px solid var(--boo-gray-800); */
+
+                .top {
+                    max-height: 290px;
+                    overflow: hidden;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        /* object-position: center; */
+                        display: block;
+                        filter: saturate(0.5) brightness(0.9);
+                        transition: all .5s ease;
+
+                        &:hover {
+                            filter: saturate(1) brightness(1);
+                            transform: scale(1.2) rotate(-10deg);
+                        }
+                    }
+                }
+
+                .bottom {
+                    background-color: var(--boo-gray-800);
+                    padding: 1rem 2rem 1.4rem 2rem;
+                    /* border-top: 1px solid var(--boo-gray-600); */
+
+                    h6 {
+                        text-decoration: none;
+                        color: var(--boo-gray-300);
+                        font-size: 1.2rem;
+                        font-weight: 400;
+                        letter-spacing: 1px;
+                        padding-left: 2px;
+                        padding-bottom: 2px;
+                        white-space: nowrap;
+                    }
+
+                    .badges {
+                        display: flex;
+                        gap: .4rem;
+
+                        .badge_dark,
+                        .badge_light {
+                            padding-inline: .6rem;
+                            border-radius: 30px;
+                            color: var(--boo-lighter);
+                            font-size: 0.7rem;
+                            font-weight: 500;
+                            height: 26px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            background-color: var(--boo-primary);
+                        }
+
+                        .badge_light {
+                            color: var(--boo-lighter);
+                            background-color: var(--boo-secondary-dark);
+                            border: 1px solid var(--boo-secondary-dark);
+                            color: var(--boo-gray-800);
+                        }
+
+                        .badge_dark {
+                            color: var(--boo-lighter);
+                            border: 1px solid var(--boo-gray-600);
+                            background-color: transparent;
+                            color: var(--boo-gray-500);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 .gif {
     width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     padding: 3rem 0;
     flex-direction: column;
     gap: 1rem;
     align-items: center;
-
-    img {
-        margin: auto;
-    }
 }
-
 
 .badge {
     cursor: pointer;
