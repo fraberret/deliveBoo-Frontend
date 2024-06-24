@@ -14,7 +14,7 @@ export default {
     methods: {
         increaseQuantity(dishId) {
             let found = store.localCart.find(item => item.dishID === dishId);
-            if (found.quantity < 5) {
+            if (store.cartQuantity < 5) {
                 found.quantity++;
                 store.cartQuantity++;
                 localStorage.setItem('cart', JSON.stringify(store.localCart));
