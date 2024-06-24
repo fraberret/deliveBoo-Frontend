@@ -20,18 +20,29 @@ export default {
             <div class="alert alert-success" role="alert">
                 Order Successfull
             </div>
-            <h1>Order Information</h1>
-            <div>Name: {{ formData.customer_name }}</div>
-            <div>Last Name: {{ formData.customer_lastname }}</div>
-            <div>Address: {{ formData.customer_address }}</div>
-            <div>Email: {{ formData.customer_email }}</div>
-            <div>Phone: {{ formData.customer_telephone }}</div>
-            <div>Total: {{ formData.amount }} &#8364;</div>
-            <div>
-                <h3>Dishes:</h3>
-                <div v-for="dish in formData.dishes" :key="dish.dishID">
-                    {{ dish.price }} &#8364;
-                    {{ dish.quantity }} pz.
+            <h2 class="my-4">Order Information</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Customer Information</h5>
+                    <ul class="list-unstyled lh-lg">
+                        <li><b>Name:</b> {{ formData.customer_name }}</li>
+                        <li><b>Last Name:</b> {{ formData.customer_lastname }}</li>
+                        <li><b>Address:</b> {{ formData.customer_address }}</li>
+                        <li><b>Email:</b> {{ formData.customer_email }}</li>
+                        <li><b>Phone:</b> {{ formData.customer_telephone }}</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h5>Order Summary</h5>
+                    <ul class="list-unstyled lh-lg">
+                        <li><b>Total:</b> {{ formData.amount }} &#8364;</li>
+                    </ul>
+                    <h5>Dishes:</h5>
+                    <ul class="list-unstyled lh-lg">
+                        <li v-for="dish in formData.dishes" :key="dish.dishID">
+                            <b>{{ dish.name }}</b> - {{ dish.price }} &#8364; ({{ dish.quantity }} pz.)
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
