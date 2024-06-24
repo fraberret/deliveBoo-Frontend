@@ -97,15 +97,26 @@ export default {
                 message: 'il tuo ordine è avvenuto con successo',
             }
 
-            let url = `${this.base_api_url}/api/contacts`
-
             axios.post('http://localhost:8000/api/contacts', data).then(response => {
                 console.log(response);
             }).catch(err => { console.error(err); })
         }
     },
     mounted() {
-        this.getToken();
+        const modalElement = document.getElementById('cartModal');
+        modalElement.addEventListener('shown.bs.modal', () => {
+            this.getToken();
+        });
+        modalElement.addEventListener('hidden.bs.modal', () => {
+            if (this.dropinInstance) {
+                this.dropinInstance.teardown((err) => {
+                    if (err) {
+                        console.error('Error tearing down Dropin instance:', err);
+                    }
+                    this.dropinInstance = null;
+                });
+            }
+        });
     }
 };
 </script>
