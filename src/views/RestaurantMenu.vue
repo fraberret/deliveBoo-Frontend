@@ -125,7 +125,7 @@ export default {
                         <div class="cousines">
                             <h6>cousines</h6>
                             <span class="cousine" v-for="(cousine, index) in restaurant.cousines" :key="cousine.id">{{
-                                cousine.name }}<span v-if="index < restaurant.cousines.length - 1">, </span>
+        cousine.name }}<span v-if="index < restaurant.cousines.length - 1">, </span>
                             </span>
                         </div>
                         <div class="telephone">
@@ -147,44 +147,50 @@ export default {
             <!-- DISHES -->
             <div class="right">
                 <div class="dishes">
-                    <div v-for="dish in restaurant.dishes" :key="dish.id" class="dish_card">
-                        <div class="top">
-                            <div class="card_left">
-                                <div>
-                                    <h5>{{ dish.name }}</h5>
-                                    <p>{{ dish.description }}</p>
+                    <template v-for="dish in restaurant.dishes" :key="dish.id">
+
+                        <div  class="dish_card" v-if="dish.visible">
+                            <div class="top">
+                                <div class="card_left">
+                                    <div>
+                                        <h5>{{ dish.name }}</h5>
+                                        <p>{{ dish.description }}</p>
+                                    </div>
+                                    <div class="ingredients">
+                                        <h6>ingredients</h6>
+                                        <p>{{ dish.ingredients }}</p>
+                                    </div>
                                 </div>
-                                <div class="ingredients">
-                                    <h6>ingredients</h6>
-                                    <p>{{ dish.ingredients }}</p>
+                                <div class="card_right">
+                                    <div class="price">
+                                        <h5>{{ dish.price }}</h5><span>&#8364;</span>
+                                    </div>
+                                    <div class="image">
+                                        <img v-if="dish.cover_image && dish.cover_image.startsWith('uploads')"
+                                            :src="base_restaurant_api + '/storage/' + dish.cover_image" alt="Dish">
+
+                                        <img v-else-if="dish.cover_image && dish.cover_image.startsWith('/img/')"
+                                            :src="base_restaurant_api + dish.cover_image" alt="Dish">
+
+                                        <img v-else :src="dish.cover_image" alt="Dish">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="card_right">
-                                <div class="price">
-                                    <h5>{{ dish.price }}</h5><span>&#8364;</span>
+                            <div class="bottom">
+                            </div>
+                            <div class="actions">
+                                <div @click="addToCart(dish, restaurant.id)" class="buttons btn_primary">Add to Cart
                                 </div>
-                                <div class="image">
-                                    <img v-if="dish.cover_image && dish.cover_image.startsWith('uploads')"
-                                        :src="base_restaurant_api + '/storage/' + dish.cover_image" alt="Dish">
-
-                                    <img v-else-if="dish.cover_image && dish.cover_image.startsWith('/img/')"
-                                        :src="base_restaurant_api + dish.cover_image" alt="Dish">
-
-                                    <img v-else :src="dish.cover_image" alt="Dish">
-                                </div>
+                                <div v-if="getCurrentQuantity(dish.id) > 0"
+                                    @click="removeFromCart(dish.id, restaurant.id)" class="buttons btn_negative">-</div>
+                                <div v-if="getCurrentQuantity(dish.id) > 0" class="counter ms-3">{{
+        getCurrentQuantity(dish.id) }} <small class="text-secondary">pz.</small></div>
+                                <!-- <img width="" src="/img/cart-icon.png" alt="cart icon"> -->
                             </div>
                         </div>
-                        <div class="bottom">
-                        </div>
-                        <div class="actions">
-                            <div @click="addToCart(dish, restaurant.id)" class="buttons btn_primary">Add to Cart</div>
-                            <div v-if="getCurrentQuantity(dish.id) > 0" @click="removeFromCart(dish.id, restaurant.id)"
-                                class="buttons btn_negative">-</div>
-                            <div v-if="getCurrentQuantity(dish.id) > 0" class="counter ms-3">{{
-                                getCurrentQuantity(dish.id) }} <small class="text-secondary">pz.</small></div>
-                            <!-- <img width="" src="/img/cart-icon.png" alt="cart icon"> -->
-                        </div>
-                    </div>
+
+                    </template>
+
                 </div>
             </div>
         </div>
