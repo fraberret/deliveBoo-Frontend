@@ -1,8 +1,10 @@
 <script>
+import { store } from '../store';
 export default {
     name: 'OrderInfo',
     data() {
         return {
+            store,
             formData: null
         };
     },
@@ -11,6 +13,7 @@ export default {
     },
     beforeRouteLeave() {
         localStorage.clear();
+        // store.localCart = [];
     }
 };
 </script>

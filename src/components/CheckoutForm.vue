@@ -65,7 +65,7 @@ export default {
                     .then(res => {
                         console.log('Order placed successfully', res.data);
                         this.formErrors = []
-                        this.localCart = []
+                        store.localCart = []
                         store.cartQuantity = 0
                         localStorage.clear();
                         localStorage.setItem('order', JSON.stringify(this.formData));
