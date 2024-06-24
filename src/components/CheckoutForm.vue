@@ -69,7 +69,9 @@ export default {
                         store.cartQuantity = 0
                         localStorage.clear();
                         localStorage.setItem('order', JSON.stringify(this.formData));
+                        this.sendMail()
                         this.redirectToOrderInfo()
+                        this.dropinInstance.clearSelectedPaymentMethod();
                     })
                     .catch(error => {
                         this.dropinInstance.clearSelectedPaymentMethod();
@@ -86,6 +88,19 @@ export default {
             const modal = bootstrap.Modal.getInstance(modalElement);
             modal.hide();
             this.$router.push({ name: 'orderInfo' });
+        },
+        sendMail() {
+            const data = {
+                name: this.formData.customer_name,
+                email: this.formData.customer_email,
+                message: 'il tuo ordine è avvenuto con successo',
+            }
+
+            let url = `${this.base_api_url}/api/contacts`
+
+            axios.post('http://localhost:8000/api/contacts', data).then(response => {
+                console.log(response);
+            }).catch(err => { console.error(err); })
         }
     },
     mounted() {
