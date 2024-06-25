@@ -285,7 +285,6 @@ export default {
             justify-content: center;
             gap: 2rem;
             width: 100%;
-
         }
     }
 
@@ -417,8 +416,15 @@ export default {
                 align-items: center;
 
                 .btn_negative {
+                    background-color: var(--boo-primary);
+                    border: none;
                     padding-inline: 0;
                     width: 3.5rem;
+
+                    &:hover {
+                        border: none;
+                        border-color: aqua;
+                    }
                 }
             }
         }
