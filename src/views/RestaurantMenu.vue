@@ -8,6 +8,7 @@ export default {
     data() {
         return {
             store,
+            base_url: 'http://127.0.0.1:8000',
             base_api: 'http://127.0.0.1:8000/api/restaurant/',
             base_restaurant_api: 'http://127.0.0.1:8000',
             success: '',
@@ -91,6 +92,15 @@ export default {
             store.localCart = [];
             localStorage.clear();
             store.cartQuantity = 0
+        },
+        getImageSrc(image) {
+            if (image && image.startsWith('uploads')) {
+                return this.base_url + '/storage/' + image;
+            } else if (image && image.startsWith('/img/')) {
+                return this.base_url + image;
+            } else if (!image) {
+                return '/img/default.png';
+            }
         }
     },
     mounted() {
@@ -119,15 +129,7 @@ export default {
                         <img src="/img/back-gray.png" alt="go back icon">
                     </router-link>
                     <div class="image">
-                        <template v-if="restaurant.logo">
-                            <img v-if="restaurant.logo && restaurant.logo.startsWith('uploads')"
-                                :src="base_restaurant_api + '/storage/' + restaurant.logo" alt="Restaurant Logo">
-                            <img v-else-if="restaurant.logo && restaurant.logo.startsWith('/img/')"
-                                :src="base_restaurant_api + restaurant.logo" alt="Restaurant Logo">
-                            <img v-else :src="restaurant.logo" alt="Restaurant Logo">
-                        </template>
-                        <img src="/img/logo-sad.png" alt="Restaurant Logo" v-else>
-
+                        <img :src="getImageSrc(restaurant.logo)" alt="Restaurant Logo">
                     </div>
                     <div class="text text-center">
                         <h5>{{ restaurant.name }}</h5>
@@ -158,7 +160,6 @@ export default {
             <div class="right">
                 <div class="dishes">
                     <template v-for="dish in restaurant.dishes" :key="dish.id">
-
                         <div class="dish_card" v-if="dish.visible">
                             <div class="top">
                                 <div class="card_left">
@@ -176,17 +177,7 @@ export default {
                                         <h5>{{ dish.price }}</h5><span>&#8364;</span>
                                     </div>
                                     <div class="image">
-                                        <template v-if="dish.cover_image">
-                                            <img v-if="dish.cover_image && dish.cover_image.startsWith('uploads')"
-                                                :src="base_restaurant_api + '/storage/' + dish.cover_image" alt="Dish">
-
-                                            <img v-else-if="dish.cover_image && dish.cover_image.startsWith('/img/')"
-                                                :src="base_restaurant_api + dish.cover_image" alt="Dish">
-
-                                            <img v-else :src="dish.cover_image" alt="Dish">
-                                        </template>
-                                        <img src="/img/logo-sad.png" alt="Restaurant Logo" v-else>
-
+                                        <img :src="getImageSrc(dish.cover_image)" alt="Restaurant Logo">
                                     </div>
                                 </div>
                             </div>

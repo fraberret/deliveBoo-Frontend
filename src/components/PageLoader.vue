@@ -14,7 +14,7 @@ export default {
     });
     setTimeout(() => {
       this.isLoading = false;
-    }, 3100);
+    }, 3200);
   }
 }
 </script>
@@ -31,6 +31,10 @@ export default {
 </template>
 
 <style>
+body {
+  overflow: auto;
+}
+
 .loader-leave-active {
   transition: transform .5s cubic-bezier(0.9, 0, 1, 1);
 }

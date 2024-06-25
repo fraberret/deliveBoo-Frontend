@@ -102,13 +102,13 @@ export default {
                 this.isLoading = false
             }, 500);
         },
-        getImageSrc(restaurantLogo) {
-            if (restaurantLogo && restaurantLogo.startsWith('uploads')) {
-                return this.base_url + '/storage/' + restaurantLogo;
-            } else if (restaurantLogo && restaurantLogo.startsWith('/img/')) {
-                return this.base_url + restaurantLogo;
-            } else {
-                return restaurantLogo;
+        getImageSrc(image) {
+            if (image && image.startsWith('uploads')) {
+                return this.base_url + '/storage/' + image;
+            } else if (image && image.startsWith('/img/')) {
+                return this.base_url + image;
+            } else if (!image) {
+                return '/img/default.png';
             }
         }
     },
@@ -144,8 +144,6 @@ export default {
             </h4>
         </div>
 
-
-
         <div class="search_container">
             <div class="cousines">
                 <div class="cousine">
@@ -164,16 +162,11 @@ export default {
                 </div>
             </div>
 
-
-
             <div class="restaurants">
-
-
                 <div v-if="isLoading" class="gif">
                     <img width="200" src="/img/logo-gif.gif" alt="">
                     <h6 class="text-secondary">Loading..</h6>
                 </div>
-
                 <template v-else>
                     <template v-if="isRestaurants" class="h-100">
                         <div v-if="restaurants.length" class="restaurants_container h-100">
@@ -181,11 +174,8 @@ export default {
                                 <router-link class="router_link"
                                     :to="{ name: 'RestaurantMenu', params: { slug: restaurant.slug } }">
                                     <div class="top">
-                                        <img :src="getImageSrc(restaurant.logo)" alt="Restaurant Logo"
-                                            v-if="restaurant.logo">
-                                        <img src="/img/logo-sad.png" alt="Restaurant Logo" v-else>
+                                        <img :src="getImageSrc(restaurant.logo)" alt="Restaurant Logo">
                                     </div>
-
                                     <div class="bottom">
                                         <h6>{{ restaurant.name }}</h6>
                                         <div class="badges">
