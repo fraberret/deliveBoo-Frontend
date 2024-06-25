@@ -52,7 +52,7 @@ export default {
                 store.cartQuantity++
             } else {
                 store.cartQuantity++
-                store.localCart.push({ restaurantId: currentRestaurantId, dishID: dish.id, nameRestaurant: this.restaurant.name , name: dish.name, price: dish.price, quantity: 1 });
+                store.localCart.push({ restaurantId: currentRestaurantId, dishID: dish.id, nameRestaurant: this.restaurant.name, name: dish.name, price: dish.price, quantity: 1 });
             }
 
             localStorage.setItem('cart', JSON.stringify(store.localCart));
@@ -182,7 +182,8 @@ export default {
                                 <div @click="addToCart(dish, restaurant.id)" class="buttons btn_primary">Add to Cart
                                 </div>
                                 <div v-if="getCurrentQuantity(dish.id) > 0"
-                                    @click="removeFromCart(dish.id, restaurant.id)" class="buttons btn_negative">-</div>
+                                    @click="removeFromCart(dish.id, restaurant.id)" class="buttons btn_negative"><i
+                                        class="fa-solid fa-minus"></i></div>
                                 <div v-if="getCurrentQuantity(dish.id) > 0" class="counter ms-3">{{
                                     getCurrentQuantity(dish.id) }} <small class="text-secondary">pz.</small></div>
                                 <!-- <img width="" src="/img/cart-icon.png" alt="cart icon"> -->
