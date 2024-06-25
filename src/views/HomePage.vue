@@ -183,7 +183,7 @@ export default {
                                     <div class="top">
                                         <img :src="getImageSrc(restaurant.logo)" alt="Restaurant Logo"
                                             v-if="restaurant.logo">
-                                        <img src="/img/logo-sad.png" width="500" alt="Restaurant Logo" v-else>
+                                        <img src="/img/logo-sad.png" alt="Restaurant Logo" v-else>
                                     </div>
 
                                     <div class="bottom">

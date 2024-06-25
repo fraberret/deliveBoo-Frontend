@@ -119,7 +119,7 @@ export default {
                                 :src="base_restaurant_api + restaurant.logo" alt="Restaurant Logo">
                             <img v-else :src="restaurant.logo" alt="Restaurant Logo">
                         </template>
-                        <img src="/img/logo-sad.png" width="500" alt="Restaurant Logo" v-else>
+                        <img src="/img/logo-sad.png" alt="Restaurant Logo" v-else>
                     </div>
                     <div class="text text-center">
                         <h5>{{ restaurant.name }}</h5>
@@ -168,13 +168,16 @@ export default {
                                         <h5>{{ dish.price }}</h5><span>&#8364;</span>
                                     </div>
                                     <div class="image">
-                                        <img v-if="dish.cover_image && dish.cover_image.startsWith('uploads')"
-                                            :src="base_restaurant_api + '/storage/' + dish.cover_image" alt="Dish">
+                                        <template v-if="dish.cover_image">
+                                            <img v-if="dish.cover_image && dish.cover_image.startsWith('uploads')"
+                                                :src="base_restaurant_api + '/storage/' + dish.cover_image" alt="Dish">
 
-                                        <img v-else-if="dish.cover_image && dish.cover_image.startsWith('/img/')"
-                                            :src="base_restaurant_api + dish.cover_image" alt="Dish">
+                                            <img v-else-if="dish.cover_image && dish.cover_image.startsWith('/img/')"
+                                                :src="base_restaurant_api + dish.cover_image" alt="Dish">
 
-                                        <img v-else :src="dish.cover_image" alt="Dish">
+                                            <img v-else :src="dish.cover_image" alt="Dish">
+                                        </template>
+                                        <img src="/img/logo-sad.png" alt="Restaurant Logo" v-else>
                                     </div>
                                 </div>
                             </div>
