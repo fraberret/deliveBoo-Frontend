@@ -35,6 +35,11 @@ export default {
                 store.localCart.splice(index, 1);
                 localStorage.setItem('cart', JSON.stringify(store.localCart));
             }
+        },
+        deleteAll() {
+            store.localCart = [];
+            store.cartQuantity = 0
+            localStorage.clear();
         }
     }
 }
@@ -80,7 +85,14 @@ export default {
                 </tbody>
             </table>
 
-            <CheckoutForm />
+            <div class="d-flex justify-content-between align-items-center ">
+                <button class="border-0 p-4 buttons bg-danger text-white" @click="deleteAll()"><i
+                        class="fa-solid fa-trash"></i>  Delete All</button>
+
+                <CheckoutForm />
+            </div>
+
+
         </template>
         <template v-else>
             <div class="alert alert-warning" role="alert">
