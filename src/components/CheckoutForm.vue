@@ -175,10 +175,10 @@ export default {
                                 <div class="d-flex gap-3 pt-3">
                                     <!-- EMAIL -->
                                     <div class="mb-3 w-50">
-                                        <label for="customer_email" class="form-label">Email</label>
+                                        <label for="customer_email" class="form-label">Email*</label>
                                         <input v-model="formData.customer_email" type="email" class="form-control"
                                             id="customer_email" name="customer_email" aria-describedby="helpId"
-                                            placeholder="Your Email..." minlength="5" maxlength="255" />
+                                            placeholder="Your Email..." minlength="5" maxlength="255" required />
                                         <div v-if="formErrors['customer_email']" class="alert alert-danger mt-3">
                                             <small>{{ formErrors['customer_email'][0] }}</small>
                                         </div>
