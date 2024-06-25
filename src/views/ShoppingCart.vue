@@ -61,11 +61,13 @@ export default {
                         <td>{{ item.name }}</td>
                         <td>{{ item.price }}€</td>
                         <td class="d-flex align-items-center">
-                            <button class="btn btn-dark" @click="decreaseQuantity(item.dishID)">-</button>
+                            <button class="btn btn-dark" @click="decreaseQuantity(item.dishID)"
+                                v-if="item.quantity > 1">-</button>
+                            <button class="btn btn-danger" @click="deleteItem(item.dishID)"
+                                v-if="item.quantity === 1"><i class="fa-solid fa-trash"></i></button>
                             <span class="mx-3 w-2">{{ item.quantity }}</span>
                             <button class="btn btn-dark ms-1" @click="increaseQuantity(item.dishID)">+</button>
-                            <button class="ms-auto btn btn-danger" @click="deleteItem(item.dishID)"><i
-                                    class="fa-solid fa-trash"></i></button>
+
                         </td>
                         <td>
                             <div class="singleTotal">{{ (item.quantity * item.price).toFixed(2) }}€</div>
@@ -100,5 +102,9 @@ export default {
 
 .w-35 {
     width: 35%;
+}
+
+.btn {
+    transition: transform 2s ease;
 }
 </style>
