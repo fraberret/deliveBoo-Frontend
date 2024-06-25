@@ -3,25 +3,18 @@ export default {
   name: 'PageLoader',
   data() {
     return {
-      isLoading: false,
+      isLoading: true,
     }
   },
   mounted() {
-    this.$watch(() => this.$route, (to) => {
-      if (to.name === 'home') {
-        this.isLoading = true;
-
-        // restart the gif 
-        window.addEventListener('load', () => {
-          const gif = this.$refs.gif;
-          gif.src = gif.src;
-        });
-
-        setTimeout(() => {
-          this.isLoading = false;
-        }, 3300);
-      }
+    // restart the gif 
+    window.addEventListener('load', () => {
+      const gif = this.$refs.gif;
+      gif.src = gif.src;
     });
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 3200);
   }
 }
 </script>

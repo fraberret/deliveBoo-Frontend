@@ -168,8 +168,8 @@ export default {
                     <h6 class="text-secondary">Loading..</h6>
                 </div>
                 <template v-else>
-                    <template v-if="isRestaurants" class="h-100">
-                        <div v-if="restaurants.length" class="restaurants_container h-100">
+                    <template v-if="isRestaurants">
+                        <div v-if="restaurants.length" class="restaurants_container w-100">
                             <div v-for="restaurant in restaurants" class="restaurant_card">
                                 <router-link class="router_link"
                                     :to="{ name: 'RestaurantMenu', params: { slug: restaurant.slug } }">
@@ -189,8 +189,8 @@ export default {
                             </div>
                         </div>
                     </template>
-                    <template v-if="isFilteredRestaurants" class="h-100">
-                        <div v-if="filteredRestaurants.length" class="restaurants_container h-100">
+                    <template v-if="isFilteredRestaurants">
+                        <div v-if="filteredRestaurants.length" class="restaurants_container w-100">
                             <div v-for="restaurant in filteredRestaurants" class="restaurant_card">
                                 <router-link class="router_link"
                                     :to="{ name: 'RestaurantMenu', params: { slug: restaurant.slug } }">
@@ -258,18 +258,17 @@ hr {
     color: var(--boo-gray-800);
     margin-top: 0;
     margin-bottom: 5rem;
-
 }
 
 .search_container {
     display: flex;
     margin-bottom: 5rem;
+    max-height: 800px;
 
     .cousines {
         width: 300px;
         flex-shrink: 0;
         padding-right: 2rem;
-        height: 800px;
         overflow-y: scroll;
         scrollbar-width: thin;
         scrollbar-color: var(--boo-primary) rgb(255, 255, 255);
@@ -339,14 +338,18 @@ hr {
                 border-radius: 2rem;
                 overflow: hidden;
                 height: fit-content;
-                /* border: 2px solid var(--boo-gray-800); */
+                border: 2px solid var(--boo-gray-400);
+                height: calc(50% - 1rem);
+
 
                 .top {
-                    max-height: 290px;
+                    /* max-height: 290px; */
                     overflow: hidden;
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    height: 75%;
+
 
                     img {
                         width: 100%;
@@ -365,6 +368,7 @@ hr {
                 }
 
                 .bottom {
+                    height: 25%;
                     background-color: var(--boo-gray-800);
                     padding: 1rem 2rem 1.4rem 2rem;
                     /* border-top: 1px solid var(--boo-gray-600); */
