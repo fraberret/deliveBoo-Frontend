@@ -35,10 +35,6 @@ export default {
 
         },
         addToCart(dish, currentRestaurantId) {
-            if (store.cartQuantity >= 5) {
-                alert('You cannot add more than 5 items to the cart.');
-                return;
-            }
 
             if (store.localCart.length > 0 && store.localCart[0].restaurantId !== currentRestaurantId) {
                 alert('You can only buy from one restaurant at a time.');

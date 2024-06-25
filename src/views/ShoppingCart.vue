@@ -14,19 +14,16 @@ export default {
     methods: {
         increaseQuantity(dishId) {
             let found = store.localCart.find(item => item.dishID === dishId);
-            if (store.cartQuantity < 5) {
-                found.quantity++;
-                store.cartQuantity++;
-                localStorage.setItem('cart', JSON.stringify(store.localCart));
-            } else {
-                alert("You cannot buy more than 5 items of this type.");
-            }
+            found.quantity++;
+            store.cartQuantity++;
+            localStorage.setItem('cart', JSON.stringify(store.localCart));
         },
         decreaseQuantity(dishId) {
             let found = store.localCart.find(item => item.dishID === dishId);
             if (found.quantity > 1) {
                 found.quantity--
                 store.cartQuantity--
+                localStorage.setItem('cart', JSON.stringify(store.localCart));
             }
         },
         deleteItem(dishId) {
@@ -45,10 +42,6 @@ export default {
 
 <template>
     <div class="container">
-
-
-
-
         <template v-if="store.localCart.length > 0">
 
             <h2 class="mb-4">Your order to <span class="text-warning">{{ store.localCart[0].nameRestaurant }}</span>
