@@ -33,7 +33,7 @@ export default {
                         this.success = resp.data.success
                         this.message = resp.data.message
                         this.loading = false
-                        
+
                     } else {
                         this.loading = false
                         this.$router.push({ name: 'notFound' })
@@ -87,7 +87,7 @@ export default {
             let found = store.localCart.find(item => item.dishID === id);
             return found ? found.quantity : 0;
         },
-        switchResturant(){
+        switchResturant() {
             store.localCart = [];
             localStorage.clear();
             store.cartQuantity = 0
@@ -119,11 +119,15 @@ export default {
                         <img src="/img/back-gray.png" alt="go back icon">
                     </router-link>
                     <div class="image">
-                        <img v-if="restaurant.logo && restaurant.logo.startsWith('uploads')"
-                            :src="base_restaurant_api + '/storage/' + restaurant.logo" alt="Restaurant Logo">
-                        <img v-else-if="restaurant.logo && restaurant.logo.startsWith('/img/')"
-                            :src="base_restaurant_api + restaurant.logo" alt="Restaurant Logo">
-                        <img v-else :src="restaurant.logo" alt="Restaurant Logo">
+                        <template v-if="restaurant.logo">
+                            <img v-if="restaurant.logo && restaurant.logo.startsWith('uploads')"
+                                :src="base_restaurant_api + '/storage/' + restaurant.logo" alt="Restaurant Logo">
+                            <img v-else-if="restaurant.logo && restaurant.logo.startsWith('/img/')"
+                                :src="base_restaurant_api + restaurant.logo" alt="Restaurant Logo">
+                            <img v-else :src="restaurant.logo" alt="Restaurant Logo">
+                        </template>
+                        <img src="/img/logo-sad.png" alt="Restaurant Logo" v-else>
+
                     </div>
                     <div class="text text-center">
                         <h5>{{ restaurant.name }}</h5>
@@ -131,7 +135,7 @@ export default {
                         <div class="cousines">
                             <h6>cousines</h6>
                             <span class="cousine" v-for="(cousine, index) in restaurant.cousines" :key="cousine.id">{{
-        cousine.name }}<span v-if="index < restaurant.cousines.length - 1">, </span>
+                                cousine.name }}<span v-if="index < restaurant.cousines.length - 1">, </span>
                             </span>
                         </div>
                         <div class="telephone">
@@ -172,13 +176,17 @@ export default {
                                         <h5>{{ dish.price }}</h5><span>&#8364;</span>
                                     </div>
                                     <div class="image">
-                                        <img v-if="dish.cover_image && dish.cover_image.startsWith('uploads')"
-                                            :src="base_restaurant_api + '/storage/' + dish.cover_image" alt="Dish">
+                                        <template v-if="dish.cover_image">
+                                            <img v-if="dish.cover_image && dish.cover_image.startsWith('uploads')"
+                                                :src="base_restaurant_api + '/storage/' + dish.cover_image" alt="Dish">
 
-                                        <img v-else-if="dish.cover_image && dish.cover_image.startsWith('/img/')"
-                                            :src="base_restaurant_api + dish.cover_image" alt="Dish">
+                                            <img v-else-if="dish.cover_image && dish.cover_image.startsWith('/img/')"
+                                                :src="base_restaurant_api + dish.cover_image" alt="Dish">
 
-                                        <img v-else :src="dish.cover_image" alt="Dish">
+                                            <img v-else :src="dish.cover_image" alt="Dish">
+                                        </template>
+                                        <img src="/img/logo-sad.png" alt="Restaurant Logo" v-else>
+
                                     </div>
                                 </div>
                             </div>
@@ -200,7 +208,7 @@ export default {
                                     @click="removeFromCart(dish.id, restaurant.id)" class="buttons btn_negative"><i
                                         class="fa-solid fa-minus"></i></div>
                                 <div v-if="getCurrentQuantity(dish.id) > 0" class="counter ms-3">{{
-        getCurrentQuantity(dish.id) }} <small class="text-secondary">pz.</small></div>
+                                    getCurrentQuantity(dish.id) }} <small class="text-secondary">pz.</small></div>
                                 <!-- <img width="" src="/img/cart-icon.png" alt="cart icon"> -->
                             </div>
                         </div>
@@ -228,9 +236,13 @@ export default {
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">You have items from a different restaurant, if you want to add this item you have to switch restaurant</div>
+                <div class="modal-body">You have items from a different restaurant, if you want to add this item you
+                    have to
+                    switch restaurant</div>
                 <div class="modal-footer">
-                    <button type="button" @click="switchResturant()" data-bs-dismiss="modal" class="btn btn-primary">Switch Restaurant</button>
+                    <button type="button" @click="switchResturant()" data-bs-dismiss="modal"
+                        class="btn btn-primary">Switch
+                        Restaurant</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         Cancel
                     </button>
