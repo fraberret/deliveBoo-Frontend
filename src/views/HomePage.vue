@@ -121,6 +121,15 @@ export default {
 
 
 <template>
+    <div class="vid">
+        <div class="video_banner">
+            <video playsInline loop preload="auto" autoplay muted>
+                <source src="/video/food-b.mp4" type="video/mp4">
+            </video>
+
+            <div class="video_filter"></div>
+        </div>
+    </div>
     <!-- <div class="search">
     <div class="searchbar">
         <i class="fa-solid fa-magnifying-glass"></i>
@@ -129,7 +138,7 @@ export default {
     </div>
      </div> -->
 
-    <div class="container">
+    <div class="container search_section">
         <AppBanner title="Chose a restaurant by selecting one or more cousine " subTitle="our restaurants" />
 
         <div class="restaurant_count text-end">
@@ -226,9 +235,47 @@ export default {
     </div>
 </template>
 
-
-
 <style>
+.vid {
+    /* position: fixed; */
+    top: 0;
+    z-index: -1;
+    width: 100%;
+    margin-top: -3rem;
+}
+
+.search_section {
+    margin-top: -10rem;
+}
+
+.video_banner {
+    width: 100%;
+    height: 500px;
+    /* margin: 1.5rem 0; */
+    /* border-radius: 2rem; */
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform .45s ease;
+    transform: translateY(0px) scale(1);
+    position: relative;
+
+    video {
+        filter: brightness(0.4);
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .video_filter {
+        inset: 0;
+        background-color: #2e0047;
+        mix-blend-mode: color;
+        position: absolute;
+    }
+}
+
 .no_restaurants {
     width: 100%;
     height: 100%;
@@ -247,6 +294,7 @@ export default {
         font-weight: 400;
         margin-top: 1rem;
         margin-bottom: 0;
+        text-align: center;
     }
 
     h6 {
@@ -262,6 +310,7 @@ hr {
 
 .search_container {
     display: flex;
+    margin-top: 3rem;
     margin-bottom: 5rem;
     max-height: 800px;
 

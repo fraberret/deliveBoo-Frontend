@@ -45,6 +45,11 @@ export default {
 <style>
 header {
     margin-bottom: 3rem;
+    /* position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    filter: invert(); */
 
     nav {
         display: flex;
