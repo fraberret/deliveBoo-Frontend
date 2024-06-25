@@ -206,9 +206,9 @@ export default {
                             <h6>Keep searching</h6>
                         </div>
                     </template>
-                    <!-- <div v-if="selectedCousine.length === 0" class="p-5">
+                    <div v-if="selectedCousine.length === 0 && !allSelected" class="p-5">
                         <h4>Select one ore more cousines to find restaurants...</h4>
-                    </div> -->
+                    </div>
                 </template>
             </div>
         </div>
