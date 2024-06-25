@@ -10,13 +10,29 @@ export default {
     AppHeader,
     AppFooter,
     PageLoader
+  },
+  data() {
+    return {
+      showLoader: false
+    };
+  },
+  beforeRouteEnter(to, from, next) {
+    if (to.path === '/') {
+      next(vm => {
+        vm.showLoader = true;
+      });
+    } else {
+      next(vm => {
+        vm.showLoader = false;
+      });
+    }
   }
 
 }
 </script>
 
 <template>
-  <PageLoader></PageLoader>
+  <PageLoader v-if="showLoader"></PageLoader>
 
   <AppHeader></AppHeader>
 

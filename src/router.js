@@ -9,12 +9,6 @@ import OrderInfo from './views/OrderInfo.vue';
 const router = createRouter({
     history: createWebHistory(),
     routes: [{
-        
-        path: '/:pathMatch(.*)*',
-        name: 'notFound',
-        component: NotFound
-    },
-    {
         path: '/',
         name: 'home',
         component: HomePage,
@@ -33,6 +27,11 @@ const router = createRouter({
         path: '/order',
         name: 'orderInfo',
         component: OrderInfo,
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'notFound',
+        component: NotFound
     }]
 })
 
