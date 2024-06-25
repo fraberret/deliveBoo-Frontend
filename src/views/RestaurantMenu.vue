@@ -15,6 +15,7 @@ export default {
             restaurant: {},
             loading: true,
             currentQuantity: 0,
+            showModal: false
         }
     },
     components: {
@@ -37,7 +38,7 @@ export default {
         addToCart(dish, currentRestaurantId) {
 
             if (store.localCart.length > 0 && store.localCart[0].restaurantId !== currentRestaurantId) {
-                alert('You can only buy from one restaurant at a time.');
+                this.showModal = true;
                 return;
             }
 
@@ -55,10 +56,7 @@ export default {
             // this.$forceUpdate();
         },
         removeFromCart(dishId, currentRestaurantId) {
-            if (store.localCart.length > 0 && store.localCart[0].restaurantId !== currentRestaurantId) {
-                alert('You can only buy from one restaurant at a time.');
-                return;
-            }
+
             let found = store.localCart.find(item => item.dishID === dishId);
 
             if (found && store.cartQuantity > 0) {
@@ -81,6 +79,11 @@ export default {
         getCurrentQuantity(id) {
             let found = store.localCart.find(item => item.dishID === id);
             return found ? found.quantity : 0;
+        },
+        switchResturant(){
+            store.localCart = [];
+            localStorage.clear();
+            store.cartQuantity = 0
         }
     },
     mounted() {
@@ -121,7 +124,7 @@ export default {
                         <div class="cousines">
                             <h6>cousines</h6>
                             <span class="cousine" v-for="(cousine, index) in restaurant.cousines" :key="cousine.id">{{
-                                cousine.name }}<span v-if="index < restaurant.cousines.length - 1">, </span>
+        cousine.name }}<span v-if="index < restaurant.cousines.length - 1">, </span>
                             </span>
                         </div>
                         <div class="telephone">
@@ -175,13 +178,22 @@ export default {
                             <div class="bottom">
                             </div>
                             <div class="actions">
-                                <div @click="addToCart(dish, restaurant.id)" class="buttons btn_primary">Add to Cart
+
+                                <!-- Modal trigger button -->
+                                <div v-if="store.localCart.length > 0 && store.localCart[0].restaurantId !== restaurant.id"
+                                    type="button" data-bs-toggle="modal" data-bs-target="#modalId"
+                                    class="buttons bg-danger">Add to Cart
                                 </div>
+
+                                <div v-else @click="addToCart(dish, restaurant.id)" class="buttons btn_primary">Add to
+                                    Cart
+                                </div>
+
                                 <div v-if="getCurrentQuantity(dish.id) > 0"
                                     @click="removeFromCart(dish.id, restaurant.id)" class="buttons btn_negative"><i
                                         class="fa-solid fa-minus"></i></div>
                                 <div v-if="getCurrentQuantity(dish.id) > 0" class="counter ms-3">{{
-                                    getCurrentQuantity(dish.id) }} <small class="text-secondary">pz.</small></div>
+        getCurrentQuantity(dish.id) }} <small class="text-secondary">pz.</small></div>
                                 <!-- <img width="" src="/img/cart-icon.png" alt="cart icon"> -->
                             </div>
                         </div>
@@ -195,6 +207,30 @@ export default {
     <template v-else>
         <h1>{{ message }}</h1>
     </template>
+
+
+    <!-- Modal Body -->
+    <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+    <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
+        aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="w-50 modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitleId">
+                        Different Resturant Item Selected!
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">You have items from a different restaurant, if you want to add this item you have to switch restaurant</div>
+                <div class="modal-footer">
+                    <button type="button" @click="switchResturant()" data-bs-dismiss="modal" class="btn btn-primary">Switch Restaurant</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </template>
 
