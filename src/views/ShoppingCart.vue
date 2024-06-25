@@ -79,7 +79,7 @@ export default {
                         </td>
                     </tr>
                     <tr class="table-dark">
-                        <th colspan="3" class="text-right">Grand Total</th>
+                        <th colspan="3" class="text-right">Total Order</th>
                         <td>{{ store.grandTotal().toFixed(2) }}€</td>
                     </tr>
                 </tbody>
