@@ -57,7 +57,7 @@ export default {
                     <tr>
                         <th scope="col" class="w-35">Name</th>
                         <th scope="col" class="w-15">Price</th>
-                        <th scope="col" class="w-35">Quantity</th>
+                        <th scope="col" class="w-35 text-center">Quantity</th>
                         <th scope="col" class="w-15">Total</th>
                     </tr>
                 </thead>
@@ -65,11 +65,11 @@ export default {
                     <tr v-for="item in store.localCart" :key="item.dishID">
                         <td>{{ item.name }}</td>
                         <td>{{ item.price }}€</td>
-                        <td class="d-flex align-items-center">
+                        <td class="d-flex justify-content-evenly px-5 align-items-center">
                             <button class="btn btn-dark" @click="decreaseQuantity(item.dishID)"
                                 v-if="item.quantity > 1">-</button>
-                            <button class="btn btn-danger" @click="deleteItem(item.dishID)"
-                                v-if="item.quantity === 1"><i class="fa-solid fa-trash"></i></button>
+                            <button class="btn btn-dark" @click="deleteItem(item.dishID)"
+                                v-if="item.quantity === 1"><i class="fa-solid fa-trash text-danger"></i></button>
                             <span class="mx-3 w-2">{{ item.quantity }}</span>
                             <button class="btn btn-dark ms-1" @click="increaseQuantity(item.dishID)">+</button>
 
@@ -87,7 +87,7 @@ export default {
 
             <div class="d-flex justify-content-between align-items-center ">
                 <button class="border-0 p-4 buttons bg-danger text-white" @click="deleteAll()"><i
-                        class="fa-solid fa-trash"></i>  Delete All</button>
+                        class="fa-solid fa-trash me-2"></i>Delete All</button>
 
                 <CheckoutForm />
             </div>
