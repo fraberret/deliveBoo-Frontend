@@ -273,7 +273,6 @@ hr {
         overflow-y: scroll;
         scrollbar-width: thin;
         scrollbar-color: var(--boo-primary) rgb(255, 255, 255);
-        /* scrollbar-color: var(--boo-primary) rgb(247, 247, 247); */
         margin-right: 2rem;
 
         .cousine {
@@ -340,9 +339,8 @@ hr {
                 border-radius: 2rem;
                 overflow: hidden;
                 height: fit-content;
-                border: 2px solid var(--boo-gray-400);
+                /* border: 2px solid var(--boo-gray-400); */
                 height: calc(50% - 1rem);
-
 
                 .top {
                     /* max-height: 290px; */
@@ -463,7 +461,6 @@ hr {
         .cousines {
             width: 25%;
             padding-right: 1rem;
-            height: 400px;
             margin-bottom: 3rem;
         }
 
@@ -473,7 +470,6 @@ hr {
     }
 }
 
-
 @media screen and (max-width: 1200px) {
     .search_container {
         display: flex;
@@ -481,6 +477,7 @@ hr {
         max-height: 100%;
 
         .cousines {
+            height: 400px;
             width: 100%;
             padding-right: 8rem;
             overflow-y: scroll;
@@ -570,7 +567,6 @@ hr {
     }
 }
 
-
 @media screen and (max-width: 900px) {
     .search_container {
         .restaurants {
@@ -604,7 +600,7 @@ hr {
     }
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 676px) {
     .search_container {
         .restaurants {
             .restaurants_container {
