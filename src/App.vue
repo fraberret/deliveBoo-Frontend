@@ -10,26 +10,12 @@ export default {
         AppHeader,
         AppFooter,
         PageLoader
-    },
-    data() {
-        return {
-            showLoader: false
-        };
-    },
-    mounted() {
-        this.$watch(() => this.$route, (to) => {
-            if (to.name === 'home') {
-                this.showLoader = true;
-            } else {
-                this.showLoader = false;
-            }
-        });
-    },
+    }
 }
 </script>
 
 <template>
-    <PageLoader v-if="showLoader"></PageLoader>
+    <PageLoader></PageLoader>
 
     <AppHeader></AppHeader>
 
