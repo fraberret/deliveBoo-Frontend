@@ -45,6 +45,11 @@ export default {
 
 <template>
     <div class="container">
+
+        
+
+        <h2 class="mb-4">Your order to <span class="text-warning">{{ store.localCart[1].nameRestaurant }}</span></h2>
+
         <template v-if="store.localCart.length > 0">
             <table class="table table-striped table-hover table-bordered">
                 <thead class="thead-dark">

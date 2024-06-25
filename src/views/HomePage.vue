@@ -128,8 +128,23 @@ export default {
             placeholder="Cerca un ristorante">
     </div>
      </div> -->
+
     <div class="container">
         <AppBanner title="Chose a restaurant by selecting one or more cousine " subTitle="our restaurants" />
+
+        <div class="restaurant_count text-end">
+            <h4 v-if="allSelected">
+                Restaurants found: {{ restaurants.length }}
+            </h4>
+            <h4 v-else-if="filteredRestaurants.length == 0">
+                Restaurants found: {{ filteredRestaurants.length }}
+            </h4>
+            <h4 v-else>
+                Restaurants found: {{ filteredRestaurants.length }}
+            </h4>
+        </div>
+
+
 
         <div class="search_container">
             <div class="cousines">
@@ -149,7 +164,10 @@ export default {
                 </div>
             </div>
 
+
+
             <div class="restaurants">
+
 
                 <div v-if="isLoading" class="gif">
                     <img width="200" src="/img/logo-gif.gif" alt="">
@@ -426,6 +444,14 @@ hr {
 
     &:hover {
         background-color: var(--boo-gray-700) !important;
+    }
+}
+
+.restaurant_count{
+    color: var(--boo-primary);
+    margin: 0 1rem 1.5rem 0;
+    h4{
+        font-weight: 300;
     }
 }
 </style>
