@@ -181,7 +181,9 @@ export default {
                                 <router-link class="router_link"
                                     :to="{ name: 'RestaurantMenu', params: { slug: restaurant.slug } }">
                                     <div class="top">
-                                        <img :src="getImageSrc(restaurant.logo)" alt="Restaurant Logo">
+                                        <img :src="getImageSrc(restaurant.logo)" alt="Restaurant Logo"
+                                            v-if="restaurant.logo">
+                                        <img src="/img/logo-sad.png" width="500" alt="Restaurant Logo" v-else>
                                     </div>
 
                                     <div class="bottom">
@@ -447,10 +449,11 @@ hr {
     }
 }
 
-.restaurant_count{
+.restaurant_count {
     color: var(--boo-primary);
     margin: 0 1rem 1.5rem 0;
-    h4{
+
+    h4 {
         font-weight: 300;
     }
 }
