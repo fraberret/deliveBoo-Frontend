@@ -19,7 +19,7 @@ body {
 }
 
 main {
-    min-height: calc(100vh - 280px - 6.5rem);
+    min-height: calc(100vh - 544px - 6.5rem);
 }
 
 .container {
