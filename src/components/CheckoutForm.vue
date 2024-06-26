@@ -94,7 +94,7 @@ export default {
                 name: this.formData.customer_name,
                 email: this.formData.customer_email,
                 restaurant_name: this.restaurant_name,
-                message: 'il tuo ordine è avvenuto con successo',
+                message: 'they successfully received your order',
             }
 
             axios.post('http://localhost:8000/api/contacts', data).then(response => {
