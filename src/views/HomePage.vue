@@ -321,7 +321,7 @@ export default {
         overflow-y: scroll;
         scrollbar-width: thin;
         scrollbar-color: var(--boo-primary) rgb(255, 255, 255);
-        margin-right: 2rem;
+        margin-right: 1.3rem;
 
         .cousine {
             /* background-color: red; */
