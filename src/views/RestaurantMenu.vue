@@ -140,7 +140,7 @@ export default {
                                     <h6>cousines</h6>
                                     <span class="cousine" v-for="(cousine, index) in restaurant.cousines"
                                         :key="cousine.id">{{
-                                            cousine.name }}<span v-if="index < restaurant.cousines.length - 1">, </span>
+        cousine.name }}<span v-if="index < restaurant.cousines.length - 1">, </span>
                                     </span>
                                 </div>
                                 <div class="telephone">
@@ -204,12 +204,12 @@ export default {
                                     @click="removeFromCart(dish.id, restaurant.id)" class="buttons btn_negative"><i
                                         class="fa-solid fa-minus"></i></div>
                                 <div v-if="getCurrentQuantity(dish.id) > 0" class="counter ms-3">{{
-                                    getCurrentQuantity(dish.id) }} <small class="text-secondary">pz.</small></div>
+        getCurrentQuantity(dish.id) }} <small class="text-secondary">pz.</small></div>
                                 <!-- <img width="" src="/img/cart-icon.png" alt="cart icon"> -->
                             </div>
                         </div>
 
-                        <div class="dish_card no_visible" v-else>
+                        <div v-else class="dish_card no_visible">
                             <div class="top">
                                 <div class="card_left">
                                     <div>
@@ -234,22 +234,29 @@ export default {
                             </div>
                             <div class="actions">
 
-                                <!-- Modal trigger button -->
-                                <div v-if="store.localCart.length > 0 && store.localCart[0].restaurantId !== restaurant.id"
-                                    type="button" data-bs-toggle="modal" data-bs-target="#modalId"
-                                    class="buttons bg-danger">Add to Cart
-                                </div>
+                                <div v-if="dish.visible" class="if-visible">
 
-                                <div v-else @click="addToCart(dish, restaurant.id)" class="buttons btn_primary">Add to
-                                    Cart
-                                </div>
 
-                                <div v-if="getCurrentQuantity(dish.id) > 0"
-                                    @click="removeFromCart(dish.id, restaurant.id)" class="buttons btn_negative"><i
-                                        class="fa-solid fa-minus"></i></div>
-                                <div v-if="getCurrentQuantity(dish.id) > 0" class="counter ms-3">{{
-                                    getCurrentQuantity(dish.id) }} <small class="text-secondary">pz.</small></div>
-                                <!-- <img width="" src="/img/cart-icon.png" alt="cart icon"> -->
+                                    <!-- Modal trigger button -->
+                                    <div v-if="store.localCart.length > 0 && store.localCart[0].restaurantId !== restaurant.id"
+                                        type="button" data-bs-toggle="modal" data-bs-target="#modalId"
+                                        class="buttons bg-danger">Add to Cart
+                                    </div>
+
+                                    <div v-else @click="addToCart(dish, restaurant.id)" class="buttons btn_primary">Add
+                                        to
+                                        Cart
+                                    </div>
+
+                                    <div v-if="getCurrentQuantity(dish.id) > 0"
+                                        @click="removeFromCart(dish.id, restaurant.id)" class="buttons btn_negative"><i
+                                            class="fa-solid fa-minus"></i></div>
+                                    <div v-if="getCurrentQuantity(dish.id) > 0" class="counter ms-3">{{getCurrentQuantity(dish.id) }} <small class="text-secondary">pz.</small></div>
+                                    <!-- <img width="" src="/img/cart-icon.png" alt="cart icon"> -->
+                                </div>
+                                <div v-else class="" style="height: 56px;">
+                                    <!-- no need of add to cart button -->
+                                </div>
                             </div>
 
                             <div class="not_available">
@@ -530,6 +537,7 @@ export default {
         .no_visible {
             opacity: 0.7;
             z-index: -1;
+            position: relative;
         }
 
         .not_available {
@@ -543,11 +551,12 @@ export default {
             justify-content: center;
             z-index: 100;
 
-            h2 {
-                color: var(--boo-primary);
-                opacity: 1;
-            }
         }
+        .not_available h2 {
+            color: var(--boo-primary);
+            opacity: 1;
+        }
+
     }
 }
 
