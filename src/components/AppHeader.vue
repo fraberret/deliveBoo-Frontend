@@ -57,6 +57,14 @@ header {
         justify-content: space-between;
         padding: 1.25rem 0;
 
+        .logo img {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+
         .nav_links {
             display: flex;
             align-items: center;
@@ -115,7 +123,12 @@ header {
                     justify-content: center;
                     color: var(--boo-lighter);
                 }
+
+                img:hover {
+                    transform: scale(1.05);
+                }
             }
+
 
             .btn_primary {
                 font-size: 0.9rem;
