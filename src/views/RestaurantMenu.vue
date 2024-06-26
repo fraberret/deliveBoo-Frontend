@@ -131,28 +131,33 @@ export default {
                     <div class="image">
                         <img :src="getImageSrc(restaurant.logo)" alt="Restaurant Logo">
                     </div>
-                    <div class="text text-center">
-                        <h5>{{ restaurant.name }}</h5>
-                        <img width="26" src="/img/social/whatsapp.png" alt="whatsapp icon">
-                        <div class="cousines">
-                            <h6>cousines</h6>
-                            <span class="cousine" v-for="(cousine, index) in restaurant.cousines" :key="cousine.id">{{
-                                cousine.name }}<span v-if="index < restaurant.cousines.length - 1">, </span>
-                            </span>
+                    <div class="restaurant_info">
+                        <div class="text text-center">
+                            <h5>{{ restaurant.name }}</h5>
+                            <img width="26" src="/img/social/whatsapp.png" alt="whatsapp icon">
+                            <div class="info">
+                                <div class="cousines">
+                                    <h6>cousines</h6>
+                                    <span class="cousine" v-for="(cousine, index) in restaurant.cousines"
+                                        :key="cousine.id">{{
+                                            cousine.name }}<span v-if="index < restaurant.cousines.length - 1">, </span>
+                                    </span>
+                                </div>
+                                <div class="telephone">
+                                    <h6>telephone</h6>
+                                    <span>{{ restaurant.telephone_number }}</span>
+                                </div>
+                                <div class="address">
+                                    <h6>address</h6>
+                                    <span>{{ restaurant.address }}</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="telephone">
-                            <h6>telephone</h6>
-                            <span>{{ restaurant.telephone_number }}</span>
+                        <div class="socials">
+                            <a href=""><img src="/img/social/instagram.png" alt="instagram icon"></a>
+                            <a href=""><img src="/img/social/facebook.png" alt="facebook icon"></a>
+                            <a href=""><img src="/img/social/x.png" alt="x icon"></a>
                         </div>
-                        <div class="address">
-                            <h6>address</h6>
-                            <span>{{ restaurant.address }}</span>
-                        </div>
-                    </div>
-                    <div class="socials">
-                        <a href=""><img src="/img/social/instagram.png" alt="instagram icon"></a>
-                        <a href=""><img src="/img/social/facebook.png" alt="facebook icon"></a>
-                        <a href=""><img src="/img/social/x.png" alt="x icon"></a>
                     </div>
                 </div>
             </div>
@@ -251,7 +256,7 @@ export default {
     display: flex;
 
     .left {
-        width: 350px;
+        width: 380px;
         padding-right: 2rem;
     }
 
@@ -339,8 +344,7 @@ export default {
         scrollbar-width: thin;
         height: 880px;
         border-radius: 1rem;
-        padding-right: 1rem;
-        /* scrollbar-color: var(--boo-primary) var(--boo-secondary-light); */
+        padding-right: 2rem;
         scrollbar-color: var(--boo-primary) transparent;
 
         .dish_card {
@@ -354,7 +358,7 @@ export default {
                 background-color: var(--boo-gray-800);
                 box-shadow: 0px 10px 8px rgba(0, 0, 0, 0.381);
                 display: flex;
-                min-height: 320px;
+                min-height: 300px;
                 z-index: 0;
 
                 .card_left {
@@ -473,6 +477,256 @@ export default {
                     }
                 }
             }
+        }
+    }
+}
+
+/* media queries ---------------------------------------->  */
+
+@media screen and (max-width: 1200px) {
+    #menu {
+        /* background-color: rgb(0, 195, 255); */
+        flex-direction: column;
+
+        .left {
+            width: 100%;
+            padding-right: 0rem;
+        }
+
+        .vertical_banner {
+            /* height: 350px; */
+            display: flex;
+            padding: 2rem 2rem;
+            z-index: 3;
+
+
+            .image {
+                width: 200px;
+                margin: auto;
+                overflow: hidden;
+                border-radius: 50%;
+
+                img {
+                    width: 100%;
+                    object-fit: cover;
+                }
+            }
+
+            .restaurant_info {
+                flex-grow: 1;
+            }
+
+            .text {
+                padding: 0 2rem;
+
+                .info {
+                    display: flex;
+                    gap: 3rem;
+                    align-items: center;
+                    justify-content: center;
+                    border-top: 1px solid var(--boo-gray-400);
+                    border-bottom: 1px solid var(--boo-gray-400);
+                }
+
+                div {
+                    margin: 1.8rem 0;
+                }
+            }
+
+            .socials {
+                position: static;
+            }
+        }
+
+        .right {
+            position: relative;
+
+            &::after {
+                position: absolute;
+                background-color: red;
+                border-radius: 2rem;
+                content: '';
+                width: 92%;
+                right: 2rem;
+                height: 100px;
+                top: -120px;
+                z-index: 1;
+                box-shadow: 0px 50px 30px rgba(0, 0, 0, 0.675);
+
+            }
+        }
+
+        .dishes {
+            padding-top: 2rem;
+            padding-left: 2rem;
+
+        }
+    }
+}
+
+@media screen and (max-width: 920px) {
+    #menu {
+        background-color: rgb(0, 195, 255);
+
+        .left {
+            width: 100%;
+            padding-right: 0rem;
+        }
+
+        .vertical_banner {
+            /* height: 350px; */
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 2rem;
+            z-index: 3;
+
+
+            .image {
+                width: 200px;
+                margin: auto;
+                overflow: hidden;
+                border-radius: 50%;
+
+                img {
+                    width: 100%;
+                    object-fit: cover;
+                }
+            }
+
+            .restaurant_info {
+                flex-grow: 1;
+            }
+
+            .text {
+                padding: 0 2rem;
+                margin-top: 1rem;
+
+                .info {
+                    display: flex;
+                    gap: 3rem;
+                    align-items: center;
+                    justify-content: center;
+                    border-top: 1px solid var(--boo-gray-400);
+                    border-bottom: 1px solid var(--boo-gray-400);
+                }
+
+                div {
+                    margin: 1.8rem 0;
+                }
+            }
+
+            .socials {
+                position: static;
+            }
+        }
+
+        .right {
+            position: relative;
+
+            &::after {
+                position: absolute;
+                background-color: red;
+                border-radius: 2rem;
+                content: '';
+                width: 92%;
+                right: 2rem;
+                height: 100px;
+                top: -120px;
+                z-index: 1;
+                box-shadow: 0px 50px 30px rgba(0, 0, 0, 0.675);
+
+            }
+        }
+
+        .dishes {
+            padding-top: 2rem;
+            padding-left: 2rem;
+
+        }
+    }
+}
+
+@media screen and (max-width: 750px) {
+    #menu {
+        background-color: rgb(14, 114, 144);
+
+        .left {
+            width: 100%;
+            padding-right: 0rem;
+        }
+
+        .vertical_banner {
+            /* height: 350px; */
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 2rem;
+            z-index: 3;
+
+
+            .image {
+                width: 200px;
+                margin: auto;
+                overflow: hidden;
+                border-radius: 50%;
+
+                img {
+                    width: 100%;
+                    object-fit: cover;
+                }
+            }
+
+            .restaurant_info {
+                flex-grow: 1;
+            }
+
+            .text {
+                padding: 0 2rem;
+                margin-top: 1rem;
+
+                .info {
+                    margin: 2rem 0;
+                    padding: 1rem 0;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0rem;
+                    align-items: center;
+                    justify-content: center;
+                    border-top: 1px solid var(--boo-gray-400);
+                    border-bottom: 1px solid var(--boo-gray-400);
+                }
+
+                div {
+                    margin: .5rem 0;
+                }
+            }
+
+            .socials {
+                position: static;
+            }
+        }
+
+        .right {
+            position: relative;
+
+            &::after {
+                position: absolute;
+                background-color: red;
+                border-radius: 2rem;
+                content: '';
+                width: 92%;
+                right: 2rem;
+                height: 100px;
+                top: -120px;
+                z-index: 1;
+                box-shadow: 0px 50px 30px rgba(0, 0, 0, 0.675);
+
+            }
+        }
+
+        .dishes {
+            padding-top: 2rem;
+            padding-left: 2rem;
+
         }
     }
 }
