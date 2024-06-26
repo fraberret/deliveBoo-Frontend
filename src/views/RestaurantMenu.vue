@@ -483,6 +483,8 @@ export default {
 
 /* media queries ---------------------------------------->  */
 
+/* media queries ---------------------------------------->  */
+
 @media screen and (max-width: 1400px) {
     #menu {
         /* background-color: rgb(98, 255, 0); */
@@ -496,7 +498,7 @@ export default {
         .vertical_banner {
             /* height: 350px; */
             display: flex;
-            padding: 2rem 2rem;
+            padding: 4rem 2rem;
             z-index: 3;
 
 
@@ -545,6 +547,36 @@ export default {
                 position: absolute;
                 border-radius: 2rem;
                 content: '';
+                width: 80%;
+                right: 8rem;
+                height: 100px;
+                top: -120px;
+                z-index: 1;
+                box-shadow: 0px 50px 30px rgba(0, 0, 0, 0.345);
+            }
+        }
+
+        .dishes {
+            padding-top: 2rem;
+            padding-left: 8rem;
+            padding-right: 8rem;
+        }
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    #menu {
+        /* background-color: rgb(98, 255, 0); */
+        flex-direction: column;
+
+
+        .right {
+            position: relative;
+
+            &::after {
+                position: absolute;
+                border-radius: 2rem;
+                content: '';
                 width: 92%;
                 right: 2rem;
                 height: 100px;
@@ -564,10 +596,8 @@ export default {
 
 @media screen and (max-width: 920px) {
     #menu {
-        /* background-color: rgb(11, 48, 60); */
 
         .vertical_banner {
-            /* height: 350px; */
             display: flex;
             flex-direction: column;
             padding: 2rem 2rem;
@@ -645,34 +675,10 @@ export default {
                     }
 
                     .card_right {
-                        /* width: 50%;
-                        position: relative; */
 
-                        /* .price {
-                            position: absolute;
-                            background-color: var(--boo-secondary-dark);
-                            width: 100px;
-                            aspect-ratio: 1;
-                            border-radius: 50%;
-                            z-index: 1;
-                            right: 0;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            color: var(--boo-gray-800);
-                            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.381);
-
-                            h5 {
-                                font-size: 1.3rem;
-                                font-weight: 600;
-                                margin-bottom: 0;
-                                margin-right: 3px;
-                            }
-                        } */
 
                         .image {
                             width: 280px;
-                            /* top: 1rem; */
                         }
                     }
                 }
@@ -683,7 +689,6 @@ export default {
 
 @media screen and (max-width: 760px) {
     #menu {
-        /* background-color: rgb(14, 114, 144); */
 
         .left {
             padding-right: 0rem;
