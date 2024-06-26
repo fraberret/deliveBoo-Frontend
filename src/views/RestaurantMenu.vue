@@ -163,7 +163,7 @@ export default {
             </div>
             <!-- DISHES -->
             <div class="right">
-                <div class="dishes">
+                <div class="dishes" v-if="restaurant.dishes.length > 0">
                     <template v-for="dish in restaurant.dishes" :key="dish.id">
                         <div class="dish_card" v-if="dish.visible">
                             <div class="top">
@@ -270,7 +270,12 @@ export default {
                     </template>
 
                 </div>
+                <div class="no_menu d-flex flex-column align-items-center justify-content-center p-5" v-else>
+                    <img src="/img/logo-sad.png" alt="" width="500">
+                    <h2 class="text-center">In this restaurant at the moment don't are dishes</h2>
+                </div>
             </div>
+
         </div>
     </template>
     <template v-else>
@@ -397,6 +402,17 @@ export default {
         }
     }
 
+    .no_menu {
+        /* position: absolute;
+            top: 0;
+            left: 0; */
+        width: 100%;
+        background-color: var(--boo-gray-800);
+        color: var(--boo-lighter);
+        border-radius: 2rem;
+        height: 880px;
+    }
+
     .dishes {
         overflow-y: auto;
         scrollbar-width: thin;
@@ -404,6 +420,8 @@ export default {
         border-radius: 1rem;
         padding-right: 2rem;
         scrollbar-color: var(--boo-primary) transparent;
+
+
 
         .dish_card {
             position: relative;
