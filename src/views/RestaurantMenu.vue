@@ -483,9 +483,9 @@ export default {
 
 /* media queries ---------------------------------------->  */
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1400px) {
     #menu {
-        /* background-color: rgb(0, 195, 255); */
+        /* background-color: rgb(98, 255, 0); */
         flex-direction: column;
 
         .left {
@@ -543,7 +543,6 @@ export default {
 
             &::after {
                 position: absolute;
-                background-color: red;
                 border-radius: 2rem;
                 content: '';
                 width: 92%;
@@ -551,27 +550,21 @@ export default {
                 height: 100px;
                 top: -120px;
                 z-index: 1;
-                box-shadow: 0px 50px 30px rgba(0, 0, 0, 0.675);
-
+                box-shadow: 0px 50px 30px rgba(0, 0, 0, 0.345);
             }
         }
 
         .dishes {
             padding-top: 2rem;
             padding-left: 2rem;
-
+            padding-right: 3rem;
         }
     }
 }
 
 @media screen and (max-width: 920px) {
     #menu {
-        background-color: rgb(0, 195, 255);
-
-        .left {
-            width: 100%;
-            padding-right: 0rem;
-        }
+        /* background-color: rgb(11, 48, 60); */
 
         .vertical_banner {
             /* height: 350px; */
@@ -620,38 +613,79 @@ export default {
             }
         }
 
-        .right {
-            position: relative;
-
-            &::after {
-                position: absolute;
-                background-color: red;
-                border-radius: 2rem;
-                content: '';
-                width: 92%;
-                right: 2rem;
-                height: 100px;
-                top: -120px;
-                z-index: 1;
-                box-shadow: 0px 50px 30px rgba(0, 0, 0, 0.675);
-
-            }
-        }
-
         .dishes {
-            padding-top: 2rem;
-            padding-left: 2rem;
+            padding-right: 2rem;
 
+            .dish_card {
+
+                .top {
+
+                    .card_left {
+                        padding-right: 4rem;
+
+                        h5 {
+                            font-size: 1.8rem;
+                        }
+
+                        p {
+                            font-size: 1rem;
+                            line-height: 1.5rem;
+                        }
+
+                        .ingredients {
+                            h6 {
+                                font-size: 1.2rem;
+                            }
+
+                            p {
+                                font-size: 1rem;
+                                line-height: 1.6rem;
+                            }
+                        }
+                    }
+
+                    .card_right {
+                        /* width: 50%;
+                        position: relative; */
+
+                        /* .price {
+                            position: absolute;
+                            background-color: var(--boo-secondary-dark);
+                            width: 100px;
+                            aspect-ratio: 1;
+                            border-radius: 50%;
+                            z-index: 1;
+                            right: 0;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            color: var(--boo-gray-800);
+                            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.381);
+
+                            h5 {
+                                font-size: 1.3rem;
+                                font-weight: 600;
+                                margin-bottom: 0;
+                                margin-right: 3px;
+                            }
+                        } */
+
+                        .image {
+                            width: 280px;
+                            /* top: 1rem; */
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 760px) {
     #menu {
-        background-color: rgb(14, 114, 144);
+        /* background-color: rgb(14, 114, 144); */
 
         .left {
-            /* width: 100%; */
             padding-right: 0rem;
         }
 
@@ -669,13 +703,7 @@ export default {
                 }
             }
 
-            /* .restaurant_info {
-                flex-grow: 1;
-            } */
-
             .text {
-                /* padding: 0 2rem;
-                margin-top: 1rem; */
 
                 .info {
                     margin: 2rem 0;
@@ -711,22 +739,16 @@ export default {
             .dish_card {
 
                 .top {
-                    /* border-radius: 2rem; */
-                    /* padding: 2.5rem 3.5rem; */
-                    /* background-color: var(--boo-gray-800); */
-                    /* box-shadow: 0px 10px 8px rgba(0, 0, 0, 0.381); */
-                    /* display: flex; */
                     flex-direction: column-reverse;
-                    /* min-height: 300px; */
-                    /* z-index: 0; */
 
                     .card_left {
                         text-align: center;
                         width: 100%;
-                        /* display: flex;
-                        justify-content: space-between;
-                        gap: 2rem;
-                        padding-right: 1rem; */
+                        margin: auto;
+                        display: flex;
+                        justify-content: center;
+                        text-align: center;
+                        padding: 0;
 
                         h5 {
                             font-size: 2rem;
@@ -739,6 +761,7 @@ export default {
                         }
 
                         .ingredients {
+
                             h6 {
                                 letter-spacing: 2.25px;
                                 font-size: 1.5rem;
@@ -753,84 +776,21 @@ export default {
 
                     .card_right {
                         width: 100%;
-                        /* position: relative; */
-                        height: 300px;
+                        height: 330px;
 
                         .price {
-                            /* position: absolute;
-                            background-color: var(--boo-secondary-dark);
-                            width: 100px;
-                            aspect-ratio: 1;
-                            border-radius: 50%;
-                            z-index: 1; */
                             right: 3rem;
-                            /* display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            color: var(--boo-gray-800);
-                            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.381); */
-
-                            /* h5 {
-                                font-size: 1.3rem;
-                                font-weight: 600;
-                                margin-bottom: 0;
-                                margin-right: 3px;
-                            } */
                         }
 
                         .image {
-                            width: 260px;
+                            width: 300px;
                             top: 0;
                             left: 0;
                             right: 0rem;
                             margin: auto;
-                            /* position: absolute;
-                            border-radius: 50%;
-                            overflow: hidden;
-                            box-shadow: 10px 20px 20px rgba(0, 0, 0, 0.381); */
-
-                            /* img {
-                                width: 100%;
-                                object-fit: cover;
-                                transition: transform 2s ease;
-
-                                &:hover {
-                                    transform: rotate(45deg);
-                                }
-                            } */
                         }
                     }
                 }
-
-                /* .bottom {
-                    position: absolute;
-                    width: 100%;
-                    height: 180px;
-                    z-index: -1;
-                    border-radius: 2rem;
-                    transform: translateY(-4rem);
-                    background-color: var(--boo-darker);
-                } */
-
-                /* .actions {
-                    display: flex;
-                    gap: .5rem;
-                    width: 100%;
-                    padding: 1.8rem 3rem;
-                    align-items: center;
-
-                    .btn_negative {
-                        background-color: var(--boo-primary);
-                        border: none;
-                        padding-inline: 0;
-                        width: 3.5rem;
-
-                        &:hover {
-                            border: none;
-                            border-color: aqua;
-                        }
-                    }
-                } */
             }
         }
     }
