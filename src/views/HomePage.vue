@@ -377,6 +377,9 @@ export default {
         /* flex-grow: 1; */
         display: flex;
         position: relative;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: var(--boo-primary) rgb(255, 255, 255);
 
         .restaurant_count {
             position: absolute;
