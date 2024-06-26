@@ -182,7 +182,8 @@ export default {
                 </div>
                 <template v-else>
                     <template v-if="isRestaurants">
-                        <div v-if="restaurants.length" class="restaurants_container w-100">
+                        <div v-if="restaurants.length" :class="restaurants.length > 6 && 'pe-3'"
+                            class="restaurants_container w-100">
                             <div v-for="restaurant in restaurants" class="restaurant_card">
                                 <router-link class="router_link"
                                     :to="{ name: 'RestaurantMenu', params: { slug: restaurant.slug } }">
@@ -203,7 +204,8 @@ export default {
                         </div>
                     </template>
                     <template v-if="isFilteredRestaurants">
-                        <div v-if="filteredRestaurants.length" class="restaurants_container w-100">
+                        <div v-if="filteredRestaurants.length" :class="filteredRestaurants.length > 6 && 'pe-3'"
+                            class="restaurants_container w-100">
                             <div v-for="restaurant in filteredRestaurants" class="restaurant_card">
                                 <router-link class="router_link"
                                     :to="{ name: 'RestaurantMenu', params: { slug: restaurant.slug } }">
@@ -305,12 +307,6 @@ export default {
     }
 }
 
-/* hr {
-    color: var(--boo-gray-800);
-    margin-top: 0;
-    margin-bottom: 5rem;
-} */
-
 .search_container {
     display: flex;
     margin-top: 5rem;
@@ -377,15 +373,13 @@ export default {
         /* flex-grow: 1; */
         display: flex;
         position: relative;
-        overflow-y: auto;
-        scrollbar-width: thin;
-        scrollbar-color: var(--boo-primary) rgb(255, 255, 255);
+
 
         .restaurant_count {
             position: absolute;
             z-index: 1;
             right: 8px;
-            top: -3.5rem;
+            top: -3.4rem;
 
             .count {
                 display: flex;
@@ -403,13 +397,13 @@ export default {
                 span {
                     color: var(--boo-gray-800);
                     font-weight: 400;
-                    font-size: 1rem;
+                    font-size: .9rem;
                     background-color: var(--boo-gray-700);
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    width: 33px;
-                    height: 33px;
+                    width: 32px;
+                    height: 32px;
                     padding-top: 1px;
                     border-radius: 50%;
                     color: var(--boo-lighter);
@@ -419,10 +413,12 @@ export default {
         }
 
         .restaurants_container {
+            overflow-y: auto;
             gap: 1rem;
             display: flex;
             flex-wrap: wrap;
-
+            scrollbar-width: thin;
+            scrollbar-color: var(--boo-primary) rgb(255, 255, 255);
 
             .router_link {
                 text-decoration: none;
