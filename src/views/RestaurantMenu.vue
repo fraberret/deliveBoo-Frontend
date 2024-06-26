@@ -209,6 +209,54 @@ export default {
                             </div>
                         </div>
 
+                        <div class="dish_card no_visible" v-else>
+                            <div class="top">
+                                <div class="card_left">
+                                    <div>
+                                        <h5>{{ dish.name }}</h5>
+                                        <p>{{ dish.description }}</p>
+                                    </div>
+                                    <div class="ingredients">
+                                        <h6>ingredients</h6>
+                                        <p>{{ dish.ingredients }}</p>
+                                    </div>
+                                </div>
+                                <div class="card_right">
+                                    <div class="price">
+                                        <h5>{{ dish.price }}</h5><span>&#8364;</span>
+                                    </div>
+                                    <div class="image">
+                                        <img :src="getImageSrc(dish.cover_image)" alt="Restaurant Logo">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom">
+                            </div>
+                            <div class="actions">
+
+                                <!-- Modal trigger button -->
+                                <div v-if="store.localCart.length > 0 && store.localCart[0].restaurantId !== restaurant.id"
+                                    type="button" data-bs-toggle="modal" data-bs-target="#modalId"
+                                    class="buttons bg-danger">Add to Cart
+                                </div>
+
+                                <div v-else @click="addToCart(dish, restaurant.id)" class="buttons btn_primary">Add to
+                                    Cart
+                                </div>
+
+                                <div v-if="getCurrentQuantity(dish.id) > 0"
+                                    @click="removeFromCart(dish.id, restaurant.id)" class="buttons btn_negative"><i
+                                        class="fa-solid fa-minus"></i></div>
+                                <div v-if="getCurrentQuantity(dish.id) > 0" class="counter ms-3">{{
+                                    getCurrentQuantity(dish.id) }} <small class="text-secondary">pz.</small></div>
+                                <!-- <img width="" src="/img/cart-icon.png" alt="cart icon"> -->
+                            </div>
+
+                            <div class="not_available">
+                                <h2>Not Available</h2>
+                            </div>
+                        </div>
+
                     </template>
 
                 </div>
@@ -476,6 +524,28 @@ export default {
                         border-color: aqua;
                     }
                 }
+            }
+        }
+
+        .no_visible {
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        .not_available {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+
+            h2 {
+                color: var(--boo-primary);
+                opacity: 1;
             }
         }
     }
