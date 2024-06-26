@@ -141,19 +141,9 @@ export default {
     <div class="container search_section">
         <AppBanner title="Chose a restaurant by selecting one or more cousine " subTitle="our restaurants" />
 
-        <div class="restaurant_count text-end">
-            <h4 v-if="allSelected">
-                Restaurants found: {{ restaurants.length }}
-            </h4>
-            <h4 v-else-if="filteredRestaurants.length == 0">
-                Restaurants found: {{ filteredRestaurants.length }}
-            </h4>
-            <h4 v-else>
-                Restaurants found: {{ filteredRestaurants.length }}
-            </h4>
-        </div>
 
         <div class="search_container">
+
             <div class="cousines">
                 <div class="cousine">
                     <div class="cousine_btn" @click="getAllRestaurants()"
@@ -172,6 +162,20 @@ export default {
             </div>
 
             <div class="restaurants">
+                <div class="restaurant_count text-end">
+                    <div v-if="allSelected" class="count">
+                        <h4> Restaurants found: </h4>
+                        <span> {{ restaurants.length }}</span>
+                    </div>
+                    <div v-else-if="filteredRestaurants.length == 0" class="count">
+                        <h4>Restaurants found: </h4>
+                        <span>{{ filteredRestaurants.length }}</span>
+                    </div>
+                    <div v-else class="count">
+                        <h4>Restaurants found: </h4>
+                        <span>{{ filteredRestaurants.length }}</span>
+                    </div>
+                </div>
                 <div v-if="isLoading" class="gif">
                     <img width="200" src="/img/logo-gif.gif" alt="">
                     <h6 class="text-secondary">Loading..</h6>
@@ -231,7 +235,7 @@ export default {
                 </template>
             </div>
         </div>
-        <hr>
+        <!-- <hr> -->
     </div>
 </template>
 
@@ -245,14 +249,13 @@ export default {
 }
 
 .search_section {
-    margin-top: -10rem;
+    margin-top: -12rem;
 }
 
 .video_banner {
     width: 100%;
     height: 500px;
     /* margin: 1.5rem 0; */
-    /* border-radius: 2rem; */
     overflow: hidden;
     display: flex;
     justify-content: space-between;
@@ -302,15 +305,15 @@ export default {
     }
 }
 
-hr {
+/* hr {
     color: var(--boo-gray-800);
     margin-top: 0;
     margin-bottom: 5rem;
-}
+} */
 
 .search_container {
     display: flex;
-    margin-top: 3rem;
+    margin-top: 5rem;
     margin-bottom: 5rem;
     max-height: 800px;
 
@@ -373,11 +376,50 @@ hr {
         width: 85%;
         /* flex-grow: 1; */
         display: flex;
+        position: relative;
+
+        .restaurant_count {
+            position: absolute;
+            z-index: 1;
+            right: 8px;
+            top: -3.5rem;
+
+            .count {
+                display: flex;
+                width: 100%;
+                align-items: center;
+
+                h4 {
+                    font-weight: 400;
+                    font-size: 1rem;
+                    color: var(--boo-gray-400);
+                    margin-bottom: 0;
+                    margin-right: .5rem;
+                }
+
+                span {
+                    color: var(--boo-gray-800);
+                    font-weight: 400;
+                    font-size: 1rem;
+                    background-color: var(--boo-gray-700);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 33px;
+                    height: 33px;
+                    padding-top: 1px;
+                    border-radius: 50%;
+                    color: var(--boo-lighter);
+                }
+            }
+
+        }
 
         .restaurants_container {
             gap: 1rem;
             display: flex;
             flex-wrap: wrap;
+
 
             .router_link {
                 text-decoration: none;
@@ -489,15 +531,6 @@ hr {
 
     &:hover {
         background-color: var(--boo-gray-700) !important;
-    }
-}
-
-.restaurant_count {
-    color: var(--boo-primary);
-    margin: 0 1rem 1.5rem 0;
-
-    h4 {
-        font-weight: 300;
     }
 }
 

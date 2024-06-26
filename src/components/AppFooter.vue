@@ -71,6 +71,11 @@ export default {
 
 
 <style>
+footer {
+    background-color: var(--boo-secondary-light);
+    padding: 8rem 0;
+}
+
 p,
 li {
     font-size: 12px;
