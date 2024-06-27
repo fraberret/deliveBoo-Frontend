@@ -193,7 +193,7 @@ export default {
                                 <!-- Modal trigger button -->
                                 <div v-if="store.localCart.length > 0 && store.localCart[0].restaurantId !== restaurant.id"
                                     type="button" data-bs-toggle="modal" data-bs-target="#modalId"
-                                    class="buttons bg-danger">Add to Cart
+                                    class="buttons bg-gray">Add to Cart
                                 </div>
 
                                 <div v-else @click="addToCart(dish, restaurant.id)" class="buttons btn_primary">Add to
@@ -240,7 +240,7 @@ export default {
                                         <!-- Modal trigger button -->
                                         <div v-if="store.localCart.length > 0 && store.localCart[0].restaurantId !== restaurant.id"
                                             type="button" data-bs-toggle="modal" data-bs-target="#modalId"
-                                            class="buttons bg-danger">Add to Cart
+                                            class="buttons bg-gray">Add to Cart
                                         </div>
 
                                         <div v-else @click="addToCart(dish, restaurant.id)" class="buttons btn_primary">
@@ -660,6 +660,17 @@ export default {
             padding-left: 8rem;
             padding-right: 8rem;
         }
+    }
+}
+
+.bg-gray {
+    border: 3px gray solid !important;
+    background-color: transparent !important;
+    color: gray !important;
+    transition: background-color 1s ease, color 1s ease;
+
+    &:hover {
+        color: white !important;
     }
 }
 

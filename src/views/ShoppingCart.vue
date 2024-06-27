@@ -49,7 +49,8 @@ export default {
     <div class="container">
         <template v-if="store.localCart.length > 0">
 
-            <h2 class="mb-4">Your order to <span class="text-warning">{{ store.localCart[0].nameRestaurant }}</span>
+            <h2 class="mb-4">Your order to <span style="color: var(--boo-primary);">{{ store.localCart[0].nameRestaurant
+                    }}</span>
             </h2>
 
             <table class="table table-striped table-hover table-bordered">
@@ -68,8 +69,8 @@ export default {
                         <td class="d-flex justify-content-evenly px-5 align-items-center">
                             <button class="btn btn-dark" @click="decreaseQuantity(item.dishID)"
                                 v-if="item.quantity > 1">-</button>
-                            <button class="btn btn-dark" @click="deleteItem(item.dishID)"
-                                v-if="item.quantity === 1"><i class="fa-solid fa-trash text-danger"></i></button>
+                            <button class="btn btn-dark" @click="deleteItem(item.dishID)" v-if="item.quantity === 1"><i
+                                    class="fa-solid fa-trash text-danger"></i></button>
                             <span class="mx-3 w-2">{{ item.quantity }}</span>
                             <button class="btn btn-dark ms-1" @click="increaseQuantity(item.dishID)">+</button>
 
@@ -116,7 +117,15 @@ export default {
     width: 35%;
 }
 
-.btn {
-    transition: transform 2s ease;
+.bg-danger {
+    border: 3px rgb(220, 53, 69) solid !important;
+    background-color: transparent !important;
+    color: rgb(220, 53, 69) !important;
+    transition: background-color 1s ease, color 1s ease;
+
+    &:hover {
+        background-color: rgb(220, 53, 69) !important;
+        color: white !important;
+    }
 }
 </style>
