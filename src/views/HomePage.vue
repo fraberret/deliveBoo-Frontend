@@ -580,6 +580,10 @@ export default {
                     width: calc((100% / 2) - 1rem);
                     height: fit-content;
 
+                    .top {
+                        aspect-ratio: 1;
+                    }
+
                     .bottom {
                         padding: 2rem 2rem 2rem 2rem;
 
@@ -648,7 +652,7 @@ export default {
                     width: 100%;
 
                     .top {
-                        max-height: 400px;
+                        aspect-ratio: 1;
                     }
 
                     .bottom {
