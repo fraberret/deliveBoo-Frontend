@@ -11,11 +11,13 @@ export default {
             <div class="row">
                 <div class="col-12 col-md-4">
                     <img src="/img/logo-deliveboo.png" class="mw-100 pb-3" alt="logo deliveboo">
-                    <p class="pe-5 footer_text">Deliveboo brings your favorite meals right to your doorstep. We partner
-                        with the
-                        best local
-                        restaurants to offer you a wide variety of dishes, all delivered fast and fresh. Join our
-                        community of happy customers and enjoy the convenience of online ordering and home delivery.</p>
+                    <p class="pe-5 footer_text">Deliveboo brings your favorite meals right to your doorstep. <span> We
+                            partner
+                            with the
+                            best local
+                            restaurants to offer you a wide variety of dishes, all delivered fast and fresh. </span></p>
+                    <!-- Join our
+                        community of happy customers and enjoy the convenience of online ordering and home delivery. -->
                     <div class="socials d-flex justify-content-start gap-5">
                         <a href=""><img src="/img/social/instagram.png" alt="instagram icon"></a>
                         <a href=""><img src="/img/social/facebook.png" alt="facebook icon"></a>
@@ -79,10 +81,17 @@ footer {
     .footer_text {
         line-height: 1.5rem;
         padding-bottom: .5rem;
+        font-size: .9rem;
+        font-weight: 300;
+
+        span {
+            font-weight: 600;
+        }
     }
 
     h5 {
         margin-bottom: 1rem;
+        color: var(--boo-gray-800);
     }
 }
 
