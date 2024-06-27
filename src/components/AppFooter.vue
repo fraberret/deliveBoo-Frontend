@@ -7,15 +7,16 @@ export default {
 
 <template>
     <footer class="mt-5">
-
         <div class="container mb-2">
             <div class="row">
                 <div class="col-12 col-md-4">
-                    <img src="/img/logo-deliveboo.png" class="mw-100 pb-3" alt="">
-                    <p>Deliveboo brings your favorite meals right to your doorstep. We partner with the best local
+                    <img src="/img/logo-deliveboo.png" class="mw-100 pb-3" alt="logo deliveboo">
+                    <p class="pe-5 footer_text">Deliveboo brings your favorite meals right to your doorstep. We partner
+                        with the
+                        best local
                         restaurants to offer you a wide variety of dishes, all delivered fast and fresh. Join our
                         community of happy customers and enjoy the convenience of online ordering and home delivery.</p>
-                    <div class="socials">
+                    <div class="socials d-flex justify-content-start gap-5">
                         <a href=""><img src="/img/social/instagram.png" alt="instagram icon"></a>
                         <a href=""><img src="/img/social/facebook.png" alt="facebook icon"></a>
                         <a href=""><img src="/img/social/x.png" alt="x icon"></a>
@@ -73,7 +74,16 @@ export default {
 <style>
 footer {
     background-color: var(--boo-secondary-light);
-    padding: 8rem 0;
+    padding: 8rem 0 4rem 0;
+
+    .footer_text {
+        line-height: 1.5rem;
+        padding-bottom: .5rem;
+    }
+
+    h5 {
+        margin-bottom: 1rem;
+    }
 }
 
 p,
@@ -86,5 +96,6 @@ li {
     align-items: center;
     justify-content: space-evenly;
     width: 100%;
+    margin-bottom: 4rem;
 }
 </style>
