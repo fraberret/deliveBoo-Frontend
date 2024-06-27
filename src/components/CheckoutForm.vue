@@ -222,7 +222,7 @@ export default {
                         </form>
                     </div>
                 </div>
-                <div v-else class="text-center my-5">loading...</div>
+                <div v-else class="text-center my-5 w-100">loading...</div>
             </div>
         </div>
     </div>
