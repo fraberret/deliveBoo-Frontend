@@ -87,12 +87,33 @@ export default {
             </table>
 
             <div class="d-flex justify-content-between align-items-center ">
-                <button class="border-0 p-4 buttons bg-danger text-white" @click="deleteAll()"><i
-                        class="fa-solid fa-trash me-2"></i>Delete All</button>
+                <button class="border-0 p-4 buttons bg-danger text-white" data-bs-toggle="modal"
+                    data-bs-target="#deleteAllModal"><i class="fa-solid fa-trash me-2"></i>Delete All</button>
 
                 <CheckoutForm />
             </div>
 
+            <div class="modal fade" id="deleteAllModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+                role="dialog" aria-labelledby="deleteAllModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteAllModalTitle">
+                                Confirm Delete All Items
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">Are you sure you want to delete all items in the cart?</div>
+                        <div class="modal-footer d-flex justify-content-between">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Cancel
+                            </button>
+                            <button type="button" @click="deleteAll()" data-bs-dismiss="modal"
+                                class="btn btn-danger">Delete All</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </template>
         <template v-else>
