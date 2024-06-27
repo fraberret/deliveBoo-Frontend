@@ -362,6 +362,7 @@ export default {
 
         .image {
             width: 200px;
+            aspect-ratio: 1;
             margin: auto;
             overflow: hidden;
             border-radius: 50%;
@@ -369,6 +370,7 @@ export default {
 
             img {
                 width: 100%;
+                height: 100%;
                 object-fit: cover;
             }
         }
@@ -504,6 +506,7 @@ export default {
 
                     .image {
                         width: 330px;
+                        aspect-ratio: 1;
                         /* top: 1rem; */
                         right: 0rem;
                         position: absolute;
@@ -513,6 +516,7 @@ export default {
 
                         img {
                             width: 100%;
+                            height: 100%;
                             object-fit: cover;
                             transition: transform 2s ease;
 
