@@ -174,7 +174,7 @@ export default {
                 </div>
                 <template v-else>
                     <template v-if="isRestaurants">
-                        <div v-if="restaurants.length" :class="restaurants.length > 6 && 'pe-3'"
+                        <div v-if="restaurants.length" :class="restaurants.length > 6 && 'pe_3'"
                             class="restaurants_container w-100">
                             <div v-for="restaurant in restaurants" class="restaurant_card">
                                 <router-link class="router_link"
@@ -196,7 +196,7 @@ export default {
                         </div>
                     </template>
                     <template v-if="isFilteredRestaurants">
-                        <div v-if="filteredRestaurants.length" :class="filteredRestaurants.length > 6 && 'pe-3'"
+                        <div v-if="filteredRestaurants.length" :class="filteredRestaurants.length > 6 && 'pe_3'"
                             class="restaurants_container w-100">
                             <div v-for="restaurant in filteredRestaurants" class="restaurant_card">
                                 <router-link class="router_link"
@@ -236,6 +236,10 @@ export default {
 <style>
 .search_section {
     margin-top: -12rem;
+}
+
+.pe_3 {
+    padding-right: 1.2rem;
 }
 
 .no_restaurants {
@@ -509,6 +513,10 @@ export default {
 }
 
 @media screen and (max-width: 1200px) {
+    .banner {
+        margin-bottom: -2rem;
+    }
+
     .search_container {
         display: flex;
         flex-direction: column;
@@ -518,6 +526,7 @@ export default {
             height: 400px;
             width: 100%;
             padding-right: 8rem;
+            margin-bottom: 4rem;
             overflow-y: scroll;
             scrollbar-width: thin;
             scrollbar-color: var(--boo-primary) rgb(255, 255, 255);
@@ -569,6 +578,8 @@ export default {
             }
         }
 
+
+
         .restaurants {
             width: 100%;
             display: flex;
@@ -610,6 +621,7 @@ export default {
 }
 
 @media screen and (max-width: 900px) {
+
     .search_container {
         .restaurants {
             .restaurants_container {
@@ -643,10 +655,15 @@ export default {
 }
 
 @media screen and (max-width: 676px) {
+
     .search_container {
+        .cousines {
+            padding-right: 1rem;
+        }
+
         .restaurants {
             .restaurants_container {
-                gap: 2rem;
+                gap: 1rem;
 
                 .restaurant_card {
                     width: 100%;
@@ -658,11 +675,12 @@ export default {
                     .bottom {
 
                         h6 {
-                            font-size: 1.8rem;
+                            font-size: 1.2rem;
                         }
 
                         .badges {
                             display: flex;
+                            flex-wrap: wrap;
                             gap: .4rem;
 
                             .badge_dark,
@@ -674,9 +692,15 @@ export default {
                             }
                         }
                     }
+
                 }
             }
         }
+    }
+
+
+    .pe_3 {
+        padding-right: 0rem;
     }
 }
 </style>
