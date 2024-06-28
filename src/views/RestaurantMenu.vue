@@ -299,7 +299,7 @@ export default {
                 </div>
                 <div class="modal-body">You have items from a different restaurant, if you click <b>confirm</b> you will
                     empty
-                    your cart and add this new item to your order.</div>
+                    your cart and you'll be able to order from this restaurant</div>
                 <div class="modal-footer d-flex justify-content-between">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         Cancel
