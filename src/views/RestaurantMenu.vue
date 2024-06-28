@@ -293,20 +293,19 @@ export default {
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalTitleId">
-                        Different Resturant Item Selected!
+                        Different Restaurant Item Selected!
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">You have items from a different restaurant, if you want to add this item you
-                    have to
-                    switch restaurant</div>
-                <div class="modal-footer">
-                    <button type="button" @click="switchResturant()" data-bs-dismiss="modal"
-                        class="btn btn-primary">Switch
-                        Restaurant</button>
+                <div class="modal-body">You have items from a different restaurant, if you click <b>confirm</b> you will
+                    empty
+                    your cart and add this new item to your order.</div>
+                <div class="modal-footer d-flex justify-content-between">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         Cancel
                     </button>
+                    <button type="button" @click="switchResturant()" data-bs-dismiss="modal"
+                        class="btn btn-primary">Confirm</button>
                 </div>
             </div>
         </div>
