@@ -196,7 +196,9 @@ export default {
                                     class="buttons bg-gray">Add to Cart
                                 </div>
 
-                                <div v-else @click="addToCart(dish, restaurant.id)" class="buttons btn_primary">Add to
+                                <div v-else @click="addToCart(dish, restaurant.id)"
+                                    class="buttons btn_primary d-flex gap-2">
+                                    <i class="fa-solid fa-plus" v-if="getCurrentQuantity(dish.id) > 0"></i>Add to
                                     Cart
                                 </div>
 
