@@ -140,7 +140,7 @@ export default {
                     :class="formDanger && 'bg-form-danger border-1 border-danger'">
                     <div class="modal-header text-white" :class="formDanger ? 'bg-danger' : 'bg-dark'">
                         <h5 class="modal-title" id="modalTitleId">
-                            Checkout
+                            Checkout - {{ restaurant_name }} - Total: {{ store.grandTotal().toFixed(2) }}€
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
