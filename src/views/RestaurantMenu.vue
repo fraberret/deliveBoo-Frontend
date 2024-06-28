@@ -134,7 +134,7 @@ export default {
                     <div class="restaurant_info">
                         <div class="text text-center">
                             <h5>{{ restaurant.name }}</h5>
-                            <img width="26" src="/img/social/whatsapp.png" alt="whatsapp icon">
+                            <!-- <img width="26" src="/img/social/whatsapp.png" alt="whatsapp icon"> -->
                             <div class="info">
                                 <div class="cousines">
                                     <h6>cousines</h6>
