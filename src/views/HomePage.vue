@@ -526,7 +526,7 @@ export default {
             height: 400px;
             width: 100%;
             padding-right: 8rem;
-            margin-bottom: 4rem;
+            margin-bottom: 5rem;
             overflow-y: scroll;
             scrollbar-width: thin;
             scrollbar-color: var(--boo-primary) rgb(255, 255, 255);
