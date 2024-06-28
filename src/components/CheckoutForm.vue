@@ -124,7 +124,7 @@ export default {
 <template>
     <div>
         <!-- Modal trigger button -->
-        <div class="py-5">
+        <div class="">
             <button type="button" class="border-0 p-4 ms-auto buttons btn_primary" data-bs-toggle="modal"
                 data-bs-target="#cartModal">
                 Order Now

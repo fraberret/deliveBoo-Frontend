@@ -81,10 +81,22 @@ export default {
                 </div>
             </div>
 
-            <div class="d-flex justify-content-between align-items-center mb-4 w-100">
-                <button class="buttons bg-danger" data-bs-toggle="modal" data-bs-target="#deleteAllModal"><i
-                        class="fa-solid fa-trash me-2"></i>Delete All</button>
-                <CheckoutForm />
+            <div class="cart-buttons-box w-100 mb-4 px-5">
+
+                <div class="cart-delete-box w-100">
+                    <button class="buttons bg-danger" data-bs-toggle="modal" data-bs-target="#deleteAllModal"><i
+                            class="fa-solid fa-trash me-2"></i>Delete All
+                    </button>
+                </div>
+                <div class="cart-items-box w-100 justify-content-end gap-3">
+
+                    <Router-Link class="text-decoration-none buttons btn_primary btn_back_to_restaurant"
+                        :to="{ name: 'RestaurantMenu', params: { slug: store.localCart[0].restaurantSlug } }">Add more
+                        Items
+                    </Router-Link>
+                    <CheckoutForm />
+                </div>
+
             </div>
 
             <div class="modal fade" id="deleteAllModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
@@ -129,4 +141,47 @@ export default {
         color: white !important;
     }
 }
+
+.cart-buttons-box {
+    .buttons{
+        width: 100%;
+    }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cart-delete-box {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.cart-items-box{
+    display: flex;
+    margin-top: 1rem;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/* ** media query **  */
+
+@media screen and (min-width: 480px) {
+    .cart-buttons-box {
+        .buttons{
+            width: fit-content;
+        }
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .cart-items-box{
+        flex-direction: row;
+    }
+    .cart-delete-box{
+        margin-top: 1rem;
+        justify-content: start;
+    }
+}
+
 </style>
