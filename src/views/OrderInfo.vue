@@ -20,6 +20,9 @@ export default {
             <div class="alert alert-success" role="alert">
                 Order Successfull
             </div>
+            <h2 class="d-flex justify-content-center my-5">
+                Thank you for purchasing from our restaurant!
+            </h2>
             <h2 class="my-4">Order Information</h2>
             <div class="row">
                 <div class="col-md-6">
@@ -45,9 +48,17 @@ export default {
                     </ul>
                 </div>
             </div>
+            <router-link to="/" class="buttons btn_primary text-center mt-4 mx-auto">Return to Home</router-link>
         </div>
+
+
         <div v-else class="text-center py-5 text-secondary">No Orders To Show...</div>
     </div>
 </template>
 
-<style></style>
+<style>
+.buttons {
+    text-decoration: none;
+    width: 200px;
+}
+</style>
