@@ -896,14 +896,14 @@ export default {
 
                     .card_right {
                         width: 100%;
-                        height: 330px;
+                        height: 250px;
 
-                        .price {
+                        /* .price {
                             right: 3rem;
-                        }
+                        } */
 
                         .image {
-                            width: 300px;
+                            width: 215px;
                             top: 0;
                             left: 0;
                             right: 0rem;
