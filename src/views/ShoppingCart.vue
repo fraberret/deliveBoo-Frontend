@@ -54,7 +54,7 @@ export default {
                     style="color: var(--boo-primary);">{{ store.localCart[0].nameRestaurant
                     }}</Router-Link></h2>
 
-            <div v-for="item in store.localCart" :key="item.dishID" class="card mb-3 w-100">
+            <div v-for="item in store.localCart" :key="item.dishID" class="card mb-3 w-100 rounded-5 px-2">
                 <div class="card-body d-flex justify-content-between align-items-center">
                     <div>
                         <h5 class="card-title">{{ item.name }}</h5>
@@ -74,14 +74,14 @@ export default {
                 </div>
             </div>
 
-            <div class="card bg-dark text-white mb-3 w-100">
+            <div class="card bg-dark text-white mb-3 w-100 rounded-5 px-3">
                 <div class="card-body d-flex justify-content-between">
-                    <h5 class="card-title">Total Order</h5>
-                    <h5 class="card-title">{{ store.grandTotal().toFixed(2) }}€</h5>
+                    <h5 class="card-title" style="margin-bottom: 0;">Total Order</h5>
+                    <h5 class="card-title" style="margin-bottom: 0;">{{ store.grandTotal().toFixed(2) }}€</h5>
                 </div>
             </div>
 
-            <div class="cart-buttons-box w-100 mb-4 px-5">
+            <div class="cart-buttons-box mb-4 px-5">
 
                 <div class="cart-delete-box w-100">
                     <button class="buttons bg-danger" data-bs-toggle="modal" data-bs-target="#deleteAllModal"><i
@@ -102,16 +102,16 @@ export default {
             <div class="modal fade" id="deleteAllModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
                 role="dialog" aria-labelledby="deleteAllModalTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
+                    <div class="modal-content rounded-5">
+                        <div class="modal-header border-bottom-0">
                             <h5 class="modal-title" id="deleteAllModalTitle">Confirm Delete All Items</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">Are you sure you want to delete all items in the cart?</div>
-                        <div class="modal-footer d-flex justify-content-between">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <div class="modal-footer d-flex justify-content-between border-top-0">
+                            <button type="button" class="btn bg-gray buttons" data-bs-dismiss="modal">Cancel</button>
                             <button type="button" @click="deleteAll()" data-bs-dismiss="modal"
-                                class="btn btn-danger">Delete All</button>
+                                class="btn btn_primary buttons">Delete All</button>
                         </div>
                     </div>
                 </div>
@@ -143,9 +143,12 @@ export default {
 }
 
 .cart-buttons-box {
-    .buttons{
+    width: 100%;
+
+    .buttons {
         width: 100%;
     }
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -157,7 +160,7 @@ export default {
     margin-top: 2rem;
 }
 
-.cart-items-box{
+.cart-items-box {
     display: flex;
     margin-top: 1rem;
     justify-content: center;
@@ -168,20 +171,23 @@ export default {
 
 @media screen and (min-width: 480px) {
     .cart-buttons-box {
-        .buttons{
+
+        .buttons {
             width: fit-content;
         }
+
         display: flex;
         flex-direction: row;
         justify-content: space-between;
     }
-    .cart-items-box{
+
+    .cart-items-box {
         flex-direction: row;
     }
-    .cart-delete-box{
+
+    .cart-delete-box {
         margin-top: 1rem;
         justify-content: start;
     }
 }
-
 </style>
