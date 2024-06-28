@@ -46,50 +46,42 @@ export default {
 </script>
 
 <template>
-    <div class="container">
+    <div class="container d-flex justify-content-center flex-column align-items-center">
         <template v-if="store.localCart.length > 0">
 
             <h2 class="mb-4">Your order to <span style="color: var(--boo-primary);">{{ store.localCart[0].nameRestaurant
-                    }}</span>
-            </h2>
+                    }}</span></h2>
 
-            <table class="table table-striped table-hover table-bordered">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col" class="w-35">Name</th>
-                        <th scope="col" class="w-15">Price</th>
-                        <th scope="col" class="w-35 text-center">Quantity</th>
-                        <th scope="col" class="w-15">Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="item in store.localCart" :key="item.dishID">
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.price }}€</td>
-                        <td class="d-flex justify-content-evenly px-5 align-items-center">
+            <div v-for="item in store.localCart" :key="item.dishID" class="card mb-3 w-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="card-title">{{ item.name }}</h5>
+                        <p class="card-text">Price: {{ item.price }}€</p>
+                    </div>
+                    <div class="d-flex flex-column justify-content-center gap-3">
+                        <div class="btn-group" role="group" aria-label="Quantity controls">
                             <button class="btn btn-dark" @click="decreaseQuantity(item.dishID)"
                                 v-if="item.quantity > 1">-</button>
                             <button class="btn btn-dark" @click="deleteItem(item.dishID)" v-if="item.quantity === 1"><i
                                     class="fa-solid fa-trash text-danger"></i></button>
-                            <span class="mx-3 w-2">{{ item.quantity }}</span>
-                            <button class="btn btn-dark ms-1" @click="increaseQuantity(item.dishID)">+</button>
+                            <span class="mx-3 my-auto">{{ item.quantity }}</span>
+                            <button class="btn btn-dark" @click="increaseQuantity(item.dishID)">+</button>
+                        </div>
+                        <div class="card-text text-center">Total: {{ (item.quantity * item.price).toFixed(2) }}€</div>
+                    </div>
+                </div>
+            </div>
 
-                        </td>
-                        <td>
-                            <div class="singleTotal">{{ (item.quantity * item.price).toFixed(2) }}€</div>
-                        </td>
-                    </tr>
-                    <tr class="table-dark">
-                        <th colspan="3" class="text-right">Total Order</th>
-                        <td>{{ store.grandTotal().toFixed(2) }}€</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="card bg-dark text-white mb-3 w-100">
+                <div class="card-body d-flex justify-content-between">
+                    <h5 class="card-title">Total Order</h5>
+                    <h5 class="card-title">{{ store.grandTotal().toFixed(2) }}€</h5>
+                </div>
+            </div>
 
-            <div class="d-flex justify-content-between align-items-center ">
-                <button class="border-0 p-4 buttons bg-danger text-white" data-bs-toggle="modal"
-                    data-bs-target="#deleteAllModal"><i class="fa-solid fa-trash me-2"></i>Delete All</button>
-
+            <div class="d-flex justify-content-between align-items-center mb-4 w-100">
+                <button class="buttons bg-danger" data-bs-toggle="modal" data-bs-target="#deleteAllModal"><i
+                        class="fa-solid fa-trash me-2"></i>Delete All</button>
                 <CheckoutForm />
             </div>
 
@@ -98,16 +90,12 @@ export default {
                 <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="deleteAllModalTitle">
-                                Confirm Delete All Items
-                            </h5>
+                            <h5 class="modal-title" id="deleteAllModalTitle">Confirm Delete All Items</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">Are you sure you want to delete all items in the cart?</div>
                         <div class="modal-footer d-flex justify-content-between">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                Cancel
-                            </button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             <button type="button" @click="deleteAll()" data-bs-dismiss="modal"
                                 class="btn btn-danger">Delete All</button>
                         </div>
@@ -117,25 +105,15 @@ export default {
 
         </template>
         <template v-else>
-            <div class="alert alert-warning" role="alert">
-                The cart is empty.
-            </div>
+            <div class="alert alert-warning" role="alert">The cart is empty.</div>
         </template>
     </div>
-
 </template>
 
 <style>
-.w-2 {
-    width: 2%;
-}
-
-.w-15 {
-    width: 15%;
-}
-
-.w-35 {
-    width: 35%;
+.card {
+    max-width: 1000px;
+    margin-bottom: 10px;
 }
 
 .bg-danger {
