@@ -858,6 +858,10 @@ export default {
 
             .dish_card {
 
+                .actions {
+                    justify-content: center;
+                }
+
                 .top {
                     flex-direction: column-reverse;
 
@@ -897,6 +901,7 @@ export default {
                     .card_right {
                         width: 100%;
                         height: 250px;
+
 
                         /* .price {
                             right: 3rem;
