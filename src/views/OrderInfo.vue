@@ -56,7 +56,7 @@ export default {
     </div>
 </template>
 
-<style>
+<style scoped>
 .buttons {
     text-decoration: none;
     width: 200px;

@@ -4,7 +4,13 @@ export default {
     name: 'AppHeader',
     data() {
         return {
-            store
+            store,
+            imgSrc: ''
+        }
+    },
+    methods: {
+        changeLogo() {
+            window.innerWidth < 676 ? this.imgSrc = '/img/logo-ghost.png' : this.imgSrc = '/img/logo-deliveboo.png';
         }
     },
     mounted() {
@@ -12,6 +18,13 @@ export default {
             store.cartQuantity += item.quantity
         });
         this.cartQuantity = store.localCart.reduce((sum, item) => sum + item.quantity, 0);
+
+        this.changeLogo()
+
+        window.addEventListener('resize', () => {
+            this.changeLogo()
+        });
+
     },
 }
 </script>
@@ -21,7 +34,7 @@ export default {
     <header>
         <nav class="container">
             <router-link class="logo" :to="{ name: 'home' }">
-                <img src="/img/logo-deliveboo.png" alt="app logo">
+                <img :src="imgSrc" alt="app logo">
             </router-link>
             <div class="nav_links">
 
@@ -42,14 +55,9 @@ export default {
 
 
 
-<style>
+<style scoped>
 header {
     margin-bottom: 3rem;
-    /* position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 1;
-    filter: invert(); */
 
     nav {
         display: flex;
@@ -139,5 +147,60 @@ header {
             }
         }
     }
+}
+
+@media screen and (max-width: 676px) {
+    header {
+
+        nav {
+
+            .nav_links {
+                display: flex;
+                align-items: center;
+                gap: 3rem;
+
+                .nav_link {
+                    color: var(--boo-gray-700);
+                    text-decoration: none;
+                    font-weight: 500;
+                    letter-spacing: .5px;
+                    font-size: .9rem;
+                    position: relative;
+                    display: flex;
+                    justify-content: center;
+
+                    &:hover {
+                        color: var(--boo-darker);
+                    }
+
+                    &::after {
+                        content: '';
+                        top: 2rem;
+                        position: absolute;
+                        width: 4px;
+                        aspect-ratio: 1;
+                        border-radius: 50%;
+                        background-color: transparent;
+                        transition: background-color .2s ease;
+                    }
+
+                    &:hover::after {
+                        background-color: var(--boo-gray-600);
+                    }
+                }
+            }
+
+            .actions {
+                .cart {
+                    margin-right: -10px;
+                }
+
+                .btn_primary {
+                    padding-inline: 1rem;
+                }
+            }
+        }
+    }
+
 }
 </style>
