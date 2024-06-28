@@ -17,10 +17,10 @@ export default {
 <template>
     <div class="container">
         <div v-if="formData">
-            <div class="alert alert-success" role="alert">
-                Order Successfull
-            </div>
-            <h2 class="d-flex justify-content-center my-5">
+            <h1 class="d-flex display-5 fw-semibold justify-content-center my-3 text-success">
+                Yes! Your order is confirmed.
+            </h1>
+            <h2 class="d-flex justify-content-center mb-5">
                 Thank you for purchasing from our restaurant!
             </h2>
             <h2 class="my-4">Order Information</h2>
@@ -28,17 +28,17 @@ export default {
                 <div class="col-md-6">
                     <h5>Customer Information</h5>
                     <ul class="list-unstyled lh-lg">
-                        <li><b>Name:</b> {{ formData.customer_name }}</li>
-                        <li><b>Last Name:</b> {{ formData.customer_lastname }}</li>
-                        <li><b>Address:</b> {{ formData.customer_address }}</li>
-                        <li><b>Email:</b> {{ formData.customer_email }}</li>
-                        <li><b>Phone:</b> {{ formData.customer_telephone }}</li>
+                        <li class="fs-6"><b>Name:</b> {{ formData.customer_name }}</li>
+                        <li class="fs-6"><b>Last Name:</b> {{ formData.customer_lastname }}</li>
+                        <li class="fs-6"><b>Address:</b> {{ formData.customer_address }}</li>
+                        <li class="fs-6"><b>Email:</b> {{ formData.customer_email }}</li>
+                        <li class="fs-6"><b>Phone:</b> {{ formData.customer_telephone }}</li>
                     </ul>
                 </div>
                 <div class="col-md-6">
                     <h5>Order Summary</h5>
                     <ul class="list-unstyled lh-lg">
-                        <li><b>Total:</b> {{ formData.amount }} &#8364;</li>
+                        <li class="fs-6"><b>Total:</b> {{ formData.amount }} &#8364;</li>
                     </ul>
                     <h5>Dishes:</h5>
                     <ul class="list-unstyled lh-lg">
@@ -61,4 +61,5 @@ export default {
     text-decoration: none;
     width: 200px;
 }
+
 </style>
