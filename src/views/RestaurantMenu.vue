@@ -289,24 +289,27 @@ export default {
     <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
     <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
         aria-labelledby="modalTitleId" aria-hidden="true">
-        <div class="confirm-modal modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+            <div class="modal-content rounded-5">
+                <div class="modal-header border-bottom-0">
                     <h5 class="modal-title" id="modalTitleId">
                         Different Restaurant Item Selected!
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body pb-5">You have items from a different restaurant, if you click <b>confirm</b> you
-                    will
-                    empty
-                    your cart and you'll be able to order from this restaurant</div>
-                <div class="modal-footer d-flex justify-content-between">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                <div class="modal-body pb-5">
+                    You have items from a different restaurant. If you click <b>Confirm</b>, you will empty your cart
+                    and
+                    you'll be able to order from this restaurant.
+                </div>
+                <div class="modal-footer d-flex justify-content-between border-top-0">
+                    <button type="button" class="btn bg-gray buttons" data-bs-dismiss="modal">
                         Cancel
                     </button>
-                    <button type="button" @click="switchResturant()" data-bs-dismiss="modal"
-                        class="btn btn_primary">Confirm</button>
+                    <button type="button" class="btn btn_primary buttons" onclick="switchRestaurant()"
+                        data-bs-dismiss="modal">
+                        Confirm
+                    </button>
                 </div>
             </div>
         </div>
@@ -678,10 +681,6 @@ export default {
     background-color: transparent !important;
     color: gray !important;
     transition: background-color 1s ease, color 1s ease;
-
-    &:hover {
-        color: white !important;
-    }
 }
 
 @media screen and (max-width: 1200px) {
