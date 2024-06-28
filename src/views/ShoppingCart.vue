@@ -49,8 +49,10 @@ export default {
     <div class="container d-flex justify-content-center flex-column align-items-center">
         <template v-if="store.localCart.length > 0">
 
-            <h2 class="mb-4">Your order to <span style="color: var(--boo-primary);">{{ store.localCart[0].nameRestaurant
-                    }}</span></h2>
+            <h2 class="mb-4">Your order to <Router-Link class="text-decoration-none"
+                    :to="{ name: 'RestaurantMenu', params: { slug: store.localCart[0].restaurantSlug } }"
+                    style="color: var(--boo-primary);">{{ store.localCart[0].nameRestaurant
+                    }}</Router-Link></h2>
 
             <div v-for="item in store.localCart" :key="item.dishID" class="card mb-3 w-100">
                 <div class="card-body d-flex justify-content-between align-items-center">

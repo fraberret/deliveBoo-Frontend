@@ -57,7 +57,7 @@ export default {
                 store.cartQuantity++
             } else {
                 store.cartQuantity++
-                store.localCart.push({ restaurantId: currentRestaurantId, dishID: dish.id, nameRestaurant: this.restaurant.name, name: dish.name, price: dish.price, quantity: 1 });
+                store.localCart.push({ restaurantId: currentRestaurantId, dishID: dish.id, nameRestaurant: this.restaurant.name, name: dish.name, price: dish.price, quantity: 1, restaurantSlug: this.restaurant.slug });
             }
 
             localStorage.setItem('cart', JSON.stringify(store.localCart));
@@ -297,7 +297,8 @@ export default {
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">You have items from a different restaurant, if you click <b>confirm</b> you will
+                <div class="modal-body pb-5">You have items from a different restaurant, if you click <b>confirm</b> you
+                    will
                     empty
                     your cart and you'll be able to order from this restaurant</div>
                 <div class="modal-footer d-flex justify-content-between">
@@ -305,7 +306,7 @@ export default {
                         Cancel
                     </button>
                     <button type="button" @click="switchResturant()" data-bs-dismiss="modal"
-                        class="btn btn-primary">Confirm</button>
+                        class="btn btn_primary">Confirm</button>
                 </div>
             </div>
         </div>
@@ -666,7 +667,8 @@ export default {
             padding-right: 8rem;
         }
     }
-    .confirm-modal{
+
+    .confirm-modal {
         width: 50%;
     }
 }
@@ -806,10 +808,9 @@ export default {
 }
 
 @media screen and (max-width: 760px) {
-    .confirm-modal{
+    .confirm-modal {
         justify-content: center;
         margin: auto
-
     }
 
     #menu {
@@ -928,7 +929,8 @@ export default {
             }
         }
     }
-    .confirm-modal{
+
+    .confirm-modal {
         width: 75%;
     }
 }
