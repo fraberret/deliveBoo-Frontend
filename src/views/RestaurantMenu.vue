@@ -289,7 +289,7 @@ export default {
     <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
     <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
         aria-labelledby="modalTitleId" aria-hidden="true">
-        <div class="w-50 modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+        <div class="confirm-modal modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalTitleId">
@@ -666,6 +666,9 @@ export default {
             padding-right: 8rem;
         }
     }
+    .confirm-modal{
+        width: 50%;
+    }
 }
 
 .bg-gray {
@@ -803,6 +806,12 @@ export default {
 }
 
 @media screen and (max-width: 760px) {
+    .confirm-modal{
+        justify-content: center;
+        margin: auto
+
+    }
+
     #menu {
 
         .left {
@@ -918,6 +927,9 @@ export default {
                 }
             }
         }
+    }
+    .confirm-modal{
+        width: 75%;
     }
 }
 </style>
