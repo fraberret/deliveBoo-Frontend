@@ -240,10 +240,12 @@ export default {
                                 </div>
                             </form>
                         </div>
-
                     </div>
 
-                    <div v-else class="text-center my-5 w-100">loading...</div>
+                    <!-- <div v-else class="text-center my-5 w-100">loading...</div> -->
+                    <div v-else class="modal-content h-25 w-50 m-auto d-flex align-items-center justify-content-center">
+                        <img width="200" src="/img/logo-gif.gif" alt="Loading...">
+                    </div>
                 </template>
 
             </div>
