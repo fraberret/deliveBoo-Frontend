@@ -88,7 +88,7 @@ export default {
             let found = store.localCart.find(item => item.dishID === id);
             return found ? found.quantity : 0;
         },
-        switchResturant() {
+        switchRestaurant() {
             store.localCart = [];
             localStorage.clear();
             store.cartQuantity = 0
@@ -306,7 +306,7 @@ export default {
                     <button type="button" class="btn bg-gray buttons" data-bs-dismiss="modal">
                         Cancel
                     </button>
-                    <button type="button" class="btn btn_primary buttons" onclick="switchRestaurant()"
+                    <button type="button" class="btn btn_primary buttons" @click="switchRestaurant()"
                         data-bs-dismiss="modal">
                         Confirm
                     </button>
