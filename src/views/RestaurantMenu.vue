@@ -428,8 +428,6 @@ export default {
         padding-right: 2rem;
         scrollbar-color: var(--boo-primary) transparent;
 
-
-
         .dish_card {
             position: relative;
             color: var(--boo-lighter);
@@ -550,6 +548,10 @@ export default {
                 padding: 1.8rem 3rem;
                 align-items: center;
 
+                .counter {
+                    margin-left: 1rem;
+                }
+
                 .btn_negative {
                     background-color: var(--boo-primary);
                     border: none;
@@ -595,7 +597,6 @@ export default {
 
 @media screen and (max-width: 1400px) {
     #menu {
-        /* background-color: rgb(98, 255, 0); */
         flex-direction: column;
 
         .left {
@@ -695,9 +696,7 @@ export default {
 
 @media screen and (max-width: 1200px) {
     #menu {
-        /* background-color: rgb(98, 255, 0); */
         flex-direction: column;
-
 
         .right {
             position: relative;
@@ -826,6 +825,7 @@ export default {
     }
 
     #menu {
+        background-color: rgb(98, 255, 0);
 
         .left {
             padding-right: 0rem;
