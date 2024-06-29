@@ -21,6 +21,7 @@ export default {
                 customer_email: '',
                 customer_telephone: '',
             },
+            loadingGif: false,
             formErrors: [],
             formDanger: false
         };
@@ -32,6 +33,7 @@ export default {
                     this.tokenApi = res.data.token;
                     this.initializeBraintree();
                     this.loading = false;
+                    this.loadingGif = false;
                 })
                 .catch(err => console.error(err));
         },
@@ -47,6 +49,12 @@ export default {
                 this.dropinInstance = dropinInstance;
             });
         },
+        loadGif() {
+            this.loadingGif = true
+            setTimeout(() => {
+                this.loadingGif = false
+            }, 500);
+        },
         order() {
             this.dropinInstance.requestPaymentMethod((error, payload) => {
                 if (error) {
@@ -60,9 +68,11 @@ export default {
                 this.formData.dishes = store.localCart;
                 this.formData.amount = store.grandTotal();
                 this.formData.restaurant_id = store.localCart[0].restaurantId;
+                this.loadingGif = true
 
                 axios.post('http://localhost:8000/api/payments/checkout', this.formData)
                     .then(res => {
+                        this.loadingGif = false
                         console.log('Order placed successfully', res.data);
                         this.formErrors = []
                         store.cartQuantity = 0
@@ -74,6 +84,7 @@ export default {
                         this.dropinInstance.clearSelectedPaymentMethod();
                     })
                     .catch(error => {
+                        this.loadingGif = false
                         this.dropinInstance.clearSelectedPaymentMethod();
                         if (error.response) {
                             this.formErrors = error.response.data.errors;
@@ -136,95 +147,109 @@ export default {
         <div class="modal fade" id="cartModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
             role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
-                <div v-if="!loading" class="modal-content"
-                    :class="formDanger && 'bg-form-danger border-1 border-danger'">
-                    <div class="modal-header text-white" :class="formDanger ? 'bg-danger' : 'bg-dark'">
-                        <h5 class="modal-title" id="modalTitleId">
-                            Checkout - {{ restaurant_name }} - Total: {{ store.grandTotal().toFixed(2) }}€
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form @submit.prevent="order()" method="post" class="py-3">
-                            <h5 class="text-center pb-3">Enter Your Informations</h5>
-                            <div class="billing_info mb-5 ">
-                                <div class="d-flex gap-3 pt-3">
-                                    <!-- NAME -->
-                                    <div class="mb-3 w-50">
-                                        <label for="customer_name" class="form-label">Name*</label>
-                                        <input required v-model="formData.customer_name" type="text"
-                                            :class="formErrors['customer_name'] && 'is-invalid'" class="form-control "
-                                            id="customer_name" name="customer_name" placeholder="Your Name..."
-                                            minlength="3" maxlength="100" />
-                                        <div v-if="formErrors['customer_name']" class="alert alert-danger mt-3">
-                                            <small>{{ formErrors['customer_name'][0] }}</small>
-                                        </div>
-                                    </div>
-                                    <!-- LASTNAME -->
-                                    <div class="mb-3 w-50">
-                                        <label for="customer_lastname" class="form-label">Last Name*</label>
-                                        <input v-model="formData.customer_lastname" type="text" class="form-control"
-                                            id="customer_lastname" name="customer_lastname" aria-describedby="helpId"
-                                            placeholder="Your Last Name..." required minlength="3" maxlength="100" />
-                                        <div v-if="formErrors['customer_lastname']" class="alert alert-danger mt-3">
-                                            <small>{{ formErrors['customer_lastname'][0] }}</small>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex gap-3 pt-3">
-                                    <!-- EMAIL -->
-                                    <div class="mb-3 w-50">
-                                        <label for="customer_email" class="form-label">Email*</label>
-                                        <input v-model="formData.customer_email" type="email" class="form-control"
-                                            id="customer_email" name="customer_email" aria-describedby="helpId"
-                                            placeholder="Your Email..." minlength="5" maxlength="255" required />
-                                        <div v-if="formErrors['customer_email']" class="alert alert-danger mt-3">
-                                            <small>{{ formErrors['customer_email'][0] }}</small>
-                                        </div>
-                                    </div>
-                                    <!-- PHONE NUMBER -->
-                                    <div class="mb-3 w-50">
-                                        <label for="customer_telephone" class="form-label">Phone Number*</label>
-                                        <input v-model="formData.customer_telephone" type="tel" class="form-control"
-                                            id="customer_telephone" name="customer_telephone" aria-describedby="helpId"
-                                            placeholder="Your Phone Number..." required autofocus
-                                            pattern="^\+[0-9]{12}$"
-                                            title="Telephone number must begin with a + followed by 12 digits." />
-                                        <div v-if="formErrors['customer_telephone']" class="alert alert-danger mt-3">
-                                            <small>{{ formErrors['customer_telephone'][0] }}</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- ADDRESS -->
-                                <div class="mb-3 pt-3">
-                                    <label for="customer_address" class="form-label">Address*</label>
-                                    <input v-model="formData.customer_address" type="text" class="form-control"
-                                        id="customer_address" name="customer_address" aria-describedby="helpId"
-                                        placeholder="Your Address..." required minlength="5" maxlength="100" />
-                                    <div v-if="formErrors['customer_address']" class="alert alert-danger mt-3">
-                                        <small>{{ formErrors['customer_address'][0] }}</small>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="payment_method">
-                                <h5 class="text-center pb-0">Choose your payment method</h5>
-                                <!-- DROPIN UI -->
-                                <div id="dropin-container"></div>
-                            </div>
-
-                            <div class="d-flex mt-5 align-items-end">
-                                <h6 class="required_field_text"><span>*</span> fields are required</h6>
-                                <button type="submit" id="submit-button"
-                                    class="buttons btn_primary border-0 ms-auto">Confirm</button>
-                            </div>
-                        </form>
-                    </div>
+                <!-- Loading GIF -->
+                <div v-if="loadingGif"
+                    class="modal-content h-25 w-50 m-auto d-flex align-items-center justify-content-center">
+                    <img width="200" src="/img/logo-gif.gif" alt="Loading...">
                 </div>
-                <div v-else class="text-center my-5 w-100">loading...</div>
+                <template v-else>
+                    <div v-if="!loading" class="modal-content"
+                        :class="formDanger && 'bg-form-danger border-1 border-danger'">
+                        <div class="modal-header text-white" :class="formDanger ? 'bg-danger' : 'bg-dark'">
+                            <h5 class="modal-title" id="modalTitleId">
+                                Checkout - {{ restaurant_name }} - Total: {{ store.grandTotal().toFixed(2) }}€
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form @submit.prevent="order()" method="post" class="py-3">
+                                <h5 class="text-center pb-3">Enter Your Informations</h5>
+                                <div class="billing_info mb-5 ">
+                                    <div class="d-flex gap-3 pt-3">
+                                        <!-- NAME -->
+                                        <div class="mb-3 w-50">
+                                            <label for="customer_name" class="form-label">Name*</label>
+                                            <input required v-model="formData.customer_name" type="text"
+                                                :class="formErrors['customer_name'] && 'is-invalid'"
+                                                class="form-control " id="customer_name" name="customer_name"
+                                                placeholder="Your Name..." minlength="3" maxlength="100" />
+                                            <div v-if="formErrors['customer_name']" class="alert alert-danger mt-3">
+                                                <small>{{ formErrors['customer_name'][0] }}</small>
+                                            </div>
+                                        </div>
+                                        <!-- LASTNAME -->
+                                        <div class="mb-3 w-50">
+                                            <label for="customer_lastname" class="form-label">Last Name*</label>
+                                            <input v-model="formData.customer_lastname" type="text" class="form-control"
+                                                id="customer_lastname" name="customer_lastname"
+                                                aria-describedby="helpId" placeholder="Your Last Name..." required
+                                                minlength="3" maxlength="100" />
+                                            <div v-if="formErrors['customer_lastname']" class="alert alert-danger mt-3">
+                                                <small>{{ formErrors['customer_lastname'][0] }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex gap-3 pt-3">
+                                        <!-- EMAIL -->
+                                        <div class="mb-3 w-50">
+                                            <label for="customer_email" class="form-label">Email*</label>
+                                            <input v-model="formData.customer_email" type="email" class="form-control"
+                                                id="customer_email" name="customer_email" aria-describedby="helpId"
+                                                placeholder="Your Email..." minlength="5" maxlength="255" required />
+                                            <div v-if="formErrors['customer_email']" class="alert alert-danger mt-3">
+                                                <small>{{ formErrors['customer_email'][0] }}</small>
+                                            </div>
+                                        </div>
+                                        <!-- PHONE NUMBER -->
+                                        <div class="mb-3 w-50">
+                                            <label for="customer_telephone" class="form-label">Phone Number*</label>
+                                            <input v-model="formData.customer_telephone" type="tel" class="form-control"
+                                                id="customer_telephone" name="customer_telephone"
+                                                aria-describedby="helpId" placeholder="Your Phone Number..." required
+                                                autofocus pattern="^\+[0-9]{12}$"
+                                                title="Telephone number must begin with a + followed by 12 digits." />
+                                            <div v-if="formErrors['customer_telephone']"
+                                                class="alert alert-danger mt-3">
+                                                <small>{{ formErrors['customer_telephone'][0] }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- ADDRESS -->
+                                    <div class="mb-3 pt-3">
+                                        <label for="customer_address" class="form-label">Address*</label>
+                                        <input v-model="formData.customer_address" type="text" class="form-control"
+                                            id="customer_address" name="customer_address" aria-describedby="helpId"
+                                            placeholder="Your Address..." required minlength="5" maxlength="100" />
+                                        <div v-if="formErrors['customer_address']" class="alert alert-danger mt-3">
+                                            <small>{{ formErrors['customer_address'][0] }}</small>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="payment_method">
+                                    <h5 class="text-center pb-0">Choose your payment method</h5>
+                                    <!-- DROPIN UI -->
+                                    <div id="dropin-container"></div>
+                                </div>
+
+                                <div class="d-flex mt-5 align-items-end">
+                                    <h6 class="required_field_text"><span>*</span> fields are required</h6>
+                                    <button type="submit" id="submit-button"
+                                        class="buttons btn_primary border-0 ms-auto">Confirm</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                    <div v-else class="text-center my-5 w-100">loading...</div>
+                </template>
+
             </div>
         </div>
+
+
     </div>
 </template>
 
