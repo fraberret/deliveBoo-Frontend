@@ -645,6 +645,7 @@ export default {
 
             .socials {
                 position: static;
+                margin-bottom: 0;
             }
         }
 
