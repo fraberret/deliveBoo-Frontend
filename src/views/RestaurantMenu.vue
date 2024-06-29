@@ -205,7 +205,7 @@ export default {
                                 <div v-if="getCurrentQuantity(dish.id) > 0"
                                     @click="removeFromCart(dish.id, restaurant.id)" class="buttons btn_negative"><i
                                         class="fa-solid fa-minus"></i></div>
-                                <div v-if="getCurrentQuantity(dish.id) > 0" class="counter ms-3">{{
+                                <div v-if="getCurrentQuantity(dish.id) > 0" class="counter">{{
                                     getCurrentQuantity(dish.id) }} <small class="text-secondary">pz.</small></div>
                                 <!-- <img width="" src="/img/cart-icon.png" alt="cart icon"> -->
                             </div>
@@ -254,7 +254,7 @@ export default {
                                         <div v-if="getCurrentQuantity(dish.id) > 0"
                                             @click="removeFromCart(dish.id, restaurant.id)"
                                             class="buttons btn_negative"><i class="fa-solid fa-minus"></i></div>
-                                        <div v-if="getCurrentQuantity(dish.id) > 0" class="counter ms-3">
+                                        <div v-if="getCurrentQuantity(dish.id) > 0" class="counter">
                                             {{ getCurrentQuantity(dish.id) }} <small class="text-secondary">pz.</small>
                                         </div>
                                         <!-- <img width="" src="/img/cart-icon.png" alt="cart icon"> -->
@@ -590,6 +590,7 @@ export default {
 }
 
 
+
 /* media queries ---------------------------------------->  */
 
 @media screen and (max-width: 1400px) {
@@ -668,6 +669,15 @@ export default {
             padding-top: 2rem;
             padding-left: 8rem;
             padding-right: 8rem;
+
+            .dish_card {
+                .actions {
+
+                    .counter {
+                        margin-left: 1rem;
+                    }
+                }
+            }
         }
     }
 
@@ -709,6 +719,8 @@ export default {
             padding-top: 2rem;
             padding-left: 2rem;
             padding-right: 3rem;
+
+
         }
     }
 }
@@ -766,6 +778,7 @@ export default {
             padding-right: 2rem;
 
             .dish_card {
+
 
                 .top {
 
@@ -869,6 +882,11 @@ export default {
 
                 .actions {
                     justify-content: center;
+                    padding: 1.8rem 1rem;
+
+                    .counter {
+                        margin-left: .5rem;
+                    }
                 }
 
                 .top {
