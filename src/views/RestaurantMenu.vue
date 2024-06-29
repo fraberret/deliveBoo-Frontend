@@ -290,7 +290,7 @@ export default {
     <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
         aria-labelledby="modalTitleId" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
-            <div class="modal-content rounded-5">
+            <div class="modal-content p-3 rounded-5">
                 <div class="modal-header border-bottom-0">
                     <h5 class="modal-title" id="modalTitleId">
                         Different Restaurant Item Selected!
