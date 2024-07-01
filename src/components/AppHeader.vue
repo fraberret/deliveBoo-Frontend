@@ -46,7 +46,7 @@ export default {
                         <small>{{ store.cartQuantity }}</small>
                     </div>
                 </router-link>
-                <a class="buttons btn_primary" href="http://localhost:8000/login">I own a place</a>
+                <a class="buttons btn_primary" target="_blank" href="http://localhost:8000/">I own a place</a>
             </div>
         </nav>
     </header>
