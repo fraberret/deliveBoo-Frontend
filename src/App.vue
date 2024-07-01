@@ -9,7 +9,7 @@ export default {
     components: {
         AppHeader,
         AppFooter,
-        // PageLoader
+        PageLoader
     }
 }
 </script>

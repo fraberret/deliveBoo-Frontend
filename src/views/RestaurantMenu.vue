@@ -274,7 +274,7 @@ export default {
                 </div>
                 <div class="no_menu d-flex flex-column align-items-center justify-content-center p-5" v-else>
                     <img src="/img/logo-sad.png" alt="" width="500">
-                    <h2 class="text-center">In this restaurant at the moment don't are dishes</h2>
+                    <h2 class="text-center">Sorry, there are no dishes at the moment in this restaurant</h2>
                 </div>
             </div>
 

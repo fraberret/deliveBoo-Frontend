@@ -7,7 +7,7 @@ export default {
 <template>
     <main class="px-5 mx-4">
         <div class="error ">
-            <h1 class="display-3 w-75">
+            <h1 class="display-3 w-50">
                 Sorry, couldn't find what you are looking for
             </h1>
         </div>
