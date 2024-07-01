@@ -825,7 +825,6 @@ export default {
     }
 
     #menu {
-        background-color: rgb(98, 255, 0);
 
         .left {
             padding-right: 0rem;
