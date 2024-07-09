@@ -1,79 +1,98 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+    --boo-lighter: #ffffff;
+    --boo-darker: #151515;
+    --boo-gray-800: #232323;
+    --boo-gray-700: #454545;
+    --boo-gray-600: #5B5B5B;
+    --boo-gray-500: #8d8d8d;
+    --boo-gray-400: #C9C9C9;
+    --boo-gray-300: #D9D9D9;
+    --boo-primary: #9667AA;
+    --boo-secondary-dark: #F2C94C;
+    --boo-secondary: #ECE7BE;
+    --boo-secondary-light: #F7F6F2;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+    font-family: "Poppins", sans-serif;
+    color: var(--boo-darker);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+main {
+    min-height: calc(100vh - 544px - 6.5rem);
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.container {
+    width: 90%;
+    /* max-width: 1420px; */
+    max-width: 1320px;
+    margin: auto;
 }
 
-.card {
-  padding: 2em;
+.buttons {
+    padding-inline: 2rem;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3.5rem;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    transition: color .4s ease;
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+
+    &::after {
+        position: absolute;
+        content: '';
+        width: 200px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        z-index: -1;
+        transform: translate(-100%, 100%) scale(.5);
+        transition: transform .4s ease;
+    }
+
+    &:hover::after {
+        transform: translate(0%, 0%) scale(1);
+    }
 }
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+
+.btn_primary {
+    background-color: var(--boo-primary);
+    color: var(--boo-lighter);
+    /* border: 2px solid var(--boo-primary); */
+
+    &::after {
+        background-color: var(--boo-gray-700);
+    }
+
+    &:hover {
+        background-color: var(--boo-primary);
+        color: var(--boo-gray-300);
+    }
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.btn_negative {
+    background-color: transparent;
+    color: var(--boo-lighter);
+    border: 2px solid var(--boo-gray-800);
+
+    &::after {
+        background-color: var(--boo-gray-800);
+    }
+
+    &:hover {
+        border: 2px solid var(--boo-gray-800);
+        color: var(--boo-gray-300);
+    }
+}
+
+.btn_back_to_restaurant {
+    background-color: #9667aa00;
+    color: var(--boo-primary);
+    border: 3px solid var(--boo-primary);
 }
